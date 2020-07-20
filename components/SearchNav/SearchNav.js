@@ -14,6 +14,7 @@ const SearchNav = () => {
   console.log('errors', errors);
 
   return (
+   
     <View style={styles.container}>
       <View>
         <Text style={styles.label}>City</Text>
@@ -36,7 +37,7 @@ const SearchNav = () => {
           )}
         />
       </View>
-      {errors.firstName && <Text style={styles.label}>This is required.</Text>}
+      
       <View>
         <Text style={styles.label}>State</Text>
         <Controller

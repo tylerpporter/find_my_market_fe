@@ -7,25 +7,24 @@ import SearchNav from "../SearchNav/SearchNav";
 const Header = () => {
   return (
     <View style={styles.container}>
-        <MainNav />
-        <Text style={styles.location}>CURRENT CITY</Text>
-        <SearchNav />
-        
+      <MainNav />
+      <Text style={styles.location}>CURRENT CITY</Text>
+      <SearchNav />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "blue",
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: "40%",
+    height: "30%",
+    marginTop: 50,
   },
   location: {
-      flexDirection: 'column',
-  }
+    flexDirection: "column",
+    alignSelf: "center",
+    padding: 20,
+    fontSize: 15,
+  },
 });
 
 export default Header;

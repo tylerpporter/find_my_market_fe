@@ -14,14 +14,12 @@ const MainNav = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "blue",
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     height: "15%",
-    margin: 0,
-    padding: 5,
+    padding: (0, 20)
   },
   title: {
     fontSize: 30,
