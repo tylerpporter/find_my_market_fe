@@ -82,11 +82,12 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   container: {
+    flex: 1,
     width: "100%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: Constants.statusBarHeight,
+    // paddingTop: Constants.statusBarHeight,
     padding: 8,
     backgroundColor: "#0e101c",
   },
