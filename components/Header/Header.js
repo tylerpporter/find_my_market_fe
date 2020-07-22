@@ -1,6 +1,5 @@
-import React, { Component, useState } from "react";
-import { FontAwesome, Feather } from "@expo/vector-icons";
-import { Platform, StyleSheet, Text, View, Image, Alert } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import MainNav from "../MainNav/MainNav";
 import SearchNav from "../SearchNav/SearchNav";
 

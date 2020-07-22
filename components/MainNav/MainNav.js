@@ -1,6 +1,6 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import { FontAwesome, Feather } from "@expo/vector-icons";
-import { Platform, StyleSheet, Text, View, Image, Alert } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 const MainNav = () => {
   return (
@@ -14,7 +14,6 @@ const MainNav = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
