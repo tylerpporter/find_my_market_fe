@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 40,
     color: "#05668D",
-    backgroundColor: "#FE5F55",
+    backgroundColor: "#F7B267",
     height: 40,
     borderRadius: 4,
     paddingRight: 50,
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 8,
     marginTop: 50,
-    backgroundColor: "#BDD5EA",
+    backgroundColor: "#F27059",
   },
   input: {
     backgroundColor: "white",
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     height: "70%",
     alignItems: "center",
     padding: 8,
-    backgroundColor: "#BDD5EA",
+    backgroundColor: "#F27059",
   },
   title: {
     fontSize: 50,
