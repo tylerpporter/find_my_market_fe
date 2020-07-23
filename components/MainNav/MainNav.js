@@ -3,6 +3,9 @@ import { FontAwesome, Feather } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
 
 const MainNav = () => {
+
+  
+
   return (
     <View style={styles.container}>
       <FontAwesome name="filter" size={50} color="black" />
