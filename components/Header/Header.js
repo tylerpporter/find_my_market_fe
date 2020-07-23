@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, Modal, Alert, TouchableHighlight } from "react-native";
-import MainNav from "../MainNav/MainNav";
 import SearchNav from "../SearchNav/SearchNav";
 import { FontAwesome, Feather } from "@expo/vector-icons";
 
