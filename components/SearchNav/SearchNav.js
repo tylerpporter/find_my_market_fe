@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
-const SearchNav = ({ setSearchedCity, setSearchedMarkets}) => {
+const SearchNav = ({ setSearchedCity, setSearchedMarkets }) => {
   const { control, handleSubmit, errors } = useForm();
   const cityInputRef = React.useRef();
   const stateInputRef = React.useRef();
@@ -45,7 +45,7 @@ const SearchNav = ({ setSearchedCity, setSearchedMarkets}) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setSearchedCity({lat: data.data.marketsByCity.latitude, lng:data.data.marketsByCity.longitude})
+        setSearchedCity({coords: {lat: data.data.marketsByCity.latitude, lng:data.data.marketsByCity.longitude}})
         setSearchedMarkets(data.data.marketsByCity.markets)
       })
       .catch((error) => {
