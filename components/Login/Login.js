@@ -25,7 +25,7 @@ const Login = ( {navigation }) => {
             control={control}
             rules={{ required: "This is required" }}
             onFocus={() => {
-              cityInputRef.current.focus();
+              emailInputRef.current.focus();
             }}
             render={(props) => (
               <TextInput
