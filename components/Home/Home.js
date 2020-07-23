@@ -26,7 +26,7 @@ const Home = () => {
   // this is for the Modal with the drop-down//filter
   const [modalVisible, setModalVisible] = useState(false);
   // this is for the searched city
-  const [searchedCity, setSearchedCity] = useState({lat: null, lng:null})
+  const [searchedCity, setSearchedCity] = useState({coords: {lat: null, lng:null}})
   // this is for the markets based off searchedCity
   const [searchedMarkets, setSearchedMarkets] = useState([]) 
 
@@ -97,7 +97,8 @@ const Home = () => {
         setModalVisible={setModalVisible}
         currentLocation={currentLocation}
         setSearchedCity={setSearchedCity}
-        setSearchedMarkets={setSearchedMarkets} />
+        setSearchedMarkets={setSearchedMarkets}
+        />
       <Map
         marketsNearMe={marketsNearMe}
         location={location} 
