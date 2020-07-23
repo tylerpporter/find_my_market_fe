@@ -2,14 +2,55 @@ import React from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
-const SearchNav = () => {
+const SearchNav = ({ setSearchedCity, setSearchedMarkets}) => {
   const { control, handleSubmit, errors } = useForm();
   const cityInputRef = React.useRef();
   const stateInputRef = React.useRef();
+
   const onSubmit = (data) => {
-    //this is the data that will be posted to backend
-    //make a post to GraphQL
-    console.log({ ...data, country: "US" });
+    let url = "https://us-farmers-markets-api.herokuapp.com/"; 
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+             query: `query($city: String!, $state: String!){ marketsByCity(city: $city, state: $state, radius: 50) {
+              latitude 
+              longitude
+              markets {
+                marketname
+                latitude
+                longitude
+                website
+                distance
+                season1date
+                season1time
+                street
+                city
+                state
+                zip
+                id 
+                products { name }
+            }
+          }
+          }`,
+          variables: {
+            city: data.city, 
+            state: data.state
+          }
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setSearchedCity({lat: data.data.marketsByCity.latitude, lng:data.data.marketsByCity.longitude})
+        setSearchedMarkets(data.data.marketsByCity.markets)
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
