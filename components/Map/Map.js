@@ -46,12 +46,31 @@ const Map = () => {
       },
 
       body: JSON.stringify({
-        query: `{ marketsByLocation(lat: ${location.coords.latitude}, lng: ${location.coords.longitude}, radius: 50) { marketname distance latitude longitude website season1date season1time street city state zip products { name } } }`,
-      }),
+        query: `{ marketsByLocation(lat: ${location.coords.latitude}, lng:  ${location.coords.longitude}, radius: 40) { 
+              location 
+              markets {
+              id 
+              marketname
+              latitude
+              longitude
+              website
+              season1date
+              season1time
+              street
+              city
+              state
+              zip
+              products {
+                  name
+              }
+              }
+          }
+      }`  
+     }),
     })
       .then((response) => response.json())
       .then((data) => {
-        setMarketsNearMe(data.data.marketsByLocation);
+        setMarketsNearMe(data.data.marketsByLocation.markets);
       })
       .catch((error) => {
         console.error("Error:", error);
