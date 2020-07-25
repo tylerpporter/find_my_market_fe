@@ -16,9 +16,6 @@ import { ScrollView } from "react-native-gesture-handler";
 const Map = ({
   marketsNearMe,
   location,
-  searchedMarkets,
-  searchedCity,
-  region,
 }) => {
 
   const markers = marketsNearMe.map((location) => {
