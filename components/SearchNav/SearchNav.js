@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
-const SearchNav = ({ setSearchedCity, setSearchedMarkets, setLocation, setMarketsNearMe }) => {
+const SearchNav = ({ setSearchedMarkets, setLocation, setMarketsNearMe, filteredProducts}) => {
   const { control, handleSubmit, errors } = useForm();
   const cityInputRef = React.useRef();
   const stateInputRef = React.useRef();
@@ -47,7 +47,6 @@ const SearchNav = ({ setSearchedCity, setSearchedMarkets, setLocation, setMarket
       .then((data) => {
         console.log('data', data)
         setLocation({coords: {latitude: data.data.marketsByCity.latitude, longitude:data.data.marketsByCity.longitude}})
-        setSearchedCity({coords: {latitude: data.data.marketsByCity.latitude, longitude:data.data.marketsByCity.longitude}})
         // setSearchedMarkets(data.data.marketsByCity.markets)
         setMarketsNearMe(data.data.marketsByCity.markets)
       })
