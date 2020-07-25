@@ -1,53 +1,64 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  TextInput,
+  Image,
+} from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import Home from "../Home/Home";
 
-const Login = ( {navigation }) => {
+// LOGO
+// import Logo from '../../assets/FMM-logo.png'
+
+const Login = ({ navigation }) => {
   const { control, handleSubmit, errors } = useForm();
   const emailInputRef = React.useRef();
 
   const onSubmit = (data) => {
     // here will be the fetch for login
-    console.log('fetch login')
+    console.log("fetch login");
   };
 
   return (
     <View style={styles.mainContainer}>
-      <Text style={styles.logo}>LOGO HERE</Text>
-      <Text style={styles.title}>Find My Market</Text>
-      
+      <View style={styles.logoContainer}>
+      <Image style={styles.logo} source={require('../../assets/FMM-logo.png')} />
+      </View>
       <View style={styles.formContainer}>
         <Text style={styles.label}>Email:</Text>
-          <Controller
-            name="email"
-            control={control}
-            rules={{ required: "This is required" }}
-            onFocus={() => {
-              emailInputRef.current.focus();
-            }}
-            render={(props) => (
-              <TextInput
-                {...props}
-                style={styles.input}
-                onChangeText={(value) => {
-                  props.onChange(value);
-                }}
-                ref={emailInputRef}
-              />
-            )}
-          />
+        <Controller
+          name="email"
+          control={control}
+          rules={{ required: "This is required" }}
+          onFocus={() => {
+            emailInputRef.current.focus();
+          }}
+          render={(props) => (
+            <TextInput
+              {...props}
+              style={styles.input}
+              onChangeText={(value) => {
+                props.onChange(value);
+              }}
+              ref={emailInputRef}
+            />
+          )}
+        />
         <TouchableOpacity>
-        <View style={styles.button}>
-          <Button
-            style={styles.button}
-            title="Log in"
-            onPress={() => {
-              handleSubmit(onSubmit)
-              navigation.navigate("Home");
-            }}
-          />
+          <View style={styles.button}>
+            <Button
+              style={styles.button}
+              title="Log in"
+              onPress={() => {
+                handleSubmit(onSubmit);
+                navigation.navigate("Home");
+              }}
+            />
           </View>
         </TouchableOpacity>
       </View>
@@ -87,12 +98,16 @@ const styles = StyleSheet.create({
     margin: 10,
     marginHorizontal: 10,
     fontSize: 30,
-
   },
   logo: {
-    color: "#05668D",
-    margin: 200,
-    marginHorizontal: 10,
+    height: "50%",
+    width: "50%",
+  },
+  logoContainer: {
+    flex: 3,
+    height: "50%",
+    width: "90%",
+    alignItems: "center",
   },
   mainContainer: {
     flex: 1,
