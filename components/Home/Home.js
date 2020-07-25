@@ -21,14 +21,13 @@ const Home = () => {
   const [marketsNearMe, setMarketsNearMe] = useState([]);
   // ????
   const [errorMsg, setErrorMsg] = useState(null);
-  // this is the text that appears in the header to let user know current location
-  const [currentLocation, setCurrentLocation] = useState("Current Location")
   // this is for the Modal with the drop-down//filter
   const [modalVisible, setModalVisible] = useState(false);
-  // this is for the searched city
-  const [searchedCity, setSearchedCity] = useState({coords: {lat: null, lng:null}})
   // this is for the markets based off searchedCity
   const [searchedMarkets, setSearchedMarkets] = useState([]) 
+
+//
+  const [filteredProducts, setFilteredProducts] = useState([])
 
   // Setting my current location as a user and receiving markets near this location
   useEffect(() => {
@@ -38,13 +37,14 @@ const Home = () => {
         setErrorMsg("Permission to access location was denied");
       }
       let location = await Location.getCurrentPositionAsync({});
-
+      
       setLocation(location);
       getMarketsNearby(location);
     })();
   }, []);
 
   const getMarketsNearby = (location) => {
+    console.log("LOCATION", location)
     let url = "https://us-farmers-markets-api.herokuapp.com/";
 
     fetch(url, {
@@ -54,7 +54,7 @@ const Home = () => {
       },
 
       body: JSON.stringify({
-        query: `{ marketsByCoords(lat: ${location.coords.latitude}, lng: ${location.coords.longitude}, radius: 40) { 
+        query: `{ marketsByCoords(lat: ${location.coords.latitude}, lng: ${location.coords.longitude}, radius: 40 ) { 
               location 
               markets {
               id 
@@ -74,14 +74,13 @@ const Home = () => {
               }
               }
           }
-      }`  
+      }`
      }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        
         setMarketsNearMe(data.data.marketsByCoords.markets);
-        setCurrentLocation(data.data.marketsByCoords.location)
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -95,14 +94,17 @@ const Home = () => {
       <Header 
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        currentLocation={currentLocation}
-        setSearchedCity={setSearchedCity}
         setSearchedMarkets={setSearchedMarkets}
+        setLocation={setLocation}
+        setMarketsNearMe={setMarketsNearMe}
+        getMarketsNearby={getMarketsNearby}
+        location={location}
+        filteredProducts={filteredProducts}
+        setFilteredProducts={setFilteredProducts}
         />
       <Map
         marketsNearMe={marketsNearMe}
         location={location} 
-        searchedCity={searchedCity}
         searchedMarkets={searchedMarkets}
   />
     </View>
