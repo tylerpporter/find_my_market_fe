@@ -44,7 +44,6 @@ const Home = () => {
   }, []);
 
   const getMarketsNearby = (location) => {
-    console.log("LOCATION", location)
     let url = "https://us-farmers-markets-api.herokuapp.com/";
 
     fetch(url, {
@@ -54,7 +53,7 @@ const Home = () => {
       },
 
       body: JSON.stringify({
-        query: `{ marketsByCoords(lat: ${location.coords.latitude}, lng: ${location.coords.longitude}, radius: 40 ) { 
+        query: `query($lat: Float!, $lng: Float!, $radius: Int!, $products: [String!]){ marketsByCoords(lat: $lat, lng: $lng, radius: $radius, products: $products ) { 
               location 
               markets {
               id 
@@ -74,13 +73,20 @@ const Home = () => {
               }
               }
           }
-      }`
+      }`,
+      variables: {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+        radius: 40,
+        products: filteredProducts
+      }
      }),
     })
       .then((response) => response.json())
       .then((data) => {
-        
+        console.log('testing filter', data)
         setMarketsNearMe(data.data.marketsByCoords.markets);
+        setFilteredProducts([])
       })
       .catch((error) => {
         console.error("Error:", error);
