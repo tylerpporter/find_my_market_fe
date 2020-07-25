@@ -1,3 +1,6 @@
+// // IMPORTS // //
+
+// React && React-Native
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -9,11 +12,15 @@ import {
   Switch,
   FlatList,
 } from "react-native";
+
+// Components
 import SearchNav from "../SearchNav/SearchNav";
-import { FontAwesome, Feather } from "@expo/vector-icons";
 import ListItem from "../ListItem/ListItem";
 
+// Vector-Icons
+import { FontAwesome, Feather } from "@expo/vector-icons";
 
+// HEADER COMPONENT
 const Header = ({
   setModalVisible,
   modalVisible,
@@ -23,64 +30,63 @@ const Header = ({
   getMarketsNearby,
   location,
   filteredProducts,
-  setFilteredProducts
+  setFilteredProducts,
 }) => {
+  // // HOOKS // //
 
+  // This is a list of products to filter by
   const [products, setProducts] = useState([
     {
       id: 1,
       title: "organic",
-      value: false
+      value: false,
     },
     {
       id: 2,
       title: "flowers",
-      value: false
+      value: false,
     },
     {
       id: 3,
       title: "meat",
-      value: false
+      value: false,
     },
     {
       id: 4,
       title: "poultry",
-      value: false
+      value: false,
     },
     {
       id: 5,
       title: "vegetables",
-      value: false
+      value: false,
     },
     {
       id: 6,
       title: "cheese",
-      value: false
+      value: false,
     },
     {
       id: 7,
       title: "honey",
-      value: false
+      value: false,
     },
     {
       id: 8,
       title: "jams",
-      value: false
+      value: false,
     },
     {
       id: 9,
       title: "juices",
-      value: false
+      value: false,
     },
     {
       id: 10,
       title: "coffee",
-      value: false
+      value: false,
     },
   ]);
-
-
-  console.log('filteredproducts', filteredProducts)
 
   return (
     <View style={styles.container}>
@@ -120,7 +126,14 @@ const Header = ({
             <View style={styles.modalContainer}>
               <FlatList
                 data={products}
-                renderItem={({ item }) => <ListItem  products={products} setFilteredProducts={setFilteredProducts} filteredProducts={filteredProducts} item={item} />}
+                renderItem={({ item }) => (
+                  <ListItem
+                    products={products}
+                    setFilteredProducts={setFilteredProducts}
+                    filteredProducts={filteredProducts}
+                    item={item}
+                  />
+                )}
                 keyExtractor={(item) => item.id}
               />
             </View>
@@ -128,7 +141,7 @@ const Header = ({
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
               onPress={() => {
-                getMarketsNearby(location)
+                getMarketsNearby(location);
                 setModalVisible(!modalVisible);
               }}
             >
@@ -141,6 +154,7 @@ const Header = ({
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   mainNavContainer: {
     flexDirection: "row",

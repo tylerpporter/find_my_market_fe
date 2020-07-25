@@ -1,3 +1,6 @@
+// // IMPORTS // //
+
+// React && React-Native
 import React, { useState } from "react";
 import MapView from "react-native-maps";
 import { Marker, Callout } from "react-native-maps";
@@ -10,14 +13,14 @@ import {
   Linking,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-// import { TouchableOpacity, TouchableHighlight } from "react-native-gesture-handler";
-// import * as Linking from 'expo-linking'
 
+// MAP COMPONENT
 const Map = ({
   marketsNearMe,
   location,
 }) => {
 
+  // This displays the markers based on current Region
   const markers = marketsNearMe.map((location) => {
     let { latitude, longitude, id } = location;
 
@@ -60,6 +63,7 @@ const Map = ({
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   button: {
     marginTop: 40,

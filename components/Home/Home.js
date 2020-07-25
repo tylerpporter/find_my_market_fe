@@ -1,19 +1,20 @@
+// // IMPORTS // // 
+
+// React && React-Native
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+
+// Components
 import Map from "../Map/Map";
 import Header from "../Header/Header";
+
+// Expo
 import * as Location from "expo-location";
 
-
+// HOME COMPONENT
 const Home = () => {
-  const initialRegion = {
-    coords: {
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    },
-  };
+
+  // // HOOKS // //
 
   // this sets the users location
   const [location, setLocation] = useState(initialRegion);
@@ -25,11 +26,21 @@ const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
   // this is for the markets based off searchedCity
   const [searchedMarkets, setSearchedMarkets] = useState([]) 
-
-//
+  // this is for the filtering of products
   const [filteredProducts, setFilteredProducts] = useState([])
+  // this is the default region for map
+  const initialRegion = {
+    coords: {
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    },
+  };
 
-  // Setting my current location as a user and receiving markets near this location
+// // METHODS // //
+
+  // Setting my current location as a user
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -43,6 +54,7 @@ const Home = () => {
     })();
   }, []);
 
+  // Setting markets based off the hook:location
   const getMarketsNearby = (location) => {
     let url = "https://us-farmers-markets-api.herokuapp.com/";
 
@@ -93,8 +105,6 @@ const Home = () => {
       });
   };
 
-
-
   return (
     <View style={styles.container}>
       <Header 
@@ -117,6 +127,7 @@ const Home = () => {
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   container: {
     height: "100%",

@@ -1,4 +1,6 @@
-import { StatusBar } from "expo-status-bar";
+// // IMPORTS // //
+
+// React && React-Native
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -10,17 +12,26 @@ import {
   Image,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
+
+// Components
 import Home from "../Home/Home";
 
-// LOGO
-// import Logo from '../../assets/FMM-logo.png'
-
+// LOGIN COMPONENT
 const Login = ({ navigation }) => {
+
+// // HOOKS // //
+
+  // This is for form validation and storing Inputs
   const { control, handleSubmit, errors } = useForm();
+  
+
+// // METHODS // //
+
+  // This is for Controller
   const emailInputRef = React.useRef();
 
+  // This is for the submit of the LoginForm
   const onSubmit = (data) => {
-    // here will be the fetch for login
     console.log("fetch login");
   };
 
@@ -66,6 +77,7 @@ const Login = ({ navigation }) => {
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   button: {
     marginTop: 40,

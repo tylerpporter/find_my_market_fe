@@ -1,7 +1,13 @@
+// //IMPORTS // // 
+
+// React && React-Native
 import React from "react";
-import { Feather } from '@expo/vector-icons'; 
 import { StyleSheet, View } from "react-native";
 
+// Vector-Icons
+import { Feather } from '@expo/vector-icons'; 
+
+// FOOTER COMPONENT
 const Footer = () => {
   return (
     <View style={styles.container}>
@@ -11,6 +17,7 @@ const Footer = () => {
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

@@ -1,18 +1,31 @@
+// // IMPORTS // //
+
+//React && React-Native
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 
+// LIST-ITEM COMPONENT
 const ListItem = ({
   item,
   setFilteredProducts,
   filteredProducts,
   products,
 }) => {
+
+  // // HOOKS // //
+
+  // This is for the switch for true or false
   const [isEnabled, setIsEnabled] = useState(false);
+  
+  // // METHODS // //
+
+  // This toggles the true and false values of the switch 
   const toggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
     filterOptions();
   };
 
+  // This is where the filter options for products is set
   const filterOptions = () => {
     if (!isEnabled) {
       let selectedProduct = products.find(
@@ -42,6 +55,7 @@ const ListItem = ({
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   listItem: {
     padding: 15,

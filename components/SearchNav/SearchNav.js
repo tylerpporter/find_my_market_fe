@@ -1,12 +1,25 @@
+// // IMPORTS // //
+
+// React && React-Native
 import React from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
+// SEARCH-NAV COMPONENT
 const SearchNav = ({ setSearchedMarkets, setLocation, setMarketsNearMe, filteredProducts}) => {
+
+// // HOOKS // //
+
+  // This is for the form validation
   const { control, handleSubmit, errors } = useForm();
+
+  // This is for Controller
   const cityInputRef = React.useRef();
   const stateInputRef = React.useRef();
 
+// // METHODS // // 
+
+  // This is the submit fetch call for searching a City&State
   const onSubmit = (data) => {
     let url = "https://us-farmers-markets-api.herokuapp.com/"; 
 
@@ -107,6 +120,7 @@ const SearchNav = ({ setSearchedMarkets, setLocation, setMarketsNearMe, filtered
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   label: {
     color: "white",
