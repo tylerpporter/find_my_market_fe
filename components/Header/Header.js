@@ -18,7 +18,7 @@ import SearchNav from "../SearchNav/SearchNav";
 import ListItem from "../ListItem/ListItem";
 
 // Vector-Icons
-import { FontAwesome, Feather } from "@expo/vector-icons";
+import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
 
 // HEADER COMPONENT
 const Header = ({
@@ -93,6 +93,7 @@ const Header = ({
       {/* <MainNav /> */}
       <View style={styles.mainNavContainer}>
         <TouchableHighlight
+          underlayColor="white"
           onPress={() => {
             setModalVisible(true);
           }}
@@ -121,7 +122,17 @@ const Header = ({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+            <View style={styles.closeIcon}>
+              <AntDesign
+                name="close"
+                size={30}
+                color="black"
+                onPress={() => {
+                  setFilteredProducts([])
+                  setModalVisible(!modalVisible);
+                }} />
+            </View>
+            <Text style={styles.modalText}>Filter By Products</Text>
 
             <View style={styles.modalContainer}>
               <FlatList
@@ -139,13 +150,23 @@ const Header = ({
             </View>
 
             <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+              style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
                 getMarketsNearby(location);
                 setModalVisible(!modalVisible);
               }}
             >
-              <Text style={styles.textStyle}>Filter By Products</Text>
+              <Text style={styles.textStyle}>Submit Filter</Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
+              onPress={() => {
+                setFilteredProducts([])
+                getMarketsNearby(location);
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>Clear Filters</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -166,8 +187,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   container: {
-    height: "30%",
+    height: "25%",
     marginTop: 20,
+    backgroundColor: "white"
   },
   modalContainer: {
     height: "60%",
@@ -183,10 +205,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    marginTop: 32,
   },
   modalView: {
-    margin: 20,
+    margin: 10,
+    height: 700,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
@@ -205,6 +228,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    marginTop: 10,
+    width: 150,
   },
   textStyle: {
     color: "white",
@@ -214,6 +239,11 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 40,
+  },
+  closeIcon: {
+    alignSelf: "flex-end",
   },
 });
 

@@ -9,6 +9,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../Home/Home";
 import Login from "../Login/Login";
 
+//Hide warnings
+console.disableYellowBox = true;
+
 // Navigation
 const Stack = createStackNavigator();
 
@@ -17,7 +20,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
 
         <Stack.Screen
           name="Home"

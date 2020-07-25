@@ -14,6 +14,16 @@ import * as Location from "expo-location";
 // HOME COMPONENT
 const Home = () => {
 
+   // this is the default region for map
+   const initialRegion = {
+    coords: {
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    },
+  };
+
   // // HOOKS // //
 
   // this sets the users location
@@ -28,15 +38,6 @@ const Home = () => {
   const [searchedMarkets, setSearchedMarkets] = useState([]) 
   // this is for the filtering of products
   const [filteredProducts, setFilteredProducts] = useState([])
-  // this is the default region for map
-  const initialRegion = {
-    coords: {
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    },
-  };
 
 // // METHODS // //
 

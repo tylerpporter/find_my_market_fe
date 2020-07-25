@@ -15,11 +15,7 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 
 // MAP COMPONENT
-const Map = ({
-  marketsNearMe,
-  location,
-}) => {
-
+const Map = ({ marketsNearMe, location }) => {
   // This displays the markers based on current Region
   const markers = marketsNearMe.map((location) => {
     let { latitude, longitude, id } = location;
@@ -35,18 +31,30 @@ const Map = ({
         coordinate={{ latitude: latitude, longitude: longitude }}
         pinColor="#F25C54"
       >
-        <Callout style={{ width: 300, height: 300 }}>
-          <View style={{margin: 5}}><Text>{location.marketname}</Text></View>
-          <View style={{margin: 5}}><Text style={{ flexWrap: "wrap" }}>
-            {location.street} {location.city}, {location.state} {location.zip}
-          </Text></View>
-          <View style={{margin: 5}}><Text>Distance Away: {Math.round(location.distance)} mile(s)</Text></View>
-          <View style={{margin: 5}}><Text>Season Date: {location.season1date}</Text></View>
-          <View style={{margin: 5}}><Text style={{ flexWrap: "wrap" }}>
-            Season Time: {location.season1time}
-          </Text></View>
-          <View style={{margin: 5}}><Text>Website: {location.website}</Text></View>
-            {/* {productsList} */}
+        <Callout style={styles.callOut}>
+          <View style={styles.views}>
+            <Text>{location.marketname}</Text>
+          </View>
+          <View style={styles.views}>
+            <Text style={styles.texts}>
+              {location.street} {location.city}, {location.state} {location.zip}
+            </Text>
+          </View>
+          <View style={styles.views}>
+            <Text>Distance Away: {Math.round(location.distance)} mile(s)</Text>
+          </View>
+          <View style={styles.views}>
+            <Text>Season Date: {location.season1date}</Text>
+          </View>
+          <View style={styles.views}>
+            <Text style={styles.texts}>
+              Season Time: {location.season1time}
+            </Text>
+          </View>
+          <View style={styles.views}>
+            <Text>Website: {location.website}</Text>
+          </View>
+          {/* {productsList} */}
         </Callout>
       </Marker>
     );
@@ -54,7 +62,7 @@ const Map = ({
 
   return (
     <MapView
-      style={{ height: "68%" }}
+      style={styles.mapView}
       showsUserLocation={true}
       region={location.coords}
     >
@@ -74,6 +82,12 @@ const styles = StyleSheet.create({
     paddingRight: 50,
     paddingLeft: 50,
   },
+  mapView: {
+    height: "75%",
+  },
+  callOut: { width: 300, height: 300 },
+  views: { margin: 5 },
+  texts: { flexWrap: "wrap" },
 });
 
 export default Map;

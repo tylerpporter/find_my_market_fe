@@ -52,6 +52,7 @@ const Login = ({ navigation }) => {
           render={(props) => (
             <TextInput
               {...props}
+              color="black"
               style={styles.input}
               onChangeText={(value) => {
                 props.onChange(value);
@@ -63,7 +64,7 @@ const Login = ({ navigation }) => {
         <TouchableOpacity>
           <View style={styles.button}>
             <Button
-              style={styles.button}
+              color="white"
               title="Log in"
               onPress={() => {
                 handleSubmit(onSubmit);
@@ -81,8 +82,8 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   button: {
     marginTop: 40,
-    color: "#05668D",
-    backgroundColor: "#F7B267",
+    color: "#ffffff",
+    backgroundColor: "#38A3A5",
     height: 40,
     borderRadius: 4,
     paddingRight: 50,
@@ -94,8 +95,7 @@ const styles = StyleSheet.create({
     height: "30%",
     alignItems: "center",
     padding: 8,
-    marginTop: 50,
-    backgroundColor: "#F27059",
+    backgroundColor: "#EF8275",
   },
   input: {
     backgroundColor: "white",
@@ -106,28 +106,30 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   label: {
-    color: "#05668D",
+    color: "black",
     margin: 10,
     marginHorizontal: 10,
     fontSize: 30,
   },
   logo: {
-    height: "50%",
-    width: "50%",
+    height: "70%",
+    width: "70%",
+    margin: 0,
   },
   logoContainer: {
     flex: 3,
     height: "50%",
-    width: "90%",
+    width: "100%",
     alignItems: "center",
+    justifyContent: "center",
   },
   mainContainer: {
     flex: 1,
     width: "100%",
-    height: "70%",
+    height: "100%",
     alignItems: "center",
     padding: 8,
-    backgroundColor: "#F27059",
+    backgroundColor: "#EF8275",
   },
   title: {
     fontSize: 50,
