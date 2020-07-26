@@ -45,7 +45,7 @@ const SearchNav = ({ setSearchedMarkets, setLocation, setMarketsNearMe, filtered
                 city
                 state
                 zip
-                id 
+                fmid 
                 products { name }
             }
           }
@@ -58,7 +58,6 @@ const SearchNav = ({ setSearchedMarkets, setLocation, setMarketsNearMe, filtered
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data)
         setLocation({coords: {latitude: data.data.marketsByCity.latitude, longitude:data.data.marketsByCity.longitude}})
         // setSearchedMarkets(data.data.marketsByCity.markets)
         setMarketsNearMe(data.data.marketsByCity.markets)
