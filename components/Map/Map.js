@@ -3,7 +3,7 @@
 // React && React-Native
 import React, { useState } from "react";
 import MapView from "react-native-maps";
-import { Marker, Callout } from "react-native-maps";
+import { Marker, Callout, CalloutSubview } from "react-native-maps";
 import {
   StyleSheet,
   Text,
@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, FlatList } from "react-native-gesture-handler";
 
 // MAP COMPONENT
 const Map = ({ marketsNearMe, location }) => {
@@ -26,7 +26,7 @@ const Map = ({ marketsNearMe, location }) => {
 
     return (
       <Marker
-        key={id}
+        key={Math.random()}
         id={id}
         coordinate={{ latitude: latitude, longitude: longitude }}
         pinColor="#F25C54"
@@ -51,9 +51,12 @@ const Map = ({ marketsNearMe, location }) => {
               Season Time: {location.season1time}
             </Text>
           </View>
-          <View style={styles.views}>
-            <Text>Website: {location.website}</Text>
-          </View>
+          <CalloutSubview onPress={() => Linking.openURL(`${location.website}`)}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.views}>View Markets Website</Text>
+            </TouchableOpacity>
+          </CalloutSubview>
+          
           {/* {productsList} */}
         </Callout>
       </Marker>
@@ -76,11 +79,14 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 40,
     color: "#05668D",
-    backgroundColor: "#F7B267",
+    backgroundColor: "#EF8275",
     height: 40,
     borderRadius: 4,
     paddingRight: 50,
     paddingLeft: 50,
+    width: "100%",
+    alignItems: "center",
+
   },
   mapView: {
     height: "75%",
