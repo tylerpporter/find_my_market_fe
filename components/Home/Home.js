@@ -12,8 +12,8 @@ import Header from "../Header/Header";
 import * as Location from "expo-location";
 
 // HOME COMPONENT
-const Home = (user) => {
-  console.log("HOME", user.route.params.user)
+const Home = () => {
+  // console.log("HOME", user.route.params.user)
 
    // this is the default region for map
    const initialRegion = {

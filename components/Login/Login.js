@@ -28,36 +28,36 @@ const Login = ({ navigation }) => {
   // This is for Controller
   const emailInputRef = React.useRef();
 
-  const nav = (user) => {
-    console.log("LOGIN", user)
-    navigation.navigate("Home", {user});
-  }
+  // const nav = (user) => {
+  //   console.log("LOGIN", user)
+  //   navigation.navigate("Home", {user});
+  // }
 
   // This is for the submit of the LoginForm
   const onSubmit = (data) => {
-    
+    navigation.navigate("Home");
     let url = "https://find-my-market-api.herokuapp.com/users/"; 
 
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    // fetch(url, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
 
-      body: JSON.stringify({
-          "email": data.email
-      })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        let user = {id: data.id, favorites: []}
-        // FOR AUTH
-        // let user = {id: data.id, favorites: data.favorites, token: data.token}
-        nav(user)
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    //   body: JSON.stringify({
+    //       "email": data.email
+    //   })
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     let user = {id: data.id, favorites: []}
+    //     // FOR AUTH
+    //     // let user = {id: data.id, favorites: data.favorites, token: data.token}
+    //     nav(user)
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
   };
 
   return (
