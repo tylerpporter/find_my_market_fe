@@ -12,7 +12,8 @@ import Header from "../Header/Header";
 import * as Location from "expo-location";
 
 // HOME COMPONENT
-const Home = () => {
+const Home = (user) => {
+  console.log("HOME", user.route.params.user)
 
    // this is the default region for map
    const initialRegion = {
@@ -69,7 +70,7 @@ const Home = () => {
         query: `query($lat: Float!, $lng: Float!, $radius: Int!, $products: [String!]){ marketsByCoords(lat: $lat, lng: $lng, radius: $radius, products: $products ) { 
               location 
               markets {
-              id 
+              fmid 
               marketname
               latitude
               longitude
@@ -97,7 +98,6 @@ const Home = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('testing filter', data)
         setMarketsNearMe(data.data.marketsByCoords.markets);
         setFilteredProducts([])
       })

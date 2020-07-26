@@ -18,21 +18,46 @@ import Home from "../Home/Home";
 
 // LOGIN COMPONENT
 const Login = ({ navigation }) => {
-
 // // HOOKS // //
 
   // This is for form validation and storing Inputs
   const { control, handleSubmit, errors } = useForm();
-  
 
 // // METHODS // //
 
   // This is for Controller
   const emailInputRef = React.useRef();
 
+  const nav = (user) => {
+    console.log("LOGIN", user)
+    navigation.navigate("Home", {user});
+  }
+
   // This is for the submit of the LoginForm
   const onSubmit = (data) => {
-    console.log("fetch login");
+    
+    let url = "https://find-my-market-api.herokuapp.com/users/"; 
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+          "email": data.email
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let user = {id: data.id, favorites: []}
+        // FOR AUTH
+        // let user = {id: data.id, favorites: data.favorites, token: data.token}
+        nav(user)
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -66,10 +91,9 @@ const Login = ({ navigation }) => {
             <Button
               color="white"
               title="Log in"
-              onPress={() => {
-                handleSubmit(onSubmit);
-                navigation.navigate("Home");
-              }}
+              onPress={
+                handleSubmit(onSubmit)
+              }
             />
           </View>
         </TouchableOpacity>
