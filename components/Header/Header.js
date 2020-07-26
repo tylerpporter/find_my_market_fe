@@ -1,5 +1,4 @@
 // // IMPORTS // //
-
 // React && React-Native
 import React, { useState } from "react";
 import {
@@ -32,8 +31,8 @@ const Header = ({
   filteredProducts,
   setFilteredProducts,
 }) => {
+  
   // // HOOKS // //
-
   // This is a list of products to filter by
   const [products, setProducts] = useState([
     {
@@ -128,9 +127,10 @@ const Header = ({
                 size={30}
                 color="black"
                 onPress={() => {
-                  setFilteredProducts([])
+                  setFilteredProducts([]);
                   setModalVisible(!modalVisible);
-                }} />
+                }}
+              />
             </View>
             <Text style={styles.modalText}>Filter By Products</Text>
 
@@ -161,12 +161,12 @@ const Header = ({
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
-                setFilteredProducts([])
+                setFilteredProducts([]);
                 getMarketsNearby(location);
                 setModalVisible(!modalVisible);
               }}
             >
-              <Text style={styles.textStyle}>Clear Filters</Text>
+              <Text style={styles.textStyle}>Clear Current Filters</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -178,57 +178,58 @@ const Header = ({
 // CSS: Styling
 const styles = StyleSheet.create({
   mainNavContainer: {
+    alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
     padding: (0, 20),
   },
   title: {
     fontSize: 30,
+    paddingLeft: 12,
   },
   container: {
+    backgroundColor: "white",
     height: "25%",
     marginTop: 20,
-    backgroundColor: "white"
   },
   modalContainer: {
     height: "60%",
     marginTop: 20,
   },
   location: {
-    flexDirection: "column",
     alignSelf: "center",
-    padding: 20,
+    flexDirection: "column",
     fontSize: 15,
+    padding: 20,
   },
   centeredView: {
+    alignItems: "center",
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
     marginTop: 32,
   },
   modalView: {
-    margin: 10,
-    height: 700,
+    alignItems: "center",
     backgroundColor: "white",
     borderRadius: 20,
+    height: 700,
+    margin: 10,
     padding: 35,
-    alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
       height: 2,
+      width: 0,
     },
+    elevation: 5,
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
   },
   openButton: {
     backgroundColor: "#F194FF",
     borderRadius: 20,
-    padding: 10,
     elevation: 2,
     marginTop: 10,
+    padding: 10,
     width: 150,
   },
   textStyle: {
@@ -237,10 +238,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalText: {
+    fontSize: 40,
+    fontWeight: "bold",
     marginBottom: 15,
     textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 40,
   },
   closeIcon: {
     alignSelf: "flex-end",

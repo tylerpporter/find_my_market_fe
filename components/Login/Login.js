@@ -1,5 +1,4 @@
 // // IMPORTS // //
-
 // React && React-Native
 import React, { useState } from "react";
 import {
@@ -19,51 +18,51 @@ import Home from "../Home/Home";
 // LOGIN COMPONENT
 const Login = ({ navigation }) => {
 // // HOOKS // //
-
   // This is for form validation and storing Inputs
   const { control, handleSubmit, errors } = useForm();
 
 // // METHODS // //
-
   // This is for Controller
   const emailInputRef = React.useRef();
 
   const nav = (user) => {
-    console.log("LOGIN", user)
-    navigation.navigate("Home", {user});
-  }
+    navigation.navigate("Home", { user });
+  };
 
   // This is for the submit of the LoginForm
   const onSubmit = (data) => {
-    
-    let url = "https://find-my-market-api.herokuapp.com/users/"; 
+    navigation.navigate("Home");
+    // let url = "https://find-my-market-api.herokuapp.com/users/";
 
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    // fetch(url, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
 
-      body: JSON.stringify({
-          "email": data.email
-      })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        let user = {id: data.id, favorites: []}
-        // FOR AUTH
-        // let user = {id: data.id, favorites: data.favorites, token: data.token}
-        nav(user)
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    //   body: JSON.stringify({
+    //     email: data.email,
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     let user = { id: data.id, favorites: [] };
+    //     // FOR AUTH
+    //     // let user = {id: data.id, favorites: data.favorites, token: data.token}
+    //     nav(user);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
   };
 
   return (
     <View style={styles.mainContainer}>
       <View style={styles.logoContainer}>
-      <Image style={styles.logo} source={require('../../assets/FMM-logo.png')} />
+        <Image
+          style={styles.logo}
+          source={require("../../assets/FMM_logo_bottom_white.png")}
+        />
       </View>
       <View style={styles.formContainer}>
         <Text style={styles.label}>Email:</Text>
@@ -91,9 +90,7 @@ const Login = ({ navigation }) => {
             <Button
               color="white"
               title="Log in"
-              onPress={
-                handleSubmit(onSubmit)
-              }
+              onPress={handleSubmit(onSubmit)}
             />
           </View>
         </TouchableOpacity>
@@ -105,59 +102,59 @@ const Login = ({ navigation }) => {
 // CSS: Styling
 const styles = StyleSheet.create({
   button: {
-    marginTop: 40,
-    color: "#ffffff",
     backgroundColor: "#38A3A5",
-    height: 40,
     borderRadius: 4,
-    paddingRight: 50,
+    color: "#ffffff",
+    height: 40,
+    marginTop: 40,
     paddingLeft: 50,
+    paddingRight: 50,
   },
   formContainer: {
-    flex: 2,
-    width: "100%",
-    height: "30%",
     alignItems: "center",
-    padding: 8,
     backgroundColor: "#EF8275",
+    flex: 2,
+    height: "30%",
+    padding: 8,
+    width: "100%",
   },
   input: {
     backgroundColor: "white",
-    height: 40,
-    width: 180,
-    padding: 10,
     borderRadius: 4,
+    height: 40,
     marginHorizontal: 10,
+    padding: 10,
+    width: 180,
   },
   label: {
     color: "black",
+    fontSize: 30,
     margin: 10,
     marginHorizontal: 10,
-    fontSize: 30,
   },
   logo: {
     height: "70%",
-    width: "70%",
     margin: 0,
+    width: "70%",
   },
   logoContainer: {
+    alignItems: "center",
     flex: 3,
     height: "50%",
-    width: "100%",
-    alignItems: "center",
     justifyContent: "center",
+    width: "100%",
   },
   mainContainer: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
     alignItems: "center",
-    padding: 8,
     backgroundColor: "#EF8275",
+    flex: 1,
+    height: "100%",
+    padding: 8,
+    width: "100%",
   },
   title: {
-    fontSize: 50,
     color: "#05668D",
+    fontSize: 50,
   },
 });
 export default Login;

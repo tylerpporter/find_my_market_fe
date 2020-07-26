@@ -12,8 +12,9 @@ import Header from "../Header/Header";
 import * as Location from "expo-location";
 
 // HOME COMPONENT
-const Home = (user) => {
-  console.log("HOME", user.route.params.user)
+const Home = () => {
+  //userData ====== props
+  // console.log("HOME", user.route.params.user)
 
    // this is the default region for map
    const initialRegion = {
@@ -26,7 +27,6 @@ const Home = (user) => {
   };
 
   // // HOOKS // //
-
   // this sets the users location
   const [location, setLocation] = useState(initialRegion);
   // this is the markets based off the location above
@@ -41,7 +41,6 @@ const Home = (user) => {
   const [filteredProducts, setFilteredProducts] = useState([])
 
 // // METHODS // //
-
   // Setting my current location as a user
   useEffect(() => {
     (async () => {
