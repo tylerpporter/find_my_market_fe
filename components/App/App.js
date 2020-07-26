@@ -26,7 +26,6 @@ const App = () => {
           options={{ headerShown: false }} 
         />
        
-
         <Stack.Screen
           name="Home"
           component={Home}

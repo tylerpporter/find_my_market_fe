@@ -1,5 +1,4 @@
 // // IMPORTS // //
-
 // React && React-Native
 import React, { useState } from "react";
 import MapView from "react-native-maps";
@@ -11,6 +10,7 @@ import {
   Button,
   TouchableOpacity,
   Linking,
+  Image,
 } from "react-native";
 import { ScrollView, FlatList } from "react-native-gesture-handler";
 
@@ -20,17 +20,14 @@ const Map = ({ marketsNearMe, location }) => {
   const markers = marketsNearMe.map((location) => {
     let { latitude, longitude, id } = location;
 
-    // let productsList = location.products.map((product) => {
-    //   return <Text key={Math.random()}>{product.name}</Text>;
-    // });
-
     return (
       <Marker
-        key={Math.random()}
+        key={`${Math.random()}`}
         id={id}
         coordinate={{ latitude: latitude, longitude: longitude }}
         pinColor="#F25C54"
       >
+      <Image source={require('../../assets/FMM_icon_no_border.png')} style={{height: 30, width:20 }} />
         <Callout style={styles.callOut}>
           <View style={styles.views}>
             <Text>{location.marketname}</Text>
@@ -51,13 +48,13 @@ const Map = ({ marketsNearMe, location }) => {
               Season Time: {location.season1time}
             </Text>
           </View>
-          <CalloutSubview onPress={() => Linking.openURL(`${location.website}`)}>
+          <CalloutSubview
+            onPress={() => Linking.openURL(`${location.website}`)}
+          >
             <TouchableOpacity style={styles.button}>
               <Text style={styles.views}>View Markets Website</Text>
             </TouchableOpacity>
           </CalloutSubview>
-          
-          {/* {productsList} */}
         </Callout>
       </Marker>
     );
@@ -77,16 +74,15 @@ const Map = ({ marketsNearMe, location }) => {
 // CSS: Styling
 const styles = StyleSheet.create({
   button: {
-    marginTop: 40,
-    color: "#05668D",
-    backgroundColor: "#EF8275",
-    height: 40,
-    borderRadius: 4,
-    paddingRight: 50,
-    paddingLeft: 50,
-    width: "100%",
     alignItems: "center",
-
+    backgroundColor: "#EF8275",
+    borderRadius: 4,
+    color: "#05668D",
+    height: 40,
+    marginTop: 40,
+    paddingLeft: 50,
+    paddingRight: 50,
+    width: "100%",
   },
   mapView: {
     height: "75%",

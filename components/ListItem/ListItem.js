@@ -1,5 +1,4 @@
 // // IMPORTS // //
-
 //React && React-Native
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
@@ -12,13 +11,11 @@ const ListItem = ({
   products,
 }) => {
 
-  // // HOOKS // //
-
+// // HOOKS // //
   // This is for the switch for true or false
   const [isEnabled, setIsEnabled] = useState(false);
   
-  // // METHODS // //
-
+// // METHODS // //
   // This toggles the true and false values of the switch 
   const toggleSwitch = () => {
     setIsEnabled((previousState) => !previousState);
@@ -58,15 +55,15 @@ const ListItem = ({
 // CSS: Styling
 const styles = StyleSheet.create({
   listItem: {
-    padding: 15,
     backgroundColor: "#f8f8f8",
     borderBottomWidth: 1,
     borderColor: "#eee",
+    padding: 15,
   },
   listItemView: {
+    alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
   },
   listItemText: {
     fontSize: 18,
