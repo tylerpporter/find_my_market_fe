@@ -4,6 +4,9 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 
+// fetch call
+import { getMarketsNearby } from '../../apiCalls';
+
 // Components
 import Map from "../Map/Map";
 import Header from "../Header/Header";
@@ -51,59 +54,10 @@ const Home = () => {
       let location = await Location.getCurrentPositionAsync({});
       
       setLocation(location);
-      getMarketsNearby(location);
+      // this is the fetch call
+      getMarketsNearby(location, setMarketsNearMe, setFilteredProducts, filteredProducts);
     })();
   }, []);
-
-  // Setting markets based off the hook:location
-  const getMarketsNearby = (location) => {
-    let url = "https://us-farmers-markets-api.herokuapp.com/";
-
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-        query: `query($lat: Float!, $lng: Float!, $radius: Int!, $products: [String!]){ marketsByCoords(lat: $lat, lng: $lng, radius: $radius, products: $products ) { 
-              location 
-              markets {
-              fmid 
-              marketname
-              latitude
-              longitude
-              website
-              distance
-              season1date
-              season1time
-              street
-              city
-              state
-              zip
-              products {
-                  name
-              }
-              }
-          }
-      }`,
-      variables: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
-        radius: 40,
-        products: filteredProducts
-      }
-     }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setMarketsNearMe(data.data.marketsByCoords.markets);
-        setFilteredProducts([])
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
 
   return (
     <View style={styles.container}>
@@ -113,7 +67,6 @@ const Home = () => {
         setSearchedMarkets={setSearchedMarkets}
         setLocation={setLocation}
         setMarketsNearMe={setMarketsNearMe}
-        getMarketsNearby={getMarketsNearby}
         location={location}
         filteredProducts={filteredProducts}
         setFilteredProducts={setFilteredProducts}
