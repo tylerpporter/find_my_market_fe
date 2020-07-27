@@ -8,9 +8,11 @@ import {
   Modal,
   Alert,
   TouchableHighlight,
-  Switch,
   FlatList,
 } from "react-native";
+
+// fetch call
+import { getMarketsNearby } from '../../apiCalls';
 
 // Components
 import SearchNav from "../SearchNav/SearchNav";
@@ -26,7 +28,6 @@ const Header = ({
   setSearchedMarkets,
   setLocation,
   setMarketsNearMe,
-  getMarketsNearby,
   location,
   filteredProducts,
   setFilteredProducts,
@@ -100,7 +101,7 @@ const Header = ({
           <FontAwesome name="filter" size={50} color="black" />
         </TouchableHighlight>
         <Text style={styles.title}>Find My Market</Text>
-        <Feather name="menu" size={50} color="black" />
+        {/* <Feather name="menu" size={50} color="black" /> */}
       </View>
 
       <SearchNav
@@ -152,7 +153,7 @@ const Header = ({
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
-                getMarketsNearby(location);
+                getMarketsNearby(location, setMarketsNearMe, setFilteredProducts, filteredProducts);
                 setModalVisible(!modalVisible);
               }}
             >
@@ -162,7 +163,7 @@ const Header = ({
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
                 setFilteredProducts([]);
-                getMarketsNearby(location);
+                getMarketsNearby(location, setMarketsNearMe, setFilteredProducts, filteredProducts);
                 setModalVisible(!modalVisible);
               }}
             >
