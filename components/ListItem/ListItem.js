@@ -9,22 +9,17 @@ const ListItem = ({
   setFilteredProducts,
   filteredProducts,
   products,
+  setProducts,
 }) => {
-
-// // HOOKS // //
-  // This is for the switch for true or false
-  const [isEnabled, setIsEnabled] = useState(false);
-  
-// // METHODS // //
-  // This toggles the true and false values of the switch 
+  // // METHODS // //
+  // This toggles the true and false values of the switch
   const toggleSwitch = () => {
-    setIsEnabled((previousState) => !previousState);
+    item.isFiltered = !item.isFiltered;
     filterOptions();
   };
-
   // This is where the filter options for products is set
   const filterOptions = () => {
-    if (!isEnabled) {
+    if (item.isFiltered) {
       let selectedProduct = products.find(
         (product) => product.title === item.title
       );
@@ -36,16 +31,15 @@ const ListItem = ({
       setFilteredProducts([...deselectedProduct]);
     }
   };
-
   return (
     <View style={styles.listItemView}>
       <Text style={styles.listItemText}>{item.title}</Text>
       <Switch
         trackColor={{ false: "#767577", true: "#38A3A5" }}
-        thumbColor={isEnabled ? "#EF8275" : "#38A3A5"}
+        thumbColor={item.isFiltered ? "#EF8275" : "#38A3A5"}
         ios_backgroundColor="#3e3e3e"
         onValueChange={() => toggleSwitch()}
-        value={isEnabled}
+        value={item.isFiltered}
         setFilteredProducts={setFilteredProducts}
       />
     </View>
