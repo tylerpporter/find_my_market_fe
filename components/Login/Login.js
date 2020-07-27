@@ -61,7 +61,7 @@ const Login = ({ navigation }) => {
     <View style={styles.mainContainer}>
       <View style={styles.logoContainer}>
         <Image
-          accessibilityRole="image"
+          testID="logo"
           style={styles.logo}
           source={require("../../assets/FMM_logo_bottom_white.png")}
         />
@@ -78,6 +78,7 @@ const Login = ({ navigation }) => {
           render={(props) => (
             <TextInput
               {...props}
+              placeholder="Please enter your email"
               color="black"
               style={styles.input}
               onChangeText={(value) => {
