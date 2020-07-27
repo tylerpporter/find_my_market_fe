@@ -64,16 +64,21 @@ describe("SearchNav", () => {
     searchNavOnSubmit.mockResolvedValue(mockData);
     const { getByPlaceholder, getByText, queryByTestId, getByTestId } = render(<SearchNav />);
 
-    const cityInput = getByPlaceholder("Enter a city");
-    const stateInput = getByPlaceholder("Enter a state");
+    // const cityInput = getByPlaceholder("Enter a city");
+    // const stateInput = getByPlaceholder("Enter a state");
     const submit = getByText("Submit");
 
     act(() => {
-      fireEvent.changeText(cityInput, "Dallas");
-      fireEvent.changeText(stateInput, "Texas");
-      fireEvent.press(submit);
+      fireEvent(getByPlaceholder("Enter a city"), 'onChange', {nativeEvent: {text: 'Dallas'}})
+      fireEvent(getByPlaceholder("Enter a state"), 'onSubmit')
+      fireEvent(getByText("Submit"), 'onChange', {nativeEvent: {text: 'Dallas'}})
+      // fireEvent.changeText(cityInput, "Dallas");
+      // fireEvent.changeText(stateInput, "Texas");
+      // fireEvent.press(submit);
     })
 
     expect(searchNavOnSubmit).toBeCalled();
   });
 });
+
+
