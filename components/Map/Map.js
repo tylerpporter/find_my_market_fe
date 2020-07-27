@@ -27,7 +27,7 @@ const Map = ({ marketsNearMe, location }) => {
         coordinate={{ latitude: latitude, longitude: longitude }}
         pinColor="#F25C54"
       >
-      <Image source={require('../../assets/FMM_icon_no_border.png')} style={{height: 30, width:20 }} />
+      <Image source={require('../../assets/FMM_icon_no_border.png')} style={{height: 45, width: 30 }} />
         <Callout style={styles.callOut}>
           <View style={styles.views}>
             <Text>{location.marketname}</Text>
