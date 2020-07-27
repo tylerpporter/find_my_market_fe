@@ -9,10 +9,11 @@ import {
   Alert,
   TouchableHighlight,
   FlatList,
+  Image,
 } from "react-native";
 
 // fetch call
-import { getMarketsNearby } from '../../apiCalls';
+import { getMarketsNearby } from "../../apiCalls";
 
 // Components
 import SearchNav from "../SearchNav/SearchNav";
@@ -32,62 +33,113 @@ const Header = ({
   filteredProducts,
   setFilteredProducts,
 }) => {
-  
   // // HOOKS // //
   // This is a list of products to filter by
   const [products, setProducts] = useState([
     {
       id: 1,
       title: "organic",
-      value: false,
+      isFiltered: false,
     },
     {
       id: 2,
       title: "flowers",
-      value: false,
+      isFiltered: false,
     },
     {
       id: 3,
       title: "meat",
-      value: false,
+      isFiltered: false,
     },
     {
       id: 4,
       title: "poultry",
-      value: false,
+      isFiltered: false,
     },
     {
       id: 5,
       title: "vegetables",
-      value: false,
+      isFiltered: false,
     },
     {
       id: 6,
       title: "cheese",
-      value: false,
+      isFiltered: false,
     },
     {
       id: 7,
       title: "honey",
-      value: false,
+      isFiltered: false,
     },
     {
       id: 8,
       title: "jams",
-      value: false,
+      isFiltered: false,
     },
     {
       id: 9,
       title: "juices",
-      value: false,
+      isFiltered: false,
     },
     {
       id: 10,
       title: "coffee",
-      value: false,
+      isFiltered: false,
     },
   ]);
-
+  const defaultProducts = [
+    {
+      id: 1,
+      title: "organic",
+      isFiltered: false,
+    },
+    {
+      id: 2,
+      title: "flowers",
+      isFiltered: false,
+    },
+    {
+      id: 3,
+      title: "meat",
+      isFiltered: false,
+    },
+    {
+      id: 4,
+      title: "poultry",
+      isFiltered: false,
+    },
+    {
+      id: 5,
+      title: "vegetables",
+      isFiltered: false,
+    },
+    {
+      id: 6,
+      title: "cheese",
+      isFiltered: false,
+    },
+    {
+      id: 7,
+      title: "honey",
+      isFiltered: false,
+    },
+    {
+      id: 8,
+      title: "jams",
+      isFiltered: false,
+    },
+    {
+      id: 9,
+      title: "juices",
+      isFiltered: false,
+    },
+    {
+      id: 10,
+      title: "coffee",
+      isFiltered: false,
+    },
+  ];
+  console.log("Products", products);
   return (
     <View style={styles.container}>
       {/* <MainNav /> */}
@@ -100,17 +152,15 @@ const Header = ({
         >
           <FontAwesome name="filter" size={50} color="black" />
         </TouchableHighlight>
-        <Text style={styles.title}>Find My Market</Text>
+        <Image testID="bannerLogo" style={styles.bannerLogo} source={require("../../assets/FMM_banner_logo_small.png")} />
         {/* <Feather name="menu" size={50} color="black" /> */}
       </View>
-
       <SearchNav
         setSearchedMarkets={setSearchedMarkets}
         setLocation={setLocation}
         setMarketsNearMe={setMarketsNearMe}
         filteredProducts={filteredProducts}
       />
-
       {/* MODAL WILL LIVE HERE */}
       <Modal
         animationType="slide"
@@ -129,12 +179,12 @@ const Header = ({
                 color="black"
                 onPress={() => {
                   setFilteredProducts([]);
+                  setProducts(defaultProducts);
                   setModalVisible(!modalVisible);
                 }}
               />
             </View>
             <Text style={styles.modalText}>Filter By Products</Text>
-
             <View style={styles.modalContainer}>
               <FlatList
                 data={products}
@@ -144,16 +194,21 @@ const Header = ({
                     setFilteredProducts={setFilteredProducts}
                     filteredProducts={filteredProducts}
                     item={item}
+                    setProducts={setProducts}
                   />
                 )}
                 keyExtractor={(item) => item.id}
               />
             </View>
-
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
-                getMarketsNearby(location, setMarketsNearMe, setFilteredProducts, filteredProducts);
+                getMarketsNearby(
+                  location,
+                  setMarketsNearMe,
+                  setFilteredProducts,
+                  filteredProducts
+                );
                 setModalVisible(!modalVisible);
               }}
             >
@@ -162,8 +217,12 @@ const Header = ({
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
-                setFilteredProducts([]);
-                getMarketsNearby(location, setMarketsNearMe, setFilteredProducts, filteredProducts);
+                setProducts(defaultProducts);
+                getMarketsNearby(
+                  location,
+                  setMarketsNearMe,
+                  setFilteredProducts
+                );
                 setModalVisible(!modalVisible);
               }}
             >
@@ -184,9 +243,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: (0, 20),
   },
-  title: {
-    fontSize: 30,
-    paddingLeft: 12,
+  bannerLogo: {
+    height: "100%",
+    width: "90%",
+    marginLeft: 7,
   },
   container: {
     backgroundColor: "white",
