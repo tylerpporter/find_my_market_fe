@@ -27,7 +27,7 @@ const Map = ({ marketsNearMe, location }) => {
         coordinate={{ latitude: latitude, longitude: longitude }}
         pinColor="#F25C54"
       >
-      <Image source={require('../../assets/FMM_icon_no_border.png')} style={{height: 45, width: 30 }} />
+      <Image source={require('../../assets/FMM_icon_no_border.png')} style={{height: 50, width: 38 }} />
         <Callout style={styles.callOut}>
           <View style={styles.views}>
             <Text>{location.marketname}</Text>
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   mapView: {
-    height: "75%",
+    height: "72%",
   },
   callOut: { width: 300, height: 300 },
   views: { margin: 5 },
