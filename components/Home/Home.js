@@ -1,11 +1,17 @@
-// // IMPORTS // // 
+// // IMPORTS // //
 
 // React && React-Native
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Modal,
+  Text,
+  TouchableHighlight,
+} from "react-native";
 
 // fetch call
-import { getMarketsNearby } from '../../apiCalls';
+import { getMarketsNearby } from "../../apiCalls";
 
 // Components
 import Map from "../Map/Map";
@@ -19,8 +25,8 @@ const Home = () => {
   //userData ====== props
   // console.log("HOME", user.route.params.user)
 
-   // this is the default region for map
-   const initialRegion = {
+  // this is the default region for map
+  const initialRegion = {
     coords: {
       latitude: 37.78825,
       longitude: -122.4324,
@@ -39,11 +45,13 @@ const Home = () => {
   // this is for the Modal with the drop-down//filter
   const [modalVisible, setModalVisible] = useState(false);
   // this is for the markets based off searchedCity
-  const [searchedMarkets, setSearchedMarkets] = useState([]) 
+  const [searchedMarkets, setSearchedMarkets] = useState([]);
   // this is for the filtering of products
-  const [filteredProducts, setFilteredProducts] = useState([])
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  //this is the loading hook for the welcome message
+  const [isLoading, setIsLoading] = useState(true);
 
-// // METHODS // //
+  // // METHODS // //
   // Setting my current location as a user
   useEffect(() => {
     (async () => {
@@ -52,16 +60,48 @@ const Home = () => {
         setErrorMsg("Permission to access location was denied");
       }
       let location = await Location.getCurrentPositionAsync({});
-      
+
       setLocation(location);
       // this is the fetch call
-      getMarketsNearby(location, setMarketsNearMe, setFilteredProducts, filteredProducts);
+      getMarketsNearby(
+        location,
+        setMarketsNearMe,
+        setFilteredProducts,
+        filteredProducts
+      );
     })();
   }, []);
 
   return (
     <View style={styles.container}>
-      <Header 
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isLoading}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Welcome to Find My Market!</Text>
+              <Text style={styles.modalText}>Find markets 50 miles from you</Text>
+
+              <TouchableHighlight
+                style={{ ...styles.openButton}}
+                onPress={() => {
+                  setIsLoading(!isLoading);
+                }}
+              >
+                <Text style={styles.textStyle}>Let's get started!</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+      </View>
+
+      <Header
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         setSearchedMarkets={setSearchedMarkets}
@@ -70,12 +110,12 @@ const Home = () => {
         location={location}
         filteredProducts={filteredProducts}
         setFilteredProducts={setFilteredProducts}
-        />
+      />
       <Map
         marketsNearMe={marketsNearMe}
-        location={location} 
+        location={location}
         searchedMarkets={searchedMarkets}
-  />
+      />
     </View>
   );
 };
@@ -84,6 +124,42 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  openButton: {
+    backgroundColor: "#EF8275",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });
 
