@@ -4,8 +4,11 @@ import React from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
+//fetch calls
+import { searchNavOnSubmit } from '../../apiCalls';
+
 // SEARCH-NAV COMPONENT
-const SearchNav = ({ setSearchedMarkets, setLocation, setMarketsNearMe, filteredProducts}) => {
+const SearchNav = ({ setLocation, setMarketsNearMe}) => {
 
 // // HOOKS // //
   // This is for the form validation
@@ -14,55 +17,6 @@ const SearchNav = ({ setSearchedMarkets, setLocation, setMarketsNearMe, filtered
   // This is for Controller
   const cityInputRef = React.useRef();
   const stateInputRef = React.useRef();
-
-// // METHODS // // 
-  // This is the submit fetch call for searching a City&State
-  const onSubmit = (data) => {
-    let url = "https://us-farmers-markets-api.herokuapp.com/"; 
-
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-             query: `query($city: String!, $state: String!){ marketsByCity(city: $city, state: $state, radius: 50) {
-              latitude 
-              longitude
-              markets {
-                marketname
-                latitude
-                longitude
-                website
-                distance
-                season1date
-                season1time
-                street
-                city
-                state
-                zip
-                fmid 
-                products { name }
-            }
-          }
-          }`,
-          variables: {
-            city: data.city, 
-            state: data.state
-          }
-      })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setLocation({coords: {latitude: data.data.marketsByCity.latitude, longitude:data.data.marketsByCity.longitude}})
-        // setSearchedMarkets(data.data.marketsByCity.markets)
-        setMarketsNearMe(data.data.marketsByCity.markets)
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
 
   return (
     <View style={styles.container}>
@@ -78,6 +32,7 @@ const SearchNav = ({ setSearchedMarkets, setLocation, setMarketsNearMe, filtered
           render={(props) => (
             <TextInput
               {...props}
+              placeholder="Enter a city"
               style={styles.input}
               onChangeText={(value) => {
                 props.onChange(value);
@@ -100,6 +55,7 @@ const SearchNav = ({ setSearchedMarkets, setLocation, setMarketsNearMe, filtered
           render={(props) => (
             <TextInput
               {...props}
+              placeholder="Enter a state"
               style={styles.input}
               onChangeText={(value) => {
                 props.onChange(value);
@@ -110,7 +66,7 @@ const SearchNav = ({ setSearchedMarkets, setLocation, setMarketsNearMe, filtered
         />
       </View>
       <View style={styles.button}>
-        <Button color="white" title="Submit" onPress={handleSubmit(onSubmit)} />
+        <Button color="white" title="Submit" onPress={handleSubmit((data) => searchNavOnSubmit(data, setLocation, setMarketsNearMe))} />
       </View>
     </View>
   );
