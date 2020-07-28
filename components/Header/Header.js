@@ -139,7 +139,7 @@ const Header = ({
       isFiltered: false,
     },
   ];
-  console.log("Products", products);
+  
   return (
     <View style={styles.container}>
       {/* <MainNav /> */}
@@ -150,7 +150,7 @@ const Header = ({
             setModalVisible(true);
           }}
         >
-          <FontAwesome name="filter" size={50} color="black" />
+          <FontAwesome testID="filterBtn" name="filter" size={50} color="black" style={styles.filterBtn} />
         </TouchableHighlight>
         <Image testID="bannerLogo" style={styles.bannerLogo} source={require("../../assets/FMM_banner_logo_small.png")} />
         {/* <Feather name="menu" size={50} color="black" /> */}
@@ -307,6 +307,9 @@ const styles = StyleSheet.create({
   closeIcon: {
     alignSelf: "flex-end",
   },
+  filterBtn: {
+    marginRight: 5
+  }
 });
 
 export default Header;
