@@ -9,5 +9,4 @@ before_script:
   - npm install -g npm@latest
   - npm install -g expo-cli 
 script:
-  - npm ci 
   - npm test 
