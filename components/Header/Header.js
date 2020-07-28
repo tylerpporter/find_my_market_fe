@@ -1,3 +1,5 @@
+// // IMPORTS // //
+// React && React-Native
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -6,104 +8,159 @@ import {
   Modal,
   Alert,
   TouchableHighlight,
-  Switch,
   FlatList,
+  Image,
 } from "react-native";
+
+// fetch call
+import { getMarketsNearby } from "../../apiCalls";
+
+// Components
 import SearchNav from "../SearchNav/SearchNav";
-import { FontAwesome, Feather } from "@expo/vector-icons";
 import ListItem from "../ListItem/ListItem";
 
+// Vector-Icons
+import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
 
+// HEADER COMPONENT
 const Header = ({
   setModalVisible,
   modalVisible,
   setSearchedMarkets,
   setLocation,
   setMarketsNearMe,
-  getMarketsNearby,
   location,
   filteredProducts,
-  setFilteredProducts
+  setFilteredProducts,
 }) => {
-
+  // // HOOKS // //
+  // This is a list of products to filter by
   const [products, setProducts] = useState([
     {
       id: 1,
       title: "organic",
-      value: false
+      isFiltered: false,
     },
     {
       id: 2,
       title: "flowers",
-      value: false
+      isFiltered: false,
     },
     {
       id: 3,
       title: "meat",
-      value: false
+      isFiltered: false,
     },
     {
       id: 4,
       title: "poultry",
-      value: false
+      isFiltered: false,
     },
     {
       id: 5,
       title: "vegetables",
-      value: false
+      isFiltered: false,
     },
     {
       id: 6,
       title: "cheese",
-      value: false
+      isFiltered: false,
     },
     {
       id: 7,
       title: "honey",
-      value: false
+      isFiltered: false,
     },
     {
       id: 8,
       title: "jams",
-      value: false
+      isFiltered: false,
     },
     {
       id: 9,
       title: "juices",
-      value: false
+      isFiltered: false,
     },
     {
       id: 10,
       title: "coffee",
-      value: false
+      isFiltered: false,
     },
   ]);
-
-
-  console.log('filteredproducts', filteredProducts)
-
+  const defaultProducts = [
+    {
+      id: 1,
+      title: "organic",
+      isFiltered: false,
+    },
+    {
+      id: 2,
+      title: "flowers",
+      isFiltered: false,
+    },
+    {
+      id: 3,
+      title: "meat",
+      isFiltered: false,
+    },
+    {
+      id: 4,
+      title: "poultry",
+      isFiltered: false,
+    },
+    {
+      id: 5,
+      title: "vegetables",
+      isFiltered: false,
+    },
+    {
+      id: 6,
+      title: "cheese",
+      isFiltered: false,
+    },
+    {
+      id: 7,
+      title: "honey",
+      isFiltered: false,
+    },
+    {
+      id: 8,
+      title: "jams",
+      isFiltered: false,
+    },
+    {
+      id: 9,
+      title: "juices",
+      isFiltered: false,
+    },
+    {
+      id: 10,
+      title: "coffee",
+      isFiltered: false,
+    },
+  ];
+  
   return (
     <View style={styles.container}>
       {/* <MainNav /> */}
       <View style={styles.mainNavContainer}>
         <TouchableHighlight
+          underlayColor="white"
           onPress={() => {
             setModalVisible(true);
           }}
         >
-          <FontAwesome name="filter" size={50} color="black" />
+          <FontAwesome testID="filterBtn" name="filter" size={50} color="black" style={styles.filterBtn} />
         </TouchableHighlight>
-        <Text style={styles.title}>Find My Market</Text>
-        <Feather name="menu" size={50} color="black" />
+        <Image testID="bannerLogo" style={styles.bannerLogo} source={require("../../assets/FMM_banner_logo_final.png")} />
+        {/* <Feather name="menu" size={50} color="black" /> */}
       </View>
-
       <SearchNav
         setSearchedMarkets={setSearchedMarkets}
         setLocation={setLocation}
         setMarketsNearMe={setMarketsNearMe}
         filteredProducts={filteredProducts}
       />
-
       {/* MODAL WILL LIVE HERE */}
       <Modal
         animationType="slide"
@@ -115,24 +172,61 @@ const Header = ({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-
+            <View style={styles.closeIcon}>
+              <AntDesign
+                name="close"
+                size={30}
+                color="black"
+                onPress={() => {
+                  setFilteredProducts([]);
+                  setProducts(defaultProducts);
+                  setModalVisible(!modalVisible);
+                }}
+              />
+            </View>
+            <Text style={styles.modalText}>Filter By Products</Text>
             <View style={styles.modalContainer}>
               <FlatList
                 data={products}
-                renderItem={({ item }) => <ListItem  products={products} setFilteredProducts={setFilteredProducts} filteredProducts={filteredProducts} item={item} />}
+                renderItem={({ item }) => (
+                  <ListItem
+                    products={products}
+                    setFilteredProducts={setFilteredProducts}
+                    filteredProducts={filteredProducts}
+                    item={item}
+                    setProducts={setProducts}
+                  />
+                )}
                 keyExtractor={(item) => item.id}
               />
             </View>
-
             <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+              style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
-                getMarketsNearby(location)
+                getMarketsNearby(
+                  location,
+                  setMarketsNearMe,
+                  setFilteredProducts,
+                  filteredProducts
+                );
                 setModalVisible(!modalVisible);
               }}
             >
-              <Text style={styles.textStyle}>Filter By Products</Text>
+              <Text style={styles.textStyle}>Submit Filter</Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
+              onPress={() => {
+                setProducts(defaultProducts);
+                getMarketsNearby(
+                  location,
+                  setMarketsNearMe,
+                  setFilteredProducts
+                );
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>Clear Current Filters</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -141,18 +235,22 @@ const Header = ({
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   mainNavContainer: {
+    alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
     padding: (0, 20),
   },
-  title: {
-    fontSize: 30,
+  bannerLogo: {
+    height: "100%",
+    width: "90%",
+    marginLeft: 7,
   },
   container: {
-    height: "30%",
+    backgroundColor: "white",
+    height: "25%",
     marginTop: 20,
   },
   modalContainer: {
@@ -160,37 +258,40 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   location: {
-    flexDirection: "column",
     alignSelf: "center",
-    padding: 20,
+    flexDirection: "column",
     fontSize: 15,
+    padding: 20,
   },
   centeredView: {
+    alignItems: "center",
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
+    marginTop: 32,
   },
   modalView: {
-    margin: 20,
+    alignItems: "center",
     backgroundColor: "white",
     borderRadius: 20,
+    height: 700,
+    margin: 10,
     padding: 35,
-    alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
       height: 2,
+      width: 0,
     },
+    elevation: 5,
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
   },
   openButton: {
     backgroundColor: "#F194FF",
     borderRadius: 20,
-    padding: 10,
     elevation: 2,
+    marginTop: 10,
+    padding: 10,
+    width: 150,
   },
   textStyle: {
     color: "white",
@@ -198,9 +299,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalText: {
+    fontSize: 40,
+    fontWeight: "bold",
     marginBottom: 15,
     textAlign: "center",
   },
+  closeIcon: {
+    alignSelf: "flex-end",
+  },
+  filterBtn: {
+    marginRight: 5
+  }
 });
 
 export default Header;

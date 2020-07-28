@@ -1,11 +1,31 @@
+// // IMPORTS // //
+
+// React && React-Native
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Modal,
+  Text,
+  TouchableHighlight,
+} from "react-native";
+
+// fetch call
+import { getMarketsNearby } from "../../apiCalls";
+
+// Components
 import Map from "../Map/Map";
 import Header from "../Header/Header";
+
+// Expo
 import * as Location from "expo-location";
 
-
+// HOME COMPONENT
 const Home = () => {
+  //userData ====== props
+  // console.log("HOME", user.route.params.user)
+
+  // this is the default region for map
   const initialRegion = {
     coords: {
       latitude: 37.78825,
@@ -15,6 +35,7 @@ const Home = () => {
     },
   };
 
+  // // HOOKS // //
   // this sets the users location
   const [location, setLocation] = useState(initialRegion);
   // this is the markets based off the location above
@@ -24,12 +45,14 @@ const Home = () => {
   // this is for the Modal with the drop-down//filter
   const [modalVisible, setModalVisible] = useState(false);
   // this is for the markets based off searchedCity
-  const [searchedMarkets, setSearchedMarkets] = useState([]) 
+  const [searchedMarkets, setSearchedMarkets] = useState([]);
+  // this is for the filtering of products
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  //this is the loading hook for the welcome message
+  const [isLoading, setIsLoading] = useState(true);
 
-//
-  const [filteredProducts, setFilteredProducts] = useState([])
-
-  // Setting my current location as a user and receiving markets near this location
+  // // METHODS // //
+  // Setting my current location as a user
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -37,89 +60,106 @@ const Home = () => {
         setErrorMsg("Permission to access location was denied");
       }
       let location = await Location.getCurrentPositionAsync({});
-      
+
       setLocation(location);
-      getMarketsNearby(location);
+      // this is the fetch call
+      getMarketsNearby(
+        location,
+        setMarketsNearMe,
+        setFilteredProducts,
+        filteredProducts
+      );
     })();
   }, []);
 
-  const getMarketsNearby = (location) => {
-    let url = "https://us-farmers-markets-api.herokuapp.com/";
-
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-        query: `query($lat: Float!, $lng: Float!, $radius: Int!, $products: [String!]){ marketsByCoords(lat: $lat, lng: $lng, radius: $radius, products: $products ) { 
-              location 
-              markets {
-              id 
-              marketname
-              latitude
-              longitude
-              website
-              distance
-              season1date
-              season1time
-              street
-              city
-              state
-              zip
-              products {
-                  name
-              }
-              }
-          }
-      }`,
-      variables: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
-        radius: 40,
-        products: filteredProducts
-      }
-     }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('testing filter', data)
-        setMarketsNearMe(data.data.marketsByCoords.markets);
-        setFilteredProducts([])
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
-
-
   return (
     <View style={styles.container}>
-      <Header 
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isLoading}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Welcome to Find My Market!</Text>
+              <Text style={styles.modalText}>Find markets within 50 miles of you</Text>
+
+              <TouchableHighlight
+                style={{ ...styles.openButton}}
+                onPress={() => {
+                  setIsLoading(!isLoading);
+                }}
+              >
+                <Text style={styles.textStyle}>Let's get started!</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+      </View>
+
+      <Header
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         setSearchedMarkets={setSearchedMarkets}
         setLocation={setLocation}
         setMarketsNearMe={setMarketsNearMe}
-        getMarketsNearby={getMarketsNearby}
         location={location}
         filteredProducts={filteredProducts}
         setFilteredProducts={setFilteredProducts}
-        />
+      />
       <Map
         marketsNearMe={marketsNearMe}
-        location={location} 
+        location={location}
         searchedMarkets={searchedMarkets}
-  />
+      />
     </View>
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   container: {
     height: "100%",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  openButton: {
+    backgroundColor: "#EF8275",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });
 

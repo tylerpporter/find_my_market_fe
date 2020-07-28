@@ -1,4 +1,5 @@
-import { StatusBar } from "expo-status-bar";
+// // IMPORTS // //
+// React && React-Native
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -10,24 +11,60 @@ import {
   Image,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
+
+// Components
 import Home from "../Home/Home";
 
-// LOGO
-// import Logo from '../../assets/FMM-logo.png'
-
+// LOGIN COMPONENT
 const Login = ({ navigation }) => {
+// // HOOKS // //
+  // This is for form validation and storing Inputs
   const { control, handleSubmit, errors } = useForm();
+
+// // METHODS // //
+  // This is for Controller
   const emailInputRef = React.useRef();
 
+  // const nav = (user) => {
+  //   console.log("LOGIN", user)
+  //   navigation.navigate("Home", {user});
+  // }
+
+  // This is for the submit of the LoginForm
   const onSubmit = (data) => {
-    // here will be the fetch for login
-    console.log("fetch login");
+    navigation.navigate("Home");
+    let url = "https://find-my-market-api.herokuapp.com/users/"; 
+
+    // fetch(url, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+
+    //   body: JSON.stringify({
+    //       "email": data.email
+    //   })
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     let user = {id: data.id, favorites: []}
+    //     // FOR AUTH
+    //     // let user = {id: data.id, favorites: data.favorites, token: data.token}
+    //     nav(user)
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
   };
 
   return (
     <View style={styles.mainContainer}>
       <View style={styles.logoContainer}>
-      <Image style={styles.logo} source={require('../../assets/FMM-logo.png')} />
+        <Image
+          testID="logo"
+          style={styles.logo}
+          source={require("../../assets/FMM_logo_final.png")}
+        />
       </View>
       <View style={styles.formContainer}>
         <Text style={styles.label}>Email:</Text>
@@ -41,6 +78,8 @@ const Login = ({ navigation }) => {
           render={(props) => (
             <TextInput
               {...props}
+              placeholder="Please enter your email"
+              color="black"
               style={styles.input}
               onChangeText={(value) => {
                 props.onChange(value);
@@ -52,12 +91,9 @@ const Login = ({ navigation }) => {
         <TouchableOpacity>
           <View style={styles.button}>
             <Button
-              style={styles.button}
+              color="white"
               title="Log in"
-              onPress={() => {
-                handleSubmit(onSubmit);
-                navigation.navigate("Home");
-              }}
+              onPress={handleSubmit(onSubmit)}
             />
           </View>
         </TouchableOpacity>
@@ -66,60 +102,62 @@ const Login = ({ navigation }) => {
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   button: {
-    marginTop: 40,
-    color: "#05668D",
-    backgroundColor: "#F7B267",
-    height: 40,
+    backgroundColor: "#38A3A5",
     borderRadius: 4,
-    paddingRight: 50,
+    color: "#ffffff",
+    height: 40,
+    marginTop: 40,
     paddingLeft: 50,
+    paddingRight: 50,
   },
   formContainer: {
-    flex: 2,
-    width: "100%",
-    height: "30%",
     alignItems: "center",
+    backgroundColor: "#EF8275",
+    flex: 2,
+    height: "30%",
     padding: 8,
-    marginTop: 50,
-    backgroundColor: "#F27059",
+    width: "100%",
   },
   input: {
     backgroundColor: "white",
-    height: 40,
-    width: 180,
-    padding: 10,
     borderRadius: 4,
+    height: 40,
     marginHorizontal: 10,
+    padding: 10,
+    width: 180,
   },
   label: {
-    color: "#05668D",
+    color: "black",
+    fontSize: 30,
     margin: 10,
     marginHorizontal: 10,
-    fontSize: 30,
   },
   logo: {
-    height: "50%",
-    width: "50%",
+    height: "70%",
+    margin: 0,
+    width: "70%",
   },
   logoContainer: {
+    alignItems: "center",
     flex: 3,
     height: "50%",
-    width: "90%",
-    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
   },
   mainContainer: {
-    flex: 1,
-    width: "100%",
-    height: "70%",
     alignItems: "center",
+    backgroundColor: "#EF8275",
+    flex: 1,
+    height: "100%",
     padding: 8,
-    backgroundColor: "#F27059",
+    width: "100%",
   },
   title: {
-    fontSize: 50,
     color: "#05668D",
+    fontSize: 50,
   },
 });
 export default Login;

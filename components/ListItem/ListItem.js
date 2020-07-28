@@ -1,20 +1,25 @@
+// // IMPORTS // //
+//React && React-Native
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 
+// LIST-ITEM COMPONENT
 const ListItem = ({
   item,
   setFilteredProducts,
   filteredProducts,
   products,
+  setProducts,
 }) => {
-  const [isEnabled, setIsEnabled] = useState(false);
+  // // METHODS // //
+  // This toggles the true and false values of the switch
   const toggleSwitch = () => {
-    setIsEnabled((previousState) => !previousState);
+    item.isFiltered = !item.isFiltered;
     filterOptions();
   };
-
+  // This is where the filter options for products is set
   const filterOptions = () => {
-    if (!isEnabled) {
+    if (item.isFiltered) {
       let selectedProduct = products.find(
         (product) => product.title === item.title
       );
@@ -26,36 +31,38 @@ const ListItem = ({
       setFilteredProducts([...deselectedProduct]);
     }
   };
-
   return (
     <View style={styles.listItemView}>
       <Text style={styles.listItemText}>{item.title}</Text>
       <Switch
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+        testID="switch"
+        trackColor={{ false: "#767577", true: "#38A3A5" }}
+        thumbColor={item.isFiltered ? "#EF8275" : "#38A3A5"}
         ios_backgroundColor="#3e3e3e"
         onValueChange={() => toggleSwitch()}
-        value={isEnabled}
+        value={item.isFiltered}
         setFilteredProducts={setFilteredProducts}
       />
     </View>
   );
 };
 
+// CSS: Styling
 const styles = StyleSheet.create({
   listItem: {
-    padding: 15,
     backgroundColor: "#f8f8f8",
     borderBottomWidth: 1,
     borderColor: "#eee",
+    padding: 15,
   },
   listItemView: {
+    alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
   },
   listItemText: {
     fontSize: 18,
+    marginHorizontal: 30,
   },
 });
 
