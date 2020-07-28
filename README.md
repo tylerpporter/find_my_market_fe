@@ -53,3 +53,5 @@ You can learn more about the back end [here](https://github.com/tylerpporter/fin
 
 * Shoutout to Colin for making our logo!
 * Shoutout to Tyler for the inception of this idea!
+
+![DevelopmentTeam](assets/team_index.png)
