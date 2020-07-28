@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/FMM_logo_bottom_white.png",
+      "image": "./assets/FMM_logo_final.png",
       "resizeMode": "contain",
       "backgroundColor": "#EF8275"
     },

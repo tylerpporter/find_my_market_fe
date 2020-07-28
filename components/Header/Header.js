@@ -152,7 +152,7 @@ const Header = ({
         >
           <FontAwesome testID="filterBtn" name="filter" size={50} color="black" style={styles.filterBtn} />
         </TouchableHighlight>
-        <Image testID="bannerLogo" style={styles.bannerLogo} source={require("../../assets/FMM_banner_logo_small.png")} />
+        <Image testID="bannerLogo" style={styles.bannerLogo} source={require("../../assets/FMM_banner_logo_final.png")} />
         {/* <Feather name="menu" size={50} color="black" /> */}
       </View>
       <SearchNav
