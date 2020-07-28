@@ -63,7 +63,7 @@ const Login = ({ navigation }) => {
         <Image
           testID="logo"
           style={styles.logo}
-          source={require("../../assets/FMM_logo_bottom_white.png")}
+          source={require("../../assets/FMM_logo_final.png")}
         />
       </View>
       <View style={styles.formContainer}>
