@@ -1,4 +1,4 @@
-![logo](https://files.slack.com/files-pri/T029P2S9M-F017NPLRL94/fmm_logo_final.png)
+![FMM_logo_final](https://user-images.githubusercontent.com/56200182/88702335-6bde7880-d0c8-11ea-9ec7-e2ee624e59cb.png)
 
 # Summary
 
@@ -45,11 +45,11 @@ You can learn more about the back end [here](https://github.com/tylerpporter/fin
 
 ## Contributors:
 
-[Quinn Elder - FE](https://github.com/QuinnrElder)
-[Michelle Kaplan - FE](https://github.com/MichelleKaplan7)
-[Colin Alexander - BE](https://github.com/coloniusrex)
-[Zach Holcomb - BE](https://github.com/zachholcomb)
-[Tyler Porter - BE](https://github.com/tylerpporter)
+- [Quinn Elder - FE](https://github.com/QuinnrElder)
+- [Michelle Kaplan - FE](https://github.com/MichelleKaplan7)
+- [Colin Alexander - BE](https://github.com/coloniusrex)
+- [Zach Holcomb - BE](https://github.com/zachholcomb)
+- [Tyler Porter - BE](https://github.com/tylerpporter)
 
 * Shoutout to Colin for making our logo!
 * Shoutout to Tyler for the inception of this idea!
