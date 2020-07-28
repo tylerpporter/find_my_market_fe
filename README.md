@@ -1,4 +1,4 @@
-![FMM_logo_final](https://user-images.githubusercontent.com/56200182/88702335-6bde7880-d0c8-11ea-9ec7-e2ee624e59cb.png){:height="50%" width="50%"}
+![FMM_banner_logo_final](https://user-images.githubusercontent.com/56200182/88703202-a5fc4a00-d0c9-11ea-87ac-cbd2ae18bd42.png)
 
 # Summary
 
