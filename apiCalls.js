@@ -15,8 +15,7 @@ export const searchNavOnSubmit = (data, setLocation, setMarketsNearMe) => {
               longitude
               website
               distance
-              season1date
-              season1time
+              seasonDates
               street
               city
               state
@@ -69,8 +68,7 @@ export const getMarketsNearby = (
             longitude
             website
             distance
-            season1date
-            season1time
+            seasonDates
             street
             city
             state
