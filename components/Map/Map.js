@@ -1,18 +1,16 @@
 // // IMPORTS // //
 // React && React-Native
-import React, { useState } from "react";
+import React from "react";
 import MapView from "react-native-maps";
 import { Marker, Callout, CalloutSubview } from "react-native-maps";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
   TouchableOpacity,
   Linking,
   Image,
 } from "react-native";
-import { ScrollView, FlatList } from "react-native-gesture-handler";
 
 // MAP COMPONENT
 const Map = ({ marketsNearMe, location }) => {
