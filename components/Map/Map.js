@@ -39,11 +39,8 @@ const Map = ({ marketsNearMe, location }) => {
             <Text>Distance Away: {Math.round(location.distance)} mile(s)</Text>
           </View>
           <View style={styles.views}>
-            <Text>Season Date: {location.season1date}</Text>
-          </View>
-          <View style={styles.views}>
             <Text style={styles.texts}>
-              Season Time: {location.season1time}
+              Season Info: {location.seasonDates}
             </Text>
           </View>
           <CalloutSubview
