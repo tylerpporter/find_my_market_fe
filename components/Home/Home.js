@@ -86,7 +86,7 @@ const Home = () => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Welcome to Find My Market!</Text>
-              <Text style={styles.modalText}>Find markets 50 miles from you</Text>
+              <Text style={styles.modalText}>Find markets within 50 miles of you</Text>
 
               <TouchableHighlight
                 style={{ ...styles.openButton}}
