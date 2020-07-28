@@ -34,7 +34,6 @@ export const searchNavOnSubmit = (data, setLocation, setMarketsNearMe) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("DATA", data);
       setLocation({
         coords: {
           latitude: data.data.marketsByCity.latitude,
