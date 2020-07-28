@@ -35,6 +35,7 @@ const ListItem = ({
     <View style={styles.listItemView}>
       <Text style={styles.listItemText}>{item.title}</Text>
       <Switch
+        testID="switch"
         trackColor={{ false: "#767577", true: "#38A3A5" }}
         thumbColor={item.isFiltered ? "#EF8275" : "#38A3A5"}
         ios_backgroundColor="#3e3e3e"
