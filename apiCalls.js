@@ -96,3 +96,58 @@ export const getMarketsNearby = (
       console.error("Error:", error);
     });
 };
+
+// Registering a new user
+export const registerFetchCall = async (data) => {
+  const url = "https://find-my-market-api.herokuapp.com/users/register";
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: data.email,
+        password: data.password,
+      }),
+    });
+    const userData = await response.json();
+    return await tokenCall(data);
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
+// Taken Call for register fetch call
+export const tokenCall = async (data) => {
+  const url = "https://find-my-market-api.herokuapp.com/login/token";
+  let formData = new FormData();
+  formData.append("username", data.email);
+  formData.append("password", data.password);
+  try {
+    let response = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
+    let token = await response.json();
+    return await tokenResolver(token);
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
+const tokenResolver = async (token) => {
+  const url = "https://find-my-market-api.herokuapp.com/login/token_check";
+  try {
+    let user = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token["access_token"]}`,
+      },
+    });
+    let newUser = await user.json();
+    return await newUser;
+  } catch (error) {
+    console.log("error", error);
+  }
+};
