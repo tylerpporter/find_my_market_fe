@@ -32,6 +32,9 @@ const Header = ({
   location,
   filteredProducts,
   setFilteredProducts,
+  hamburgerVisible,
+  setHamburgerVisible,
+  navigation,
 }) => {
   // // HOOKS // //
   // This is a list of products to filter by
@@ -139,7 +142,7 @@ const Header = ({
       isFiltered: false,
     },
   ];
-  
+
   return (
     <View style={styles.container}>
       {/* <MainNav /> */}
@@ -150,10 +153,27 @@ const Header = ({
             setModalVisible(true);
           }}
         >
-          <FontAwesome testID="filterBtn" name="filter" size={50} color="black" style={styles.filterBtn} />
+          <FontAwesome
+            testID="filterBtn"
+            name="filter"
+            size={50}
+            color="black"
+            style={styles.filterBtn}
+          />
         </TouchableHighlight>
-        <Image testID="bannerLogo" style={styles.bannerLogo} source={require("../../assets/FMM_banner_logo_final.png")} />
-        {/* <Feather name="menu" size={50} color="black" /> */}
+        <Image
+          testID="bannerLogo"
+          style={styles.bannerLogo}
+          source={require("../../assets/FMM_banner_logo_final.png")}
+        />
+        <TouchableHighlight
+          underlayColor="white"
+          onPress={() => {
+            setHamburgerVisible(true);
+          }}
+        >
+          <Feather name="menu" size={50} color="black" />
+        </TouchableHighlight>
       </View>
       <SearchNav
         setSearchedMarkets={setSearchedMarkets}
@@ -161,7 +181,7 @@ const Header = ({
         setMarketsNearMe={setMarketsNearMe}
         filteredProducts={filteredProducts}
       />
-      {/* MODAL WILL LIVE HERE */}
+      {/* MODAL for filter WILL LIVE HERE */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -231,6 +251,40 @@ const Header = ({
           </View>
         </View>
       </Modal>
+      {/* Modal for hamburger menu will live here */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={hamburgerVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View style={styles.hamburgerCenteredView}>
+          <View style={styles.hamburgerModalView}>
+            <View style={styles.closeIcon}>
+              <AntDesign
+                name="close"
+                size={30}
+                color="black"
+                onPress={() => {
+                  setHamburgerVisible(!hamburgerVisible);
+                }}
+              />
+            </View>
+
+            <TouchableHighlight
+              style={{ ...styles.logOutButton }}
+              onPress={() => {
+                setHamburgerVisible(!hamburgerVisible);
+                navigation.navigate("Login");
+              }}
+            >
+              <Text style={styles.textStyle}>LOG OUT!</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -244,9 +298,8 @@ const styles = StyleSheet.create({
     padding: (0, 20),
   },
   bannerLogo: {
-    height: "100%",
-    width: "90%",
-    marginLeft: 7,
+    height: "75%",
+    width: "70%",
   },
   container: {
     backgroundColor: "white",
@@ -269,6 +322,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 32,
   },
+  hamburgerCenteredView: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+    marginTop: 32,
+  },
   modalView: {
     alignItems: "center",
     backgroundColor: "white",
@@ -285,8 +344,32 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
+  hamburgerModalView: {
+    alignItems: "center",
+    backgroundColor: "white",
+    borderRadius: 20,
+    height: 150,
+    margin: 10,
+    padding: 35,
+    shadowColor: "#000",
+    shadowOffset: {
+      height: 2,
+      width: 0,
+    },
+    elevation: 5,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
   openButton: {
-    backgroundColor: "#F194FF",
+    backgroundColor: "#EF8275",
+    borderRadius: 20,
+    elevation: 2,
+    marginTop: 10,
+    padding: 10,
+    width: 150,
+  },
+  logOutButton: {
+    backgroundColor: "#EF8275",
     borderRadius: 20,
     elevation: 2,
     marginTop: 10,
@@ -308,8 +391,8 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   filterBtn: {
-    marginRight: 5
-  }
+    marginRight: 5,
+  },
 });
 
 export default Header;
