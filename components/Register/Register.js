@@ -14,43 +14,30 @@ import {
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
-const Register = ({ control, handleSubmit, navigation, setRegister, register }) => {
+// // FETCH CALL
+import { registerFetchCall } from "../../apiCalls";
+
+const Register = ({
+  control,
+  handleSubmit,
+  navigation,
+  setRegister,
+  register,
+}) => {
   // // METHODS // //
   // This is for Controller
-  const nameInputRef = React.useRef();
   const emailInputRef = React.useRef();
   const passwordInputRef = React.useRef();
 
-  // fetch
-  const registerFetch = (data) => {
+  // FETCH CALL
+  const onSubmit = async (data) => {
+    let user = await registerFetchCall(data);
     setRegister(!register);
-    navigation.navigate("Home");
+    navigation.navigate("Home", { user });
   };
 
   return (
     <View style={styles.centeredView}>
-      <Text style={styles.label}>Username:</Text>
-      <Controller
-        name="name"
-        control={control}
-        rules={{ required: "This is required" }}
-        onFocus={() => {
-          nameInputRef.current.focus();
-        }}
-        render={(props) => (
-          <TextInput
-            {...props}
-            placeholder="Please enter a username"
-            color="black"
-            style={styles.registerNameInput}
-            onChangeText={(value) => {
-              props.onChange(value);
-            }}
-            ref={nameInputRef}
-          />
-        )}
-      />
-
       <Text style={styles.label}>Email:</Text>
       <Controller
         name="email"
@@ -97,7 +84,7 @@ const Register = ({ control, handleSubmit, navigation, setRegister, register }) 
 
       <TouchableHighlight
         style={{ ...styles.registerOpenButton }}
-        onPress={() => handleSubmit(registerFetch())}
+        onPress={handleSubmit(onSubmit)}
       >
         <Text style={styles.textStyle}>Submit</Text>
       </TouchableHighlight>
@@ -153,7 +140,7 @@ const styles = StyleSheet.create({
   textStyle: {
     alignSelf: "center",
     paddingTop: 10,
-  }
+  },
 });
 
 export default Register;
