@@ -45,6 +45,7 @@ const Login = ({ navigation }) => {
           <TouchableOpacity>
             <View style={styles.button1}>
               <Button
+                testID="registerBtn"
                 color="white"
                 title="REGISTER"
                 onPress={() => {
@@ -57,6 +58,7 @@ const Login = ({ navigation }) => {
           <TouchableOpacity>
             <View style={styles.button2}>
               <Button
+                testID="signInBtn"
                 color="white"
                 title="SIGN IN"
                 onPress={() => {

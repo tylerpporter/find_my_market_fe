@@ -49,6 +49,7 @@ const Register = ({
         render={(props) => (
           <TextInput
             {...props}
+            testID="registerEmail"
             placeholder="Please enter an email"
             color="black"
             style={styles.registerEmailInput}
@@ -71,6 +72,7 @@ const Register = ({
         render={(props) => (
           <TextInput
             {...props}
+            testID="registerPassword"
             placeholder="Please enter a password"
             color="black"
             style={styles.registerPasswordInput}
@@ -86,7 +88,7 @@ const Register = ({
         style={{ ...styles.registerOpenButton }}
         onPress={handleSubmit(onSubmit)}
       >
-        <Text style={styles.textStyle}>Submit</Text>
+        <Text style={styles.textStyle} testID="registerSubmit">Submit</Text>
       </TouchableHighlight>
     </View>
   );

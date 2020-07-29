@@ -21,7 +21,7 @@ import Header from "../Header/Header";
 import * as Location from "expo-location";
 
 // HOME COMPONENT
-const Home = ({ navigation, route }) => {
+const Home = ({navigation, route}) => {
 
   // this is the default region for map
   const initialRegion = {
