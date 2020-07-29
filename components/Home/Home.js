@@ -119,6 +119,8 @@ const Home = ({navigation, route}) => {
         marketsNearMe={marketsNearMe}
         location={location}
         searchedMarkets={searchedMarkets}
+        user={user}
+        setUser={setUser}
       />
     </View>
   );
