@@ -4,7 +4,19 @@ import Home from "./Home";
 
 describe("Home Page", () => {
   test("renders a welcome modal upon load", async () => {
-    const { getByText } = render(<Home />);
+    let route =  {
+      "key": "Home-qgz4hYnwG2IKoQ2rL5x7v",
+      "name": "Home",
+      "params": {
+        "user": {
+          "email": "Whatsup@gmail.com",
+          "favorites": [],
+          "id": 82,
+        },
+      },
+    }
+
+    const { getByText } = render(<Home route={route} />);
 
     const welcomeModalText = await waitFor(() => getByText("Welcome to Find My Market!"));
     const getStartedBtn = await waitFor(() => getByText("Let's get started!"));
@@ -14,7 +26,18 @@ describe("Home Page", () => {
   });
 
   test("renders a header component", async () => {
-    const { getByText, getByTestId } = render(<Home />);
+    let route =  {
+      "key": "Home-qgz4hYnwG2IKoQ2rL5x7v",
+      "name": "Home",
+      "params": {
+        "user": {
+          "email": "Whatsup@gmail.com",
+          "favorites": [],
+          "id": 82,
+        },
+      },
+    }
+    const { getByText, getByTestId } = render(<Home route={route} />);
 
     const titleLogo = getByTestId("bannerLogo");
     const city = getByText("City");

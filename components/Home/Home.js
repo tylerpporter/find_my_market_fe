@@ -21,9 +21,7 @@ import Header from "../Header/Header";
 import * as Location from "expo-location";
 
 // HOME COMPONENT
-const Home = () => {
-  //userData ====== props
-  // console.log("HOME", user.route.params.user)
+const Home = ({navigation, route}) => {
 
   // this is the default region for map
   const initialRegion = {
@@ -44,13 +42,16 @@ const Home = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   // this is for the Modal with the drop-down//filter
   const [modalVisible, setModalVisible] = useState(false);
+  // This is for the hamburger menu
+  const [hamburgerVisible, setHamburgerVisible] = useState(false);
   // this is for the markets based off searchedCity
   const [searchedMarkets, setSearchedMarkets] = useState([]);
   // this is for the filtering of products
   const [filteredProducts, setFilteredProducts] = useState([]);
   //this is the loading hook for the welcome message
   const [isLoading, setIsLoading] = useState(true);
-
+  // This is the user
+  const [user, setUser] = useState(route.params.user);
   // // METHODS // //
   // Setting my current location as a user
   useEffect(() => {
@@ -110,6 +111,9 @@ const Home = () => {
         location={location}
         filteredProducts={filteredProducts}
         setFilteredProducts={setFilteredProducts}
+        hamburgerVisible={hamburgerVisible}
+        setHamburgerVisible={setHamburgerVisible}
+        navigation={navigation}
       />
       <Map
         marketsNearMe={marketsNearMe}
