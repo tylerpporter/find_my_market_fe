@@ -17,68 +17,7 @@ import { useForm, Controller } from "react-hook-form";
 // Components
 import Home from "../Home/Home";
 import Register from "../Register/Register";
-
-// -- ORIGINAL -- //
-// LOGIN COMPONENT
-// const Login = ({ navigation }) => {
-// // // HOOKS // //
-//   // This is for form validation and storing Inputs
-//   const { control, handleSubmit, errors } = useForm();
-
-// // // METHODS // //
-//   // This is for Controller
-//   const emailInputRef = React.useRef();
-
-//   // This is for the submit of the LoginForm
-//   const onSubmit = (data) => {
-//     navigation.navigate("Home");
-
-//   };
-
-//   return (
-//     <View style={styles.mainContainer}>
-//       <View style={styles.logoContainer}>
-//         <Image
-//           testID="logo"
-//           style={styles.logo}
-//           source={require("../../assets/FMM_logo_bottom_white.png")}
-//         />
-//       </View>
-//       <View style={styles.formContainer}>
-//         <Text style={styles.label}>Email:</Text>
-//         <Controller
-//           name="email"
-//           control={control}
-//           rules={{ required: "This is required" }}
-//           onFocus={() => {
-//             emailInputRef.current.focus();
-//           }}
-//           render={(props) => (
-//             <TextInput
-//               {...props}
-//               placeholder="Please enter your email"
-//               color="black"
-//               style={styles.input}
-//               onChangeText={(value) => {
-//                 props.onChange(value);
-//               }}
-//               ref={emailInputRef}
-//             />
-//           )}
-//         />
-//         <TouchableOpacity>
-//           <View style={styles.button}>
-//             <Button
-//               color="white"
-//               title="Log in"
-//               onPress={handleSubmit(onSubmit)}
-//             />
-//           </View>
-//         </TouchableOpacity>
-//       </View>
-//     </View>
-//   );
-// };
+import SignIn from "../SignIn/SignIn";
 
 // AUTH
 const Login = ({ navigation }) => {
@@ -92,54 +31,41 @@ const Login = ({ navigation }) => {
   // This is for the Register Modal
   const [signIn, setSignIn] = useState(false);
 
-  // // METHODS // //
-
-  // This is for the submit of the LoginForm
-  // const registerFetch = (data) => {
-  //   setRegister(!register);
-  //   navigation.navigate("Home");
-  // };
-
-  const signInFetch = () => {
-    setSignIn(!signIn);
-    navigation.navigate("Home");
-  };
-
   return (
     <View style={styles.mainContainer}>
       <View style={styles.logoWrapper}>
-      <View style={styles.logoContainer}>
-        <Image
-          testID="logo"
-          style={styles.logo}
-          source={require("../../assets/FMM_logo_final.png")}
-        />
-      </View>
-      <View style={styles.formContainer}>
-        <TouchableOpacity>
-          <View style={styles.button1}>
-            <Button
-              color="white"
-              title="REGISTER"
-              onPress={() => {
-                setRegister(true);
-              }}
-            />
-          </View>
-        </TouchableOpacity>
-        <Text style={styles.or}>-OR-</Text>
-        <TouchableOpacity>
-          <View style={styles.button2}>
-            <Button
-              color="white"
-              title="SIGN IN"
-              onPress={() => {
-                setSignIn(true);
-              }}
-            />
-          </View>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.logoContainer}>
+          <Image
+            testID="logo"
+            style={styles.logo}
+            source={require("../../assets/FMM_logo_final.png")}
+          />
+        </View>
+        <View style={styles.formContainer}>
+          <TouchableOpacity>
+            <View style={styles.button1}>
+              <Button
+                color="white"
+                title="REGISTER"
+                onPress={() => {
+                  setRegister(true);
+                }}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text style={styles.or}>-OR-</Text>
+          <TouchableOpacity>
+            <View style={styles.button2}>
+              <Button
+                color="white"
+                title="SIGN IN"
+                onPress={() => {
+                  setSignIn(true);
+                }}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.centeredView}>
@@ -172,17 +98,14 @@ const Login = ({ navigation }) => {
             Alert.alert("Modal has been closed.");
           }}
         >
-          <View style={styles.signInCenteredView}>
-            <View style={styles.signInModalView}>
-              {/* <SignIn control={control} /> */}
-
-              <TouchableHighlight
-                style={{ ...styles.signInOpenButton }}
-                onPress={() => handleSubmit(signInFetch())}
-              >
-                <Text style={styles.textStyle}>Submit</Text>
-              </TouchableHighlight>
-            </View>
+          <View style={styles.signInModalView}>
+            <SignIn
+              control={control}
+              handleSubmit={handleSubmit}
+              navigation={navigation}
+              signIn={signIn}
+              setSignIn={setSignIn}
+            />
           </View>
         </Modal>
       </View>
@@ -226,7 +149,7 @@ const styles = StyleSheet.create({
   logo: {
     height: "60%",
     width: "60%",
-    paddingTop: "10%"
+    paddingTop: "10%",
   },
   logoContainer: {
     alignItems: "center",
@@ -264,9 +187,35 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    height: "55%",
+    height: "45%",
     width: "80%",
-    marginTop: "30%",
+    marginTop: "50%",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#38A3A5",
+  },
+  // SignIn Modal
+  signInModalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    alignSelf: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    height: "45%",
+    width: "80%",
+    marginTop: "50%",
   },
   centeredView: {
     flex: 1,
