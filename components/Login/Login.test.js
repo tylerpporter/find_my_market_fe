@@ -7,8 +7,8 @@ describe("Login Page", () => {
   test("renders a login page upon load", async () => {
     const { getByText, getByTestId } = render(<Login />);
 
-    const email = await waitFor(() => getByText("Email:"));
-    const button = await waitFor(() => getByText("Log in"));
+    const email = await waitFor(() => getByText("REGISTER"));
+    const button = await waitFor(() => getByText("SIGN IN"));
     const logo = await waitFor(() => getByTestId("logo"));
 
     expect(email).toBeTruthy();
@@ -16,15 +16,15 @@ describe("Login Page", () => {
     expect(logo).toBeTruthy();
   });
 
-  test("user can fill out the email input", async () => {
-    const { getByPlaceholder } = render(<Login />);
+  // test("user can fill out the email input", async () => {
+  //   const { getByPlaceholder } = render(<Login />);
 
-    const emailInput = getByPlaceholder("Please enter your email");
+  //   const emailInput = getByPlaceholder("Please enter your email");
 
-    act(() => {
-      fireEvent.changeText(emailInput, "michelle@gmail.com");
-    });
+  //   act(() => {
+  //     fireEvent.changeText(emailInput, "michelle@gmail.com");
+  //   });
 
-    expect(await waitFor(() => emailInput.props.value)).toEqual("michelle@gmail.com");
-  });
+  //   expect(await waitFor(() => emailInput.props.value)).toEqual("michelle@gmail.com");
+  // });
 });
