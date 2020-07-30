@@ -243,7 +243,7 @@ const Header = ({
                   setMarketsNearMe,
                   setFilteredProducts
                 );
-                setModalVisible(!modalVisible);
+                // setModalVisible(!modalVisible);
               }}
             >
               <Text style={styles.textStyle}>Clear Current Filters</Text>
