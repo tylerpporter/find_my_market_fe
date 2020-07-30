@@ -19,6 +19,9 @@ import Home from "../Home/Home";
 import Register from "../Register/Register";
 import SignIn from "../SignIn/SignIn";
 
+// VECTOR ICONS
+import {  AntDesign } from "@expo/vector-icons";
+
 // AUTH
 const Login = ({ navigation }) => {
   // // HOOKS // //
@@ -80,6 +83,16 @@ const Login = ({ navigation }) => {
           }}
         >
           <View style={styles.registerModalView}>
+          <View style={styles.closeIcon}>
+              <AntDesign
+                name="close"
+                size={30}
+                color="black"
+                onPress={() => {
+                  setRegister(!register);
+                }}
+              />
+            </View>
             <Register
               control={control}
               handleSubmit={handleSubmit}
@@ -101,6 +114,16 @@ const Login = ({ navigation }) => {
           }}
         >
           <View style={styles.signInModalView}>
+          <View style={styles.closeIcon}>
+              <AntDesign
+                name="close"
+                size={30}
+                color="black"
+                onPress={() => {
+                  setSignIn(!signIn);
+                }}
+              />
+            </View>
             <SignIn
               control={control}
               handleSubmit={handleSubmit}
@@ -189,7 +212,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    height: "45%",
+    height: "55%",
     width: "80%",
     marginTop: "50%",
   },
