@@ -26,17 +26,17 @@ const Map = ({ marketsNearMe, location, user, setUser }) => {
 
   // // METHODS // //
 
-  const checkFav = () => {
-    marketsNearMe.forEach((market) => {
-        user.favorites.forEach(fav => {
-          if (market.fmid == fav["market_id"]) {
-            setFavorites(true)
-          } else {
-            return
-          }
-        })
-    });
-  };
+  // const checkFav = () => {
+  //   marketsNearMe.forEach((market) => {
+  //       user.favorites.forEach(fav => {
+  //         if (market.fmid == fav["market_id"]) {
+  //           setFavorites(true)
+  //         } else {
+  //           return
+  //         }
+  //       })
+  //   });
+  // };
 
 
   // This displays the markers based on current Region
@@ -48,10 +48,10 @@ const Map = ({ marketsNearMe, location, user, setUser }) => {
         id={fmid}
         coordinate={{ latitude: latitude, longitude: longitude }}
         pinColor="#F25C54"
-        onPress={() => {
-          setFavorites(false)
-          checkFav()
-        }}
+        // onPress={() => {
+        //   setFavorites(false)
+        //   checkFav()
+        // }}
       >
         <Image
           source={require("../../assets/FMM_icon_no_border.png")}
