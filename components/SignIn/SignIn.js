@@ -65,6 +65,7 @@ const SignIn = ({ control, handleSubmit, navigation, setSignIn, signIn }) => {
         render={(props) => (
           <TextInput
             {...props}
+            secureTextEntry={true}
             placeholder="Please enter a password"
             color="black"
             style={styles.signInPasswordInput}
