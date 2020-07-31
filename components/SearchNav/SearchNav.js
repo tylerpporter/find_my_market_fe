@@ -8,7 +8,7 @@ import { useForm, Controller } from "react-hook-form";
 import { searchNavOnSubmit } from '../../apiCalls';
 
 // SEARCH-NAV COMPONENT
-const SearchNav = ({ setLocation, setMarketsNearMe}) => {
+const SearchNav = ({ setLocation, setMarketsNearMe, setDisplayFav }) => {
 
 // // HOOKS // //
   // This is for the form validation
@@ -66,7 +66,7 @@ const SearchNav = ({ setLocation, setMarketsNearMe}) => {
         />
       </View>
       <View style={styles.button}>
-        <Button color="white" title="Submit" onPress={handleSubmit((data) => searchNavOnSubmit(data, setLocation, setMarketsNearMe))} />
+        <Button color="white" title="Submit" onPress={handleSubmit((data) => searchNavOnSubmit(data, setLocation, setMarketsNearMe, setDisplayFav))} />
       </View>
     </View>
   );
