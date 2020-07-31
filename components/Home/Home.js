@@ -22,14 +22,14 @@ import * as Location from "expo-location";
 
 // HOME COMPONENT
 const Home = ({navigation, route}) => {
-
+console.log(route)
   // this is the default region for map
   const initialRegion = {
     coords: {
       latitude: 37.78825,
       longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+      latitudeDelta: 2,
+      longitudeDelta: 2,
     },
   };
 
@@ -52,6 +52,9 @@ const Home = ({navigation, route}) => {
   const [isLoading, setIsLoading] = useState(true);
   // This is the user
   const [user, setUser] = useState(route.params.user);
+   // This is for the favorite Icon
+   const [favorites, setFavorites] = useState(false);
+  
   // // METHODS // //
   // Setting my current location as a user
   useEffect(() => {
@@ -61,7 +64,6 @@ const Home = ({navigation, route}) => {
         setErrorMsg("Permission to access location was denied");
       }
       let location = await Location.getCurrentPositionAsync({});
-
       setLocation(location);
       // this is the fetch call
       getMarketsNearby(
@@ -73,6 +75,7 @@ const Home = ({navigation, route}) => {
     })();
   }, []);
 
+  // console.log('marketsNearMe', marketsNearMe)
   return (
     <View style={styles.container}>
       <View style={styles.centeredView}>
@@ -114,6 +117,10 @@ const Home = ({navigation, route}) => {
         hamburgerVisible={hamburgerVisible}
         setHamburgerVisible={setHamburgerVisible}
         navigation={navigation}
+        user={user}
+        setUser={setUser}
+        favorites={favorites}
+        setFavorites={setFavorites}
       />
       <Map
         marketsNearMe={marketsNearMe}
@@ -121,6 +128,8 @@ const Home = ({navigation, route}) => {
         searchedMarkets={searchedMarkets}
         user={user}
         setUser={setUser}
+        favorites={favorites}
+        setFavorites={setFavorites}
       />
     </View>
   );
