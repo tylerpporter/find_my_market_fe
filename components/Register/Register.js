@@ -50,7 +50,7 @@ const Register = ({
         render={(props) => (
           <TextInput
             {...props}
-            testID="registerEmail"
+            testID="registerUsername"
             placeholder="Please enter an email"
             color="black"
             style={styles.registerEmailInput}
