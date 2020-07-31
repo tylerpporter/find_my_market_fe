@@ -59,7 +59,7 @@ export const getMarketsNearby = (
   setMarketsNearMe,
   setFilteredProducts,
   filteredProducts,
-  setDisplayFav
+  setDisplayFav,
 ) => {
   let url = "https://us-farmers-markets-api.herokuapp.com/";
   fetch(url, {
@@ -98,9 +98,9 @@ export const getMarketsNearby = (
   })
     .then((response) => response.json())
     .then((data) => {
-      setDisplayFav(false);
       setMarketsNearMe(data.data.marketsByCoords.markets);
       setFilteredProducts([]);
+    
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -208,10 +208,57 @@ export const displayFavoriteMarkets = (
     .then((response) => response.json())
     .then((data) => {
       setDisplayFav(true);
-      setFavorites(true);
+      setFavorites(true)
       setMarketsNearMe(data.data.markets);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 };
+
+
+
+export const createFavorite = async (id, user, setUser) => {
+    //  console.log(user)
+
+  const url = `https://find-my-market-api.herokuapp.com/users/${user.id}/favorites`;
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fmid: id,
+      }),
+    });
+    const userData = await response.json();
+  //  console.log(userData)
+   setUser(userData)
+  } catch (error) {
+    console.log("error", error);
+  }
+}
+
+
+export const destroyFavorite = async (id, user, setUser) => {
+  // console.log(user)
+  // console.log(id)
+  const url = `https://find-my-market-api.herokuapp.com/users/${user.id}/favorites`;
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fmid: id,
+      }),
+    });
+    const userData = await response.json();
+   console.log(userData)
+   setUser(userData)
+  } catch (error) {
+    console.log("error", error);
+  }
+}
