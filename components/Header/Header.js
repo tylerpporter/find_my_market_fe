@@ -38,7 +38,8 @@ const Header = ({
   user,
   setUser,
   favorites,
-  setFavorites
+  setFavorites,
+  setDisplayFav,
 }) => {
 
   // // HOOKS // //
@@ -185,6 +186,7 @@ const Header = ({
         setLocation={setLocation}
         setMarketsNearMe={setMarketsNearMe}
         filteredProducts={filteredProducts}
+        setDisplayFav={setDisplayFav}
       />
       {/* MODAL for filter WILL LIVE HERE */}
       <Modal
@@ -232,7 +234,8 @@ const Header = ({
                   location,
                   setMarketsNearMe,
                   setFilteredProducts,
-                  filteredProducts
+                  filteredProducts,
+                  setDisplayFav,
                 );
                 setModalVisible(!modalVisible);
               }}
@@ -246,7 +249,8 @@ const Header = ({
                 getMarketsNearby(
                   location,
                   setMarketsNearMe,
-                  setFilteredProducts
+                  setFilteredProducts,
+                  setDisplayFav
                 );
                 // setModalVisible(!modalVisible);
               }}
@@ -297,7 +301,8 @@ const Header = ({
                 displayFavoriteMarkets(
                   setMarketsNearMe,
                   user,
-                  setFavorites
+                  setFavorites,
+                  setDisplayFav,
                 );
                 setHamburgerVisible(!hamburgerVisible);
               }}
