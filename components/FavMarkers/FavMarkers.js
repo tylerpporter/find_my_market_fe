@@ -32,7 +32,7 @@ const FavMarkers = ({ latitude, longitude, fmid, favorites, location, setFavorit
         pinColor="#F25C54"
       >
         <Image
-          source={require("../../assets/FMM_icon_no_border.png")}
+          source={require("../../assets/FMM_icon_no_border_favorites.png")}
           style={{ height: 50, width: 38 }}
         />
         <Callout style={styles.callOut}>
@@ -62,7 +62,11 @@ const FavMarkers = ({ latitude, longitude, fmid, favorites, location, setFavorit
           </CalloutSubview>
           <CalloutSubview
             onPress={() => {
-              setFavorites(true)
+              if(favorites) {
+                setFavorites(false)
+              } else {
+                setFavorites(true)
+              }
             }}
           >
             <TouchableOpacity style={styles.favButton}>

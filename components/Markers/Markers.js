@@ -62,7 +62,11 @@ const Markers = ({ latitude, longitude, fmid, location }) => {
           </CalloutSubview>
           <CalloutSubview
             onPress={() => {
-              setMarkerFav(true)
+              if(markerFav) {
+                setMarkerFav(false)
+              }else {
+                setMarkerFav(true)
+              }
             }}
           >
             <TouchableOpacity style={styles.favButton}>
