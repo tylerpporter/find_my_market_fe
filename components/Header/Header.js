@@ -13,7 +13,7 @@ import {
 } from "react-native";
 
 // fetch call
-import { getMarketsNearby } from "../../apiCalls";
+import { getMarketsNearby, displayFavoriteMarkets } from "../../apiCalls";
 
 // Components
 import SearchNav from "../SearchNav/SearchNav";
@@ -35,7 +35,12 @@ const Header = ({
   hamburgerVisible,
   setHamburgerVisible,
   navigation,
+  user,
+  setUser,
+  favorites,
+  setFavorites
 }) => {
+
   // // HOOKS // //
   // This is a list of products to filter by
   const [products, setProducts] = useState([
@@ -251,6 +256,7 @@ const Header = ({
           </View>
         </View>
       </Modal>
+
       {/* Modal for hamburger menu will live here */}
       <Modal
         animationType="slide"
@@ -272,7 +278,8 @@ const Header = ({
                 }}
               />
             </View>
-
+            <Text style={styles.title}> MENU </Text>
+            {/* This is the button to Log-Out */}
             <TouchableHighlight
               style={{ ...styles.logOutButton }}
               onPress={() => {
@@ -281,6 +288,21 @@ const Header = ({
               }}
             >
               <Text style={styles.textStyle}>LOG OUT!</Text>
+            </TouchableHighlight>
+
+            {/* This is the button to display user favorites */}
+            <TouchableHighlight
+              style={{ ...styles.logOutButton }}
+              onPress={() => {
+                displayFavoriteMarkets(
+                  setMarketsNearMe,
+                  user,
+                  setFavorites
+                );
+                setHamburgerVisible(!hamburgerVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>Display MY favorites</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -348,7 +370,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     borderRadius: 20,
-    height: 150,
+    height: 250,
     margin: 10,
     padding: 35,
     shadowColor: "#000",
@@ -393,6 +415,9 @@ const styles = StyleSheet.create({
   filterBtn: {
     marginRight: 5,
   },
+  title: {
+    fontSize: 35,
+  }
 });
 
 export default Header;
