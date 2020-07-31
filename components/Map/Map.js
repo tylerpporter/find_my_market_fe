@@ -19,24 +19,20 @@ import { AntDesign } from "@expo/vector-icons";
 }
 
 // MAP COMPONENT
-const Map = ({ marketsNearMe, location, user, setUser }) => {
-  // // HOOKS // //
-  // This is for the favorite Icon
-  const [favorites, setFavorites] = useState(false);
-
+const Map = ({ marketsNearMe, location, user, setUser, favorites, setFavorites }) => {
   // // METHODS // //
 
-  // const checkFav = () => {
-  //   marketsNearMe.forEach((market) => {
-  //       user.favorites.forEach(fav => {
-  //         if (market.fmid == fav["market_id"]) {
-  //           setFavorites(true)
-  //         } else {
-  //           return
-  //         }
-  //       })
-  //   });
-  // };
+  const checkFav = () => {
+    marketsNearMe.forEach((market) => {
+        user.favorites.forEach(fav => {
+          if (market.fmid == fav["market_id"]) {
+            setFavorites(true)
+          } else {
+            return
+          }
+        })
+    });
+  };
 
 
   // This displays the markers based on current Region
@@ -50,7 +46,6 @@ const Map = ({ marketsNearMe, location, user, setUser }) => {
         pinColor="#F25C54"
         // onPress={() => {
         //   setFavorites(false)
-        //   checkFav()
         // }}
       >
         <Image
@@ -84,7 +79,8 @@ const Map = ({ marketsNearMe, location, user, setUser }) => {
           </CalloutSubview>
           <CalloutSubview
             onPress={() => {
-              console.log("help");
+              setFavorites(true)
+              
             }}
           >
             <TouchableOpacity style={styles.favButton}>
