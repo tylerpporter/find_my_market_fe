@@ -18,84 +18,41 @@ import { AntDesign } from "@expo/vector-icons";
   /* <AntDesign name='heart' size={40} color='#80ED99' /> */
 }
 
+// COMPONENT
+import Markers from '../Markers/Markers'
+import FavMarkers from '../FavMarkers/FavMarkers'
+
 // MAP COMPONENT
-const Map = ({ marketsNearMe, location, user, setUser, favorites, setFavorites }) => {
+const Map = ({ marketsNearMe, location, user, setUser, favorites, setFavorites, displayFav }) => {
   // // METHODS // //
 
-  const checkFav = () => {
-    marketsNearMe.forEach((market) => {
-        user.favorites.forEach(fav => {
-          if (market.fmid == fav["market_id"]) {
-            setFavorites(true)
-          } else {
-            return
-          }
-        })
-    });
-  };
+  // const checkFav = () => {
+  //   marketsNearMe.forEach((market) => {
+  //       user.favorites.forEach(fav => {
+  //         if (market.fmid == fav["market_id"]) {
+  //           setFavorites(true)
+  //         } else {
+  //           return
+  //         }
+  //       })
+  //   });
+  // };
 
 
   // This displays the markers based on current Region
   const markers = marketsNearMe.map((location) => {
     let { latitude, longitude, fmid } = location;
-    return (
-      <Marker
-        key={`${Math.random()}`}
-        id={fmid}
-        coordinate={{ latitude: latitude, longitude: longitude }}
-        pinColor="#F25C54"
-        // onPress={() => {
-        //   setFavorites(false)
-        // }}
-      >
-        <Image
-          source={require("../../assets/FMM_icon_no_border.png")}
-          style={{ height: 50, width: 38 }}
-        />
-        <Callout style={styles.callOut}>
-          <View style={styles.views}>
-            <Text>{location.marketname}</Text>
-          </View>
-          <View style={styles.views}>
-            <Text style={styles.texts}>
-              {location.street} {location.city}, {location.state} {location.zip}
-            </Text>
-          </View>
-          <View style={styles.views}>
-            <Text>Distance Away: {Math.round(location.distance)} mile(s)</Text>
-          </View>
-          <View style={styles.views}>
-            <Text style={styles.texts}>
-              Season Info: {location.seasonDates}
-            </Text>
-          </View>
-
-          <CalloutSubview
-            onPress={() => Linking.openURL(`${location.website}`)}
-          >
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.views}>View Market Website</Text>
-            </TouchableOpacity>
-          </CalloutSubview>
-          <CalloutSubview
-            onPress={() => {
-              setFavorites(true)
-              
-            }}
-          >
-            <TouchableOpacity style={styles.favButton}>
-              {favorites ? (
-                <AntDesign name="heart" size={40} color="#80ED99" id={fmid} />
-              ) : (
-                <AntDesign name="hearto" size={40} color="#80ED99" id={fmid} />
-              )}
-              <Text>FAVORITE THIS MARKET</Text>
-            </TouchableOpacity>
-          </CalloutSubview>
-        </Callout>
-      </Marker>
-    );
-  });
+    if (displayFav) {
+      return (
+        <FavMarkers latitude={latitude} longitude={longitude} fmid={fmid} location={location} favorites={favorites} setFavorites={setFavorites} />
+      )
+    } else {
+      return (
+        <Markers latitude={latitude} longitude={longitude} fmid={fmid} location={location} />
+      )
+    }
+    
+    });
 
   return (
     <MapView
