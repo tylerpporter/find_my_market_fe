@@ -37,6 +37,8 @@ export const searchNavOnSubmit = (data, setLocation, setMarketsNearMe) => {
         coords: {
           latitude: data.data.marketsByCity.latitude,
           longitude: data.data.marketsByCity.longitude,
+          latitudeDelta: 2,
+          longitudeDelta: 2,
         },
       });
       setMarketsNearMe(data.data.marketsByCity.markets);
@@ -121,9 +123,12 @@ export const registerFetchCall = async (data) => {
 // Taken Call for register fetch call
 export const tokenCall = async (data) => {
   const url = "https://find-my-market-api.herokuapp.com/login/token";
+
   let formData = new FormData();
+
   formData.append("username", data.email);
   formData.append("password", data.password);
+
   try {
     let response = await fetch(url, {
       method: "POST",
@@ -138,6 +143,7 @@ export const tokenCall = async (data) => {
 
 const tokenResolver = async (token) => {
   const url = "https://find-my-market-api.herokuapp.com/login/token_check";
+  
   try {
     let user = await fetch(url, {
       method: "POST",
@@ -151,3 +157,52 @@ const tokenResolver = async (token) => {
     console.log("error", error);
   }
 };
+
+
+export const displayFavoriteMarkets = (
+  setMarketsNearMe,
+  user,
+  setFavorites
+  ) => {
+  let fmidArray = user.favorites.map(markets => {
+    return markets["market_id"]
+  })
+  let url = "https://us-farmers-markets-api.herokuapp.com/";
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      query: `query($fmids: [Int!]!){ markets(fmids: $fmids) {
+          
+            fmid 
+            marketname
+            latitude
+            longitude
+            website
+            seasonDates
+            street
+            city
+            state
+            zip
+            products {
+                name
+            }
+            }
+    }`,
+      variables: {
+        fmids: fmidArray,
+      },
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      setMarketsNearMe(data.data.markets);
+      setFavorites(true)
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
