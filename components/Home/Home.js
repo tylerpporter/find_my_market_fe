@@ -22,7 +22,7 @@ import * as Location from "expo-location";
 
 // HOME COMPONENT
 const Home = ({navigation, route}) => {
-console.log(route)
+
   // this is the default region for map
   const initialRegion = {
     coords: {
@@ -54,6 +54,8 @@ console.log(route)
   const [user, setUser] = useState(route.params.user);
    // This is for the favorite Icon
    const [favorites, setFavorites] = useState(false);
+   // This is for which markers to display
+   const [displayFav, setDisplayFav] = useState(false);
   
   // // METHODS // //
   // Setting my current location as a user
@@ -70,12 +72,12 @@ console.log(route)
         location,
         setMarketsNearMe,
         setFilteredProducts,
-        filteredProducts
+        filteredProducts,
+        setDisplayFav
       );
     })();
   }, []);
 
-  // console.log('marketsNearMe', marketsNearMe)
   return (
     <View style={styles.container}>
       <View style={styles.centeredView}>
@@ -121,6 +123,7 @@ console.log(route)
         setUser={setUser}
         favorites={favorites}
         setFavorites={setFavorites}
+        setDisplayFav={setDisplayFav}
       />
       <Map
         marketsNearMe={marketsNearMe}
@@ -130,6 +133,7 @@ console.log(route)
         setUser={setUser}
         favorites={favorites}
         setFavorites={setFavorites}
+        displayFav={displayFav}
       />
     </View>
   );
