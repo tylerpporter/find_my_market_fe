@@ -52,10 +52,10 @@ const Home = ({navigation, route}) => {
   const [isLoading, setIsLoading] = useState(true);
   // This is the user
   const [user, setUser] = useState(route.params.user);
-   // This is for the favorite Icon
-   const [favorites, setFavorites] = useState(false);
-   // This is for which markers to display
-   const [displayFav, setDisplayFav] = useState(false);
+  // This is for which markers to display
+  const [displayFav, setDisplayFav] = useState(false);
+  // This is for the favorite Icon
+  const [favorites, setFavorites] = useState(false);
   
   // // METHODS // //
   // Setting my current location as a user
@@ -120,10 +120,9 @@ const Home = ({navigation, route}) => {
         setHamburgerVisible={setHamburgerVisible}
         navigation={navigation}
         user={user}
-        setUser={setUser}
+        setDisplayFav={setDisplayFav}
         favorites={favorites}
         setFavorites={setFavorites}
-        setDisplayFav={setDisplayFav}
       />
       <Map
         marketsNearMe={marketsNearMe}
@@ -131,9 +130,9 @@ const Home = ({navigation, route}) => {
         searchedMarkets={searchedMarkets}
         user={user}
         setUser={setUser}
+        displayFav={displayFav}
         favorites={favorites}
         setFavorites={setFavorites}
-        displayFav={displayFav}
       />
     </View>
   );

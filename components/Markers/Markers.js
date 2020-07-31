@@ -18,8 +18,11 @@ import { AntDesign } from "@expo/vector-icons";
   /* <AntDesign name='heart' size={40} color='#80ED99' /> */
 }
 
+// FETCH CALLS
+import { createFavorite, destroyFavorite } from '../../apiCalls'
+
 // MAP COMPONENT
-const Markers = ({ latitude, longitude, fmid, location }) => {
+const Markers = ({ latitude, longitude, fmid, location, user, setUser }) => {
   // // METHODS // //
 
   const [markerFav, setMarkerFav] = useState(false)
@@ -31,10 +34,15 @@ const Markers = ({ latitude, longitude, fmid, location }) => {
         coordinate={{ latitude: latitude, longitude: longitude }}
         pinColor="#F25C54"
       >
+        { markerFav ? <Image
+          source={require("../../assets/FMM_icon_no_border_favorites.png")}
+          style={{ height: 50, width: 38 }}
+        /> 
+        :
         <Image
           source={require("../../assets/FMM_icon_no_border.png")}
           style={{ height: 50, width: 38 }}
-        />
+        />}
         <Callout style={styles.callOut}>
           <View style={styles.views}>
             <Text>{location.marketname}</Text>
@@ -64,8 +72,12 @@ const Markers = ({ latitude, longitude, fmid, location }) => {
             onPress={() => {
               if(markerFav) {
                 setMarkerFav(false)
+                // deleting fav
+                destroyFavorite(fmid, user, setUser)
               }else {
                 setMarkerFav(true)
+                //send to favorites
+                createFavorite(fmid, user, setUser)
               }
             }}
           >

@@ -23,7 +23,7 @@ import Markers from '../Markers/Markers'
 import FavMarkers from '../FavMarkers/FavMarkers'
 
 // MAP COMPONENT
-const Map = ({ marketsNearMe, location, user, setUser, favorites, setFavorites, displayFav }) => {
+const Map = ({ marketsNearMe, location, user, setUser, displayFav, favorites, setFavorites }) => {
 
 // // METHODS // //
   // This displays the markers based on current Region
@@ -31,11 +31,27 @@ const Map = ({ marketsNearMe, location, user, setUser, favorites, setFavorites, 
     let { latitude, longitude, fmid } = location;
     if (displayFav) {
       return (
-        <FavMarkers latitude={latitude} longitude={longitude} fmid={fmid} location={location} favorites={favorites} setFavorites={setFavorites} />
+        <FavMarkers
+          latitude={latitude}
+          longitude={longitude}
+          fmid={fmid}
+          location={location}
+          user={user}
+          setUser={setUser}
+          favorites={favorites}
+          setFavorites={setFavorites}
+        />
       )
     } else {
       return (
-        <Markers latitude={latitude} longitude={longitude} fmid={fmid} location={location} />
+        <Markers
+        latitude={latitude}
+        longitude={longitude}
+        fmid={fmid}
+        location={location}
+        user={user}
+        setUser={setUser}
+      />
       )
     }
     

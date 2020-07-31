@@ -18,12 +18,12 @@ import { AntDesign } from "@expo/vector-icons";
   /* <AntDesign name='heart' size={40} color='#80ED99' /> */
 }
 
+// FETCH CALLS
+import { createFavorite, destroyFavorite } from '../../apiCalls'
+
 // MAP COMPONENT
-const FavMarkers = ({ latitude, longitude, fmid, favorites, location, setFavorites }) => {
-  // // METHODS // //
-
-  const [markerFav, setMarkerFav] = useState(false)
-
+const FavMarkers = ({ latitude, longitude, fmid, location, user, setUser, favorites, setFavorites }) => {
+  
   return (
       <Marker
         key={`${Math.random()}`}
@@ -64,8 +64,11 @@ const FavMarkers = ({ latitude, longitude, fmid, favorites, location, setFavorit
             onPress={() => {
               if(favorites) {
                 setFavorites(false)
+                destroyFavorite(fmid, user, setUser)
               } else {
                 setFavorites(true)
+                createFavorite(fmid, user, setUser)
+
               }
             }}
           >

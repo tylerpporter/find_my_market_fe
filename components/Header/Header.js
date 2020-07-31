@@ -36,10 +36,9 @@ const Header = ({
   setHamburgerVisible,
   navigation,
   user,
-  setUser,
+  setDisplayFav,
   favorites,
   setFavorites,
-  setDisplayFav,
 }) => {
 
   // // HOOKS // //
@@ -250,7 +249,7 @@ const Header = ({
                   location,
                   setMarketsNearMe,
                   setFilteredProducts,
-                  setDisplayFav
+                  setDisplayFav,
                 );
                 // setModalVisible(!modalVisible);
               }}
