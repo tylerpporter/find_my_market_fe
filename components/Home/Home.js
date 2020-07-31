@@ -28,8 +28,8 @@ const Home = ({navigation, route}) => {
     coords: {
       latitude: 37.78825,
       longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+      latitudeDelta: 2,
+      longitudeDelta: 2,
     },
   };
 
@@ -52,6 +52,11 @@ const Home = ({navigation, route}) => {
   const [isLoading, setIsLoading] = useState(true);
   // This is the user
   const [user, setUser] = useState(route.params.user);
+  // This is for which markers to display
+  const [displayFav, setDisplayFav] = useState(false);
+  // This is for the favorite Icon
+  const [favorites, setFavorites] = useState(false);
+  
   // // METHODS // //
   // Setting my current location as a user
   useEffect(() => {
@@ -61,14 +66,14 @@ const Home = ({navigation, route}) => {
         setErrorMsg("Permission to access location was denied");
       }
       let location = await Location.getCurrentPositionAsync({});
-
       setLocation(location);
       // this is the fetch call
       getMarketsNearby(
         location,
         setMarketsNearMe,
         setFilteredProducts,
-        filteredProducts
+        filteredProducts,
+        setDisplayFav
       );
     })();
   }, []);
@@ -114,11 +119,20 @@ const Home = ({navigation, route}) => {
         hamburgerVisible={hamburgerVisible}
         setHamburgerVisible={setHamburgerVisible}
         navigation={navigation}
+        user={user}
+        setDisplayFav={setDisplayFav}
+        favorites={favorites}
+        setFavorites={setFavorites}
       />
       <Map
         marketsNearMe={marketsNearMe}
         location={location}
         searchedMarkets={searchedMarkets}
+        user={user}
+        setUser={setUser}
+        displayFav={displayFav}
+        favorites={favorites}
+        setFavorites={setFavorites}
       />
     </View>
   );

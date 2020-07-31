@@ -28,7 +28,8 @@ const Register = ({
   // This is for Controller
   const emailInputRef = React.useRef();
   const passwordInputRef = React.useRef();
-
+  const usernameInputRef = React.useRef();
+  
   // FETCH CALL
   const onSubmit = async (data) => {
     let user = await registerFetchCall(data);
@@ -38,6 +39,28 @@ const Register = ({
 
   return (
     <View style={styles.centeredView}>
+          <Text style={styles.label}>Username:</Text>
+      <Controller
+        name="username"
+        control={control}
+        rules={{ required: "This is required" }}
+        onFocus={() => {
+          usernameInputRef.current.focus();
+        }}
+        render={(props) => (
+          <TextInput
+            {...props}
+            testID="registerUsername"
+            placeholder="Please enter an email"
+            color="black"
+            style={styles.registerEmailInput}
+            onChangeText={(value) => {
+              props.onChange(value);
+            }}
+            ref={usernameInputRef}
+          />
+        )}
+      />
       <Text style={styles.label}>Email:</Text>
       <Controller
         name="email"
@@ -72,6 +95,7 @@ const Register = ({
         render={(props) => (
           <TextInput
             {...props}
+            secureTextEntry={true}
             testID="registerPassword"
             placeholder="Please enter a password"
             color="black"

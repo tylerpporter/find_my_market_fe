@@ -25,31 +25,31 @@ describe("App integration tests", () => {
     expect(logo).toBeTruthy();
   });
 
-  test("goes to the home page upon filling out the login page", async () => {
-    const { getByTestId, getByText } = render(<App />);
+  // test("goes to the home page upon filling out the login page", async () => {
+  //   const { getByTestId, getByText } = render(<App />);
 
-    const register = await waitFor(() => getByTestId("registerBtn"));
+  //   const register = await waitFor(() => getByTestId("registerBtn"));
 
-    act(() => {
-      fireEvent.press(register);
-    });
+  //   act(() => {
+  //     fireEvent.press(register);
+  //   });
 
-    const email = await waitFor(() => getByTestId("registerEmail"));
-    const password = await waitFor(() => getByTestId("registerPassword"));
-    const submit = await waitFor(() => getByTestId("registerSubmit"));
+  //   const email = await waitFor(() => getByTestId("registerEmail"));
+  //   const password = await waitFor(() => getByTestId("registerPassword"));
+  //   const submit = await waitFor(() => getByTestId("registerSubmit"));
 
-    act(() => {
-      fireEvent.changeText(email, "tyler@gmail.com");
-      fireEvent.changeText(password, "1234");
-    });
+  //   act(() => {
+  //     fireEvent.changeText(email, "tyler@gmail.com");
+  //     fireEvent.changeText(password, "1234");
+  //   });
 
-    act(() => {
-      fireEvent.press(submit);
-    });
+  //   act(() => {
+  //     fireEvent.press(submit);
+  //   });
 
-    const welcomeModalText = await waitFor(() =>
-      getByText("Welcome to Find My Market!")
-    );
-    expect(welcomeModalText).toBeTruthy();
-  });
+  //   const welcomeModalText = await waitFor(() =>
+  //     getByText("Welcome to Find My Market!")
+  //   );
+  //   expect(welcomeModalText).toBeTruthy();
+  // });
 })
