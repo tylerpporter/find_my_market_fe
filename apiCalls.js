@@ -1,4 +1,9 @@
-export const searchNavOnSubmit = (data, setLocation, setMarketsNearMe) => {
+export const searchNavOnSubmit = (
+  data,
+  setLocation,
+  setMarketsNearMe,
+  setDisplayFav
+) => {
   let url = "https://us-farmers-markets-api.herokuapp.com/";
   fetch(url, {
     method: "POST",
@@ -41,6 +46,7 @@ export const searchNavOnSubmit = (data, setLocation, setMarketsNearMe) => {
           longitudeDelta: 2,
         },
       });
+      setDisplayFav(false);
       setMarketsNearMe(data.data.marketsByCity.markets);
     })
     .catch((error) => {
@@ -52,7 +58,8 @@ export const getMarketsNearby = (
   location,
   setMarketsNearMe,
   setFilteredProducts,
-  filteredProducts
+  filteredProducts,
+  setDisplayFav
 ) => {
   let url = "https://us-farmers-markets-api.herokuapp.com/";
   fetch(url, {
@@ -91,6 +98,7 @@ export const getMarketsNearby = (
   })
     .then((response) => response.json())
     .then((data) => {
+      setDisplayFav(false);
       setMarketsNearMe(data.data.marketsByCoords.markets);
       setFilteredProducts([]);
     })
@@ -143,7 +151,7 @@ export const tokenCall = async (data) => {
 
 const tokenResolver = async (token) => {
   const url = "https://find-my-market-api.herokuapp.com/login/token_check";
-  
+
   try {
     let user = await fetch(url, {
       method: "POST",
@@ -158,21 +166,21 @@ const tokenResolver = async (token) => {
   }
 };
 
-
 export const displayFavoriteMarkets = (
   setMarketsNearMe,
   user,
-  setFavorites
-  ) => {
-  let fmidArray = user.favorites.map(markets => {
-    return markets["market_id"]
-  })
+  setFavorites,
+  setDisplayFav,
+) => {
+  let fmidArray = user.favorites.map((markets) => {
+    return markets["market_id"];
+  });
   let url = "https://us-farmers-markets-api.herokuapp.com/";
 
   fetch(url, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       query: `query($fmids: [Int!]!){ markets(fmids: $fmids) {
@@ -199,10 +207,11 @@ export const displayFavoriteMarkets = (
   })
     .then((response) => response.json())
     .then((data) => {
+      setDisplayFav(true);
+      setFavorites(true);
       setMarketsNearMe(data.data.markets);
-      setFavorites(true)
     })
     .catch((error) => {
       console.error("Error:", error);
     });
-}
+};
