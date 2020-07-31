@@ -24,21 +24,8 @@ import FavMarkers from '../FavMarkers/FavMarkers'
 
 // MAP COMPONENT
 const Map = ({ marketsNearMe, location, user, setUser, favorites, setFavorites, displayFav }) => {
-  // // METHODS // //
 
-  // const checkFav = () => {
-  //   marketsNearMe.forEach((market) => {
-  //       user.favorites.forEach(fav => {
-  //         if (market.fmid == fav["market_id"]) {
-  //           setFavorites(true)
-  //         } else {
-  //           return
-  //         }
-  //       })
-  //   });
-  // };
-
-
+// // METHODS // //
   // This displays the markers based on current Region
   const markers = marketsNearMe.map((location) => {
     let { latitude, longitude, fmid } = location;
