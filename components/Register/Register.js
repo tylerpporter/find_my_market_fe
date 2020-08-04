@@ -23,6 +23,8 @@ const Register = ({
   navigation,
   setRegister,
   register,
+  setRegisterError,
+  registerError
 }) => {
   // // METHODS // //
   // This is for Controller
@@ -33,8 +35,14 @@ const Register = ({
   // FETCH CALL
   const onSubmit = async (data) => {
     let user = await registerFetchCall(data);
-    setRegister(!register);
-    navigation.navigate("Home", { user });
+  
+    if (user.detail) {
+      setRegister(!register);
+      setRegisterError(!registerError)
+    } else {
+      setRegister(!register);
+      navigation.navigate("Home", { user });
+    }
   };
 
   return (
