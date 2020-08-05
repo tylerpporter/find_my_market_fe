@@ -150,7 +150,6 @@ const Header = ({
   ];
 
   const [filteredDate, setFilteredDate] = useState('')
-  console.log('setDate', filteredDate)
 
   return (
     <View style={styles.container}>
@@ -208,15 +207,13 @@ const Header = ({
                 size={30}
                 color="black"
                 onPress={() => {
-                  setFilteredProducts([]);
-                  setProducts(defaultProducts);
                   setModalVisible(!modalVisible);
                 }}
               />
             </View>
             <Text style={styles.modalText}>Filter By Products</Text>
-            <View style={{height: "8%", width: 200, alignItems: "center"}}>
-            <MyDatePicker setFilteredDate={setFilteredDate}/>
+            <View style={styles.datePickerContainer}>
+            <MyDatePicker setFilteredDate={setFilteredDate} filteredDate={filteredDate}/>
             </View>
             <View style={styles.modalContainer}>
               <FlatList
@@ -243,6 +240,7 @@ const Header = ({
                   setFilteredProducts,
                   filteredProducts,
                   setDisplayFav,
+                  filteredDate,
                 );
                 setModalVisible(!modalVisible);
               }}
@@ -253,13 +251,14 @@ const Header = ({
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
                 setProducts(defaultProducts);
+                setFilteredDate('')
                 getMarketsNearby(
                   location,
                   setMarketsNearMe,
                   setFilteredProducts,
                   setDisplayFav,
                 );
-                // setModalVisible(!modalVisible);
+                setModalVisible(!modalVisible);
               }}
             >
               <Text style={styles.textStyle}>Clear Current Filters</Text>
@@ -430,6 +429,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 35,
+  },
+  datePickerContainer: {
+    height: "8%",
+    width: 200,
+    alignItems: "center"
   }
 });
 
