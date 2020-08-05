@@ -1,23 +1,19 @@
-import React, { Component } from 'react';
-import { Container, Content, DatePicker, Text } from 'native-base';
+import React, { useState } from "react";
+import { Container, Content, DatePicker } from "native-base";
+import moment from "moment";
 
-class MyDatePicker extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { chosenDate: new Date().toLocaleDateString()};
-    this.setDate = this.setDate.bind(this);
-  }
+const MyDatePicker = (props) => {
+  const [chosenDate, setChosenDate] = useState(props.filteredDate);
 
-  setDate(newDate) {
-    let splitDate = newDate.toLocaleDateString()
-    let formattedNewDate = this.formatDates(splitDate)
-    this.setState({ chosenDate: formattedNewDate }, () => {
-      this.props.setFilteredDate(this.state.chosenDate)
-    });
-  }
+  const setDate = (newDate) => {
+    let splitDate = newDate.toLocaleDateString();
+    let formattedNewDate = formatDates(splitDate);
+    setChosenDate(formattedNewDate);
+    props.setFilteredDate(formattedNewDate);
+  };
 
-  formatDates(date) {
-    let dateArray = date.split('/');
+  const formatDates = (date) => {
+    let dateArray = date.split("/");
     let month = dateArray[0];
     let day = dateArray[1];
     let year = dateArray[2];
@@ -31,32 +27,35 @@ class MyDatePicker extends Component {
       let dateFormat = `${month}/0${day}/${year}`;
       return dateFormat;
     } else {
-      return date
+      return date;
     }
-  }
+  };
 
-  render() {
-    return (
-      <Container style={{borderWidth: 3, borderRadius: "20%", width: "80%"}}>
-        <Content>
-          <DatePicker
-            defaultDate={new Date()}
-            minimumDate={new Date(2020, 1, 1)}
-            maximumDate={new Date(2021, 1, 1)}
-            locale={"en"}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={"fade"}
-            placeHolderText="Select date"
-            textStyle={{ color: "green" }}
-            placeHolderTextStyle={{ color: "#38A3A5" }}
-            onDateChange={this.setDate}
-            disabled={false}
-            />
-        </Content>
-      </Container>
-    );
-  }
-}
+  return (
+    <Container style={{ borderWidth: 3, borderRadius: "20%", width: "80%" }}>
+      <Content>
+        <DatePicker
+          formatChosenDate={(date) => {
+            return moment(date).format("MM/DD/YYYY");
+          }}
+          defaultDate={new Date()}
+          minimumDate={new Date(2020, 1, 1)}
+          maximumDate={new Date(2021, 1, 1)}
+          locale={"en"}
+          timeZoneOffsetInMinutes={undefined}
+          modalTransparent={false}
+          animationType={"fade"}
+          placeHolderText={
+            props.filteredDate ? props.filteredDate : "Select date"
+          }
+          textStyle={{ color: "green" }}
+          placeHolderTextStyle={{ color: "#38A3A5" }}
+          onDateChange={setDate}
+          disabled={false}
+        />
+      </Content>
+    </Container>
+  );
+};
 
-export default MyDatePicker
+export default MyDatePicker;
