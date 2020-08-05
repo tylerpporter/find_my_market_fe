@@ -17,7 +17,15 @@ import { useForm, Controller } from "react-hook-form";
 // FETCH CALLS
 import { tokenCall } from '../../apiCalls'
 
-const SignIn = ({ control, handleSubmit, navigation, setSignIn, signIn }) => {
+const SignIn = ({ 
+  control,
+  handleSubmit,
+  setSignIn,
+  signIn,
+  setSignInError,
+  signInError,
+  navigation
+}) => {
   // // METHODS // //
   // This is for Controller
   const emailInputRef = React.useRef();
@@ -26,9 +34,15 @@ const SignIn = ({ control, handleSubmit, navigation, setSignIn, signIn }) => {
   // fetch
   const onSubmit = async (data) => {
     let user = await tokenCall(data)
-    setSignIn(!signIn);
-    navigation.navigate("Home", {user});
+    console.log(user)
+    if (user.detail) {
+      setSignIn(!signIn);
+      setSignInError(!signInError)
+    } else {
+      setSignIn(!signIn);
+      navigation.navigate("Home", {user});
   };
+  }
 
   return (
     <View style={styles.centeredView}>
@@ -81,10 +95,10 @@ const SignIn = ({ control, handleSubmit, navigation, setSignIn, signIn }) => {
         style={{ ...styles.signInOpenButton }}
         onPress={handleSubmit(onSubmit)}
       >
-        <Text style={styles.textStyle}>Submit</Text>
+        <Text style={styles.textStyle}>SUBMIT</Text>
       </TouchableHighlight>
     </View>
-  );
+  )
 };
 
 const styles = StyleSheet.create({
@@ -134,6 +148,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     alignSelf: "center",
+    color: "white",
     paddingTop: 10,
   },
 });

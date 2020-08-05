@@ -18,6 +18,7 @@ import { getMarketsNearby, displayFavoriteMarkets } from "../../apiCalls";
 // Components
 import SearchNav from "../SearchNav/SearchNav";
 import ListItem from "../ListItem/ListItem";
+import MyDatePicker from '../MyDatePicker/MyDatePicker';
 
 // Vector-Icons
 import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
@@ -148,6 +149,8 @@ const Header = ({
     },
   ];
 
+  const [filteredDate, setFilteredDate] = useState('')
+
   return (
     <View style={styles.container}>
       {/* <MainNav /> */}
@@ -204,13 +207,14 @@ const Header = ({
                 size={30}
                 color="black"
                 onPress={() => {
-                  setFilteredProducts([]);
-                  setProducts(defaultProducts);
                   setModalVisible(!modalVisible);
                 }}
               />
             </View>
             <Text style={styles.modalText}>Filter By Products</Text>
+            <View style={styles.datePickerContainer}>
+            <MyDatePicker setFilteredDate={setFilteredDate} filteredDate={filteredDate}/>
+            </View>
             <View style={styles.modalContainer}>
               <FlatList
                 data={products}
@@ -226,6 +230,7 @@ const Header = ({
                 keyExtractor={(item) => item.id}
               />
             </View>
+           
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
@@ -235,6 +240,7 @@ const Header = ({
                   setFilteredProducts,
                   filteredProducts,
                   setDisplayFav,
+                  filteredDate,
                 );
                 setModalVisible(!modalVisible);
               }}
@@ -245,17 +251,19 @@ const Header = ({
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
                 setProducts(defaultProducts);
+                setFilteredDate('')
                 getMarketsNearby(
                   location,
                   setMarketsNearMe,
                   setFilteredProducts,
                   setDisplayFav,
                 );
-                // setModalVisible(!modalVisible);
+                setModalVisible(!modalVisible);
               }}
             >
               <Text style={styles.textStyle}>Clear Current Filters</Text>
             </TouchableHighlight>
+            
           </View>
         </View>
       </Modal>
@@ -333,7 +341,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   modalContainer: {
-    height: "60%",
+    height: "50%",
     marginTop: 20,
   },
   location: {
@@ -421,6 +429,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 35,
+  },
+  datePickerContainer: {
+    height: "8%",
+    width: 200,
+    alignItems: "center"
   }
 });
 

@@ -5,12 +5,11 @@ import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
 //fetch calls
-import { searchNavOnSubmit } from '../../apiCalls';
+import { searchNavOnSubmit } from "../../apiCalls";
 
 // SEARCH-NAV COMPONENT
 const SearchNav = ({ setLocation, setMarketsNearMe, setDisplayFav }) => {
-
-// // HOOKS // //
+  // // HOOKS // //
   // This is for the form validation
   const { control, handleSubmit, errors } = useForm();
 
@@ -66,7 +65,18 @@ const SearchNav = ({ setLocation, setMarketsNearMe, setDisplayFav }) => {
         />
       </View>
       <View style={styles.button}>
-        <Button color="white" title="Submit" onPress={handleSubmit((data) => searchNavOnSubmit(data, setLocation, setMarketsNearMe, setDisplayFav))} />
+        <Button
+          color="white"
+          title="Submit"
+          onPress={handleSubmit((data) =>
+            searchNavOnSubmit(
+              data,
+              setLocation,
+              setMarketsNearMe,
+              setDisplayFav
+            )
+          )}
+        />
       </View>
     </View>
   );

@@ -1,6 +1,6 @@
 // // IMPORTS // //
 // React && React-Native
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,7 +15,8 @@ import {
 import { useForm, Controller } from "react-hook-form";
 
 // Components
-import Home from "../Home/Home";
+import RegisterModal from '../Modals/RegisterModal'
+import SignInModal from '../Modals/SignInModal'
 import Register from "../Register/Register";
 import SignIn from "../SignIn/SignIn";
 
@@ -33,6 +34,13 @@ const Login = ({ navigation }) => {
 
   // This is for the Register Modal
   const [signIn, setSignIn] = useState(false);
+
+  // This is for the RegisterModalError
+  const [registerError, setRegisterError] = useState(false)
+
+  // This is for the RegisterModalError
+  const [signInError, setSignInError] = useState(false)
+
 
   return (
     <View style={styles.mainContainer}>
@@ -72,7 +80,7 @@ const Login = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-
+      
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -93,15 +101,25 @@ const Login = ({ navigation }) => {
                 }}
               />
             </View>
+
             <Register
               control={control}
               handleSubmit={handleSubmit}
               navigation={navigation}
               setRegister={setRegister}
               register={register}
+              setRegisterError={setRegisterError}
+              registerError={registerError}
             />
           </View>
         </Modal>
+      </View>
+
+      <View style={styles.centeredView}>
+      {registerError && <RegisterModal registerError={registerError} setRegisterError={setRegisterError} />}
+      </View>
+      <View style={styles.centeredView}>
+      {signInError && <SignInModal signInError={signInError} setSignInError={setSignInError} />}
       </View>
 
       <View style={styles.centeredView}>
@@ -130,6 +148,8 @@ const Login = ({ navigation }) => {
               navigation={navigation}
               signIn={signIn}
               setSignIn={setSignIn}
+              setSignInError={setSignInError}
+              signInError={signInError}
             />
           </View>
         </Modal>
