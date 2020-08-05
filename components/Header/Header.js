@@ -18,6 +18,7 @@ import { getMarketsNearby, displayFavoriteMarkets } from "../../apiCalls";
 // Components
 import SearchNav from "../SearchNav/SearchNav";
 import ListItem from "../ListItem/ListItem";
+import MyDatePicker from '../MyDatePicker/MyDatePicker';
 
 // Vector-Icons
 import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
@@ -148,6 +149,8 @@ const Header = ({
     },
   ];
 
+  const [filteredDate, setFilteredDate] = useState('')
+
   return (
     <View style={styles.container}>
       {/* <MainNav /> */}
@@ -211,6 +214,9 @@ const Header = ({
               />
             </View>
             <Text style={styles.modalText}>Filter By Products</Text>
+            <View style={{height: "20%"}}>
+            <MyDatePicker />
+            </View>
             <View style={styles.modalContainer}>
               <FlatList
                 data={products}
