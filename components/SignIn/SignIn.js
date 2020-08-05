@@ -23,7 +23,8 @@ const SignIn = ({
   setSignIn,
   signIn,
   setSignInError,
-  signInError
+  signInError,
+  navigation
 }) => {
   // // METHODS // //
   // This is for Controller
