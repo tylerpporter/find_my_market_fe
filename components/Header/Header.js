@@ -150,6 +150,7 @@ const Header = ({
   ];
 
   const [filteredDate, setFilteredDate] = useState('')
+  console.log('setDate', filteredDate)
 
   return (
     <View style={styles.container}>
@@ -214,8 +215,8 @@ const Header = ({
               />
             </View>
             <Text style={styles.modalText}>Filter By Products</Text>
-            <View style={{height: "20%"}}>
-            <MyDatePicker />
+            <View style={{height: "8%", width: 200, alignItems: "center"}}>
+            <MyDatePicker setFilteredDate={setFilteredDate}/>
             </View>
             <View style={styles.modalContainer}>
               <FlatList
@@ -232,6 +233,7 @@ const Header = ({
                 keyExtractor={(item) => item.id}
               />
             </View>
+           
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
@@ -262,6 +264,7 @@ const Header = ({
             >
               <Text style={styles.textStyle}>Clear Current Filters</Text>
             </TouchableHighlight>
+            
           </View>
         </View>
       </Modal>
@@ -339,7 +342,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   modalContainer: {
-    height: "60%",
+    height: "50%",
     marginTop: 20,
   },
   location: {

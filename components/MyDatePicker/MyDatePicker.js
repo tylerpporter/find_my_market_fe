@@ -4,12 +4,16 @@ import { Container, Content, DatePicker, Text } from 'native-base';
 class MyDatePicker extends Component {
   constructor(props) {
     super(props);
-    this.state = { chosenDate: new Date() };
+    this.state = { chosenDate: new Date().toLocaleDateString()};
     this.setDate = this.setDate.bind(this);
   }
 
   setDate(newDate) {
-    this.setState({ chosenDate: newDate });
+    let splitDate = newDate.toLocaleDateString()
+    let formattedNewDate = this.formatDates(splitDate)
+    this.setState({ chosenDate: formattedNewDate }, () => {
+      this.props.setFilteredDate(this.state.chosenDate)
+    });
   }
 
   formatDates(date) {
@@ -33,7 +37,7 @@ class MyDatePicker extends Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{borderWidth: 3, borderRadius: "20%", width: "80%"}}>
         <Content>
           <DatePicker
             defaultDate={new Date()}
@@ -45,13 +49,10 @@ class MyDatePicker extends Component {
             animationType={"fade"}
             placeHolderText="Select date"
             textStyle={{ color: "green" }}
-            placeHolderTextStyle={{ color: "#d3d3d3" }}
+            placeHolderTextStyle={{ color: "#38A3A5" }}
             onDateChange={this.setDate}
             disabled={false}
             />
-            <Text>
-              Date: {this.formatDates(this.state.chosenDate.toLocaleDateString())}
-            </Text>
         </Content>
       </Container>
     );
