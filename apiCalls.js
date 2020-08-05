@@ -60,7 +60,9 @@ export const getMarketsNearby = (
   setFilteredProducts,
   filteredProducts,
   setDisplayFav,
+  filteredDate
 ) => {
+  console.log("LOCATION", location)
   let url = "https://us-farmers-markets-api.herokuapp.com/";
   fetch(url, {
     method: "POST",
@@ -68,7 +70,7 @@ export const getMarketsNearby = (
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      query: `query($lat: Float!, $lng: Float!, $radius: Int!, $products: [String!]){ marketsByCoords(lat: $lat, lng: $lng, radius: $radius, products: $products ) { 
+      query: `query($lat: Float!, $lng: Float!, $radius: Int!, $products: [String!] $date: String!){ marketsByCoords(lat: $lat, lng: $lng, radius: $radius, products: $products, date: $date ) { 
             location 
             markets {
             fmid 
@@ -93,6 +95,7 @@ export const getMarketsNearby = (
         lng: location.coords.longitude,
         radius: 40,
         products: filteredProducts || [],
+        date: filteredDate || '',
       },
     }),
   })
