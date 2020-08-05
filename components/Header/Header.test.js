@@ -82,7 +82,6 @@ describe("Header", () => {
       <Header
         setModalVisible={mockModalVisible}
         setFilteredProducts={mockSetFilteredProducts}
-        setProducts={mockSetProducts}
       />
     );
 
