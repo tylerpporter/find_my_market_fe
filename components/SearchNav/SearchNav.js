@@ -7,15 +7,6 @@ import { useForm, Controller } from "react-hook-form";
 //fetch calls
 import { searchNavOnSubmit } from "../../apiCalls";
 
-// IMPORT API KEY
-
-import Constants from 'expo-constants';
-// console.log(Constants.manifest.extra.google)
-
-
-// AUTO COMPLETE FOR CITY AND STATE
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-
 // SEARCH-NAV COMPONENT
 const SearchNav = ({ setLocation, setMarketsNearMe, setDisplayFav }) => {
   // // HOOKS // //
@@ -28,7 +19,7 @@ const SearchNav = ({ setLocation, setMarketsNearMe, setDisplayFav }) => {
 
   return (
     <View style={styles.container}>
-      {/* <View>
+      <View>
         <Text style={styles.label}>City</Text>
         <Controller
           name="city"
@@ -72,40 +63,7 @@ const SearchNav = ({ setLocation, setMarketsNearMe, setDisplayFav }) => {
             />
           )}
         />
-      </View> */}
-      <GooglePlacesAutocomplete
-          query={{
-          key: Constants.manifest.extra.google,
-          language: "en",
-        }}
-        placeholder='Enter Location'
-        onPress={(data, details = null) => {
-          // 'details' is provided when fetchDetails = true
-          console.log(data, details);
-        }}
-        minLength={2}
-        autoFocus={false}
-        returnKeyType={'default'}
-        fetchDetails={true}
-        styles={{
-          textInputContainer: {
-            backgroundColor: 'rgba(0,0,0,0)',
-            borderTopWidth: 0,
-            borderBottomWidth: 0,
-          },
-          textInput: {
-            marginLeft: 0,
-            marginRight: 0,
-            height: 38,
-            color: '#5d5d5d',
-            fontSize: 16,
-          },
-          predefinedPlacesDescription: {
-            color: '#1faadb',
-          },
-        }}
-      />
-
+      </View>
       <View style={styles.button}>
         <Button
           color="white"
