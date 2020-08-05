@@ -95,7 +95,7 @@ const SignIn = ({
         style={{ ...styles.signInOpenButton }}
         onPress={handleSubmit(onSubmit)}
       >
-        <Text style={styles.textStyle}>Submit</Text>
+        <Text style={styles.textStyle}>SUBMIT</Text>
       </TouchableHighlight>
     </View>
   )
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     alignSelf: "center",
+    color: "white",
     paddingTop: 10,
   },
 });

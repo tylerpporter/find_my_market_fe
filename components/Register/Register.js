@@ -59,7 +59,7 @@ const Register = ({
           <TextInput
             {...props}
             testID="registerUsername"
-            placeholder="Please enter an email"
+            placeholder="Please enter your username"
             color="black"
             style={styles.registerEmailInput}
             onChangeText={(value) => {
@@ -81,7 +81,7 @@ const Register = ({
           <TextInput
             {...props}
             testID="registerEmail"
-            placeholder="Please enter an email"
+            placeholder="Please enter your email"
             color="black"
             style={styles.registerEmailInput}
             onChangeText={(value) => {
@@ -120,7 +120,7 @@ const Register = ({
         style={{ ...styles.registerOpenButton }}
         onPress={handleSubmit(onSubmit)}
       >
-        <Text style={styles.textStyle} testID="registerSubmit">Submit</Text>
+        <Text style={styles.textStyle} testID="registerSubmit">SUBMIT</Text>
       </TouchableHighlight>
     </View>
   );
@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     alignSelf: "center",
+    color: "white",
     paddingTop: 10,
   },
 });
