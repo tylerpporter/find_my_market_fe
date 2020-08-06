@@ -29,39 +29,8 @@ const Map = ({
   user,
   setUser,
   displayFav,
-  favorites,
-  setFavorites,
 }) => {
-  // // METHODS // //
-  // This displays the markers based on current Region
-  // const markers = marketsNearMe.map((location) => {
-  //   let { latitude, longitude, fmid } = location;
-  //   if (displayFav) {
-  //     return (
-  //       <FavMarkers
-  //         latitude={latitude}
-  //         longitude={longitude}
-  //         fmid={fmid}
-  //         location={location}
-  //         user={user}
-  //         setUser={setUser}
-  //         favorites={favorites}
-  //         setFavorites={setFavorites}
-  //       />
-  //     )
-  //   } else {
-  //     return (
-  //       <Markers
-  //       latitude={latitude}
-  //       longitude={longitude}
-  //       fmid={fmid}
-  //       location={location}
-  //       user={user}
-  //       setUser={setUser}
-  //     />
-  //     )
-  //   }
-  //   });
+  
   const [userFavFmid, setUserFavFmid] = useState(
     user.favorites.map((fav) => fav["market_id"])
   );
@@ -79,8 +48,6 @@ const Map = ({
           location={location}
           user={user}
           setUser={setUser}
-          favorites={favorites}
-          setFavorites={setFavorites}
         />
       );
     } else {
@@ -109,8 +76,6 @@ const Map = ({
           location={location}
           user={user}
           setUser={setUser}
-          favorites={favorites}
-          setFavorites={setFavorites}
         />
       );
     }

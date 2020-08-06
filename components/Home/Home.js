@@ -54,8 +54,7 @@ const Home = ({navigation, route}) => {
   const [user, setUser] = useState(route.params.user);
   // This is for which markers to display
   const [displayFav, setDisplayFav] = useState(false);
-  // This is for the favorite Icon
-  const [favorites, setFavorites] = useState(true);
+
   
   // // METHODS // //
   // Setting my current location as a user
@@ -129,8 +128,6 @@ const Home = ({navigation, route}) => {
         user={user}
         setUser={setUser}
         displayFav={displayFav}
-        favorites={favorites}
-        setFavorites={setFavorites}
       />
     </View>
   );

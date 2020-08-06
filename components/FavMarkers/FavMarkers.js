@@ -14,15 +14,12 @@ import {
 
 // Vector-Icons
 import { AntDesign } from "@expo/vector-icons";
-{
-  /* <AntDesign name='heart' size={40} color='#80ED99' /> */
-}
 
 // FETCH CALLS
 import { createFavorite, destroyFavorite } from '../../apiCalls'
 
 // MAP COMPONENT
-const FavMarkers = ({ latitude, longitude, fmid, location, user, setUser, favorites, setFavorites }) => {
+const FavMarkers = ({ latitude, longitude, fmid, location, user, setUser }) => {
   
   const [fav, setFav] = useState(true)
 
