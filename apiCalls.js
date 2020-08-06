@@ -172,7 +172,6 @@ const tokenResolver = async (token) => {
 export const displayFavoriteMarkets = (
   setMarketsNearMe,
   user,
-  setFavorites,
   setDisplayFav,
 ) => {
   let fmidArray = user.favorites.map((markets) => {
@@ -211,7 +210,6 @@ export const displayFavoriteMarkets = (
     .then((response) => response.json())
     .then((data) => {
       setDisplayFav(true);
-      setFavorites(true)
       setMarketsNearMe(data.data.markets);
     })
     .catch((error) => {
@@ -222,7 +220,7 @@ export const displayFavoriteMarkets = (
 
 
 export const createFavorite = async (id, user, setUser) => {
-    //  console.log(user)
+
 
   const url = `https://find-my-market-api.herokuapp.com/users/${user.id}/favorites`;
   try {
@@ -236,7 +234,7 @@ export const createFavorite = async (id, user, setUser) => {
       }),
     });
     const userData = await response.json();
-  //  console.log(userData)
+
    setUser(userData)
   } catch (error) {
     console.log("error", error);
@@ -245,8 +243,7 @@ export const createFavorite = async (id, user, setUser) => {
 
 
 export const destroyFavorite = async (id, user, setUser) => {
-  // console.log(user)
-  // console.log(id)
+
   const url = `https://find-my-market-api.herokuapp.com/users/${user.id}/favorites`;
   try {
     const response = await fetch(url, {
