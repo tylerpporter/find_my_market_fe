@@ -19,15 +19,53 @@ import { AntDesign } from "@expo/vector-icons";
 }
 
 // COMPONENT
-import Markers from '../Markers/Markers'
-import FavMarkers from '../FavMarkers/FavMarkers'
+import Markers from "../Markers/Markers";
+import FavMarkers from "../FavMarkers/FavMarkers";
 
 // MAP COMPONENT
-const Map = ({ marketsNearMe, location, user, setUser, displayFav, favorites, setFavorites }) => {
+const Map = ({
+  marketsNearMe,
+  location,
+  user,
+  setUser,
+  displayFav,
+}) => {
+  
+  const [userFavFmid, setUserFavFmid] = useState(
+    user.favorites.map((fav) => fav["market_id"])
+  );
 
-// // METHODS // //
-  // This displays the markers based on current Region
   const markers = marketsNearMe.map((location) => {
+    let { latitude, longitude, fmid } = location;
+
+    if (userFavFmid.includes(fmid)) {
+      return (
+        <FavMarkers
+          key={fmid}
+          latitude={latitude}
+          longitude={longitude}
+          fmid={fmid}
+          location={location}
+          user={user}
+          setUser={setUser}
+        />
+      );
+    } else {
+      return (
+        <Markers
+          key={fmid}
+          latitude={latitude}
+          longitude={longitude}
+          fmid={fmid}
+          location={location}
+          user={user}
+          setUser={setUser}
+        />
+      );
+    }
+  });
+
+  const favMarkers = marketsNearMe.map((location) => {
     let { latitude, longitude, fmid } = location;
     if (displayFav) {
       return (
@@ -38,24 +76,10 @@ const Map = ({ marketsNearMe, location, user, setUser, displayFav, favorites, se
           location={location}
           user={user}
           setUser={setUser}
-          favorites={favorites}
-          setFavorites={setFavorites}
         />
-      )
-    } else {
-      return (
-        <Markers
-        latitude={latitude}
-        longitude={longitude}
-        fmid={fmid}
-        location={location}
-        user={user}
-        setUser={setUser}
-      />
-      )
+      );
     }
-    
-    });
+  });
 
   return (
     <MapView
@@ -63,7 +87,7 @@ const Map = ({ marketsNearMe, location, user, setUser, displayFav, favorites, se
       showsUserLocation={true}
       region={location.coords}
     >
-      {markers}
+      {displayFav ? favMarkers : markers}
     </MapView>
   );
 };

@@ -38,8 +38,6 @@ const Header = ({
   navigation,
   user,
   setDisplayFav,
-  favorites,
-  setFavorites,
 }) => {
 
   // // HOOKS // //
@@ -308,7 +306,6 @@ const Header = ({
                 displayFavoriteMarkets(
                   setMarketsNearMe,
                   user,
-                  setFavorites,
                   setDisplayFav,
                 );
                 setHamburgerVisible(!hamburgerVisible);

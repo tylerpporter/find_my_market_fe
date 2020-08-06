@@ -14,16 +14,15 @@ import {
 
 // Vector-Icons
 import { AntDesign } from "@expo/vector-icons";
-{
-  /* <AntDesign name='heart' size={40} color='#80ED99' /> */
-}
 
 // FETCH CALLS
 import { createFavorite, destroyFavorite } from '../../apiCalls'
 
 // MAP COMPONENT
-const FavMarkers = ({ latitude, longitude, fmid, location, user, setUser, favorites, setFavorites }) => {
+const FavMarkers = ({ latitude, longitude, fmid, location, user, setUser }) => {
   
+  const [fav, setFav] = useState(true)
+
   return (
       <Marker
         key={`${Math.random()}`}
@@ -31,10 +30,16 @@ const FavMarkers = ({ latitude, longitude, fmid, location, user, setUser, favori
         coordinate={{ latitude: latitude, longitude: longitude }}
         pinColor="#F25C54"
       >
-        <Image
+        { fav ? <Image
           source={require("../../assets/FMM_icon_no_border_favorites.png")}
           style={{ height: 50, width: 38 }}
+        /> 
+        :
+        <Image
+          source={require("../../assets/FMM_icon_no_border.png")}
+          style={{ height: 50, width: 38 }}
         />
+        }
         <Callout style={styles.callOut}>
           <View style={styles.views}>
             <Text>{location.marketname}</Text>
@@ -62,18 +67,19 @@ const FavMarkers = ({ latitude, longitude, fmid, location, user, setUser, favori
           </CalloutSubview>
           <CalloutSubview
             onPress={() => {
-              if(favorites) {
-                setFavorites(false)
+              if(fav) {
+                setFav(!fav)
+                // setFavorites(!favorites)
                 destroyFavorite(fmid, user, setUser)
               } else {
-                setFavorites(true)
+                setFav(!fav)
+                // setFavorites(!favorites)
                 createFavorite(fmid, user, setUser)
-
               }
             }}
           >
             <TouchableOpacity style={styles.favButton}>
-              {favorites ? (
+              {fav ? (
                 <AntDesign name="heart" size={40} color="#80ED99" id={fmid} />
               ) : (
                 <AntDesign name="hearto" size={40} color="#80ED99" id={fmid} />
