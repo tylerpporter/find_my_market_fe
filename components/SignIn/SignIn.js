@@ -34,7 +34,6 @@ const SignIn = ({
   // fetch
   const onSubmit = async (data) => {
     let user = await tokenCall(data)
-    console.log(user)
     if (user.detail) {
       setSignIn(!signIn);
       setSignInError(!signInError)
