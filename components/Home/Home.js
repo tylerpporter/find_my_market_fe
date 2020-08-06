@@ -55,7 +55,7 @@ const Home = ({navigation, route}) => {
   // This is for which markers to display
   const [displayFav, setDisplayFav] = useState(false);
   // This is for the favorite Icon
-  const [favorites, setFavorites] = useState(false);
+  const [favorites, setFavorites] = useState(true);
   
   // // METHODS // //
   // Setting my current location as a user
@@ -121,8 +121,6 @@ const Home = ({navigation, route}) => {
         navigation={navigation}
         user={user}
         setDisplayFav={setDisplayFav}
-        favorites={favorites}
-        setFavorites={setFavorites}
       />
       <Map
         marketsNearMe={marketsNearMe}
