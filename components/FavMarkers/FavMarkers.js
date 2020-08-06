@@ -16,83 +16,76 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 
 // FETCH CALLS
-import { createFavorite, destroyFavorite } from '../../apiCalls'
+import { createFavorite, destroyFavorite } from "../../apiCalls";
 
 // MAP COMPONENT
 const FavMarkers = ({ latitude, longitude, fmid, location, user, setUser }) => {
-  
-  const [fav, setFav] = useState(true)
+  const [fav, setFav] = useState(true);
 
   return (
-      <Marker
-        key={`${Math.random()}`}
-        id={fmid}
-        coordinate={{ latitude: latitude, longitude: longitude }}
-        pinColor="#F25C54"
-      >
-        { fav ? <Image
+    <Marker
+      key={`${Math.random()}`}
+      id={fmid}
+      coordinate={{ latitude: latitude, longitude: longitude }}
+      pinColor="#F25C54"
+    >
+      {fav ? (
+        <Image
           source={require("../../assets/FMM_icon_no_border_favorites.png")}
           style={{ height: 50, width: 38 }}
-        /> 
-        :
+        />
+      ) : (
         <Image
           source={require("../../assets/FMM_icon_no_border.png")}
           style={{ height: 50, width: 38 }}
         />
-        }
-        <Callout style={styles.callOut}>
-          <View style={styles.views}>
-            <Text>{location.marketname}</Text>
-          </View>
-          <View style={styles.views}>
-            <Text style={styles.texts}>
-              {location.street} {location.city}, {location.state} {location.zip}
-            </Text>
-          </View>
-          <View style={styles.views}>
-            <Text>Distance Away: {Math.round(location.distance)} mile(s)</Text>
-          </View>
-          <View style={styles.views}>
-            <Text style={styles.texts}>
-              Season Info: {location.seasonDates}
-            </Text>
-          </View>
+      )}
+      <Callout style={styles.callOut}>
+        <View style={styles.views}>
+          <Text>{location.marketname}</Text>
+        </View>
+        <View style={styles.views}>
+          <Text style={styles.texts}>
+            {location.street} {location.city}, {location.state} {location.zip}
+          </Text>
+        </View>
+        <View style={styles.views}>
+          <Text style={styles.texts}>Season Info: {location.seasonDates}</Text>
+        </View>
 
-          <CalloutSubview
-            onPress={() => Linking.openURL(`${location.website}`)}
-          >
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.views}>View Market Website</Text>
-            </TouchableOpacity>
-          </CalloutSubview>
-          <CalloutSubview
-            onPress={() => {
-              if(fav) {
-                setFav(!fav)
-                // setFavorites(!favorites)
-                destroyFavorite(fmid, user, setUser)
-              } else {
-                setFav(!fav)
-                // setFavorites(!favorites)
-                createFavorite(fmid, user, setUser)
-              }
-            }}
-          >
-            <TouchableOpacity style={styles.favButton}>
-              {fav ? (
-                <AntDesign name="heart" size={40} color="#80ED99" id={fmid} />
-              ) : (
-                <AntDesign name="hearto" size={40} color="#80ED99" id={fmid} />
-              )}
-              <Text>FAVORITE THIS MARKET</Text>
-            </TouchableOpacity>
-          </CalloutSubview>
-        </Callout>
-      </Marker>
-    );
-  };
+        <CalloutSubview onPress={() => Linking.openURL(`${location.website}`)}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.views}>View Market Website</Text>
+          </TouchableOpacity>
+        </CalloutSubview>
+        <CalloutSubview
+          onPress={() => {
+            if (fav) {
+              setFav(!fav);
+              // setFavorites(!favorites)
+              destroyFavorite(fmid, user, setUser);
+            } else {
+              setFav(!fav);
+              // setFavorites(!favorites)
+              createFavorite(fmid, user, setUser);
+            }
+          }}
+        >
+          <TouchableOpacity style={styles.favButton}>
+            {fav ? (
+              <AntDesign name="heart" size={40} color="#80ED99" id={fmid} />
+            ) : (
+              <AntDesign name="hearto" size={40} color="#80ED99" id={fmid} />
+            )}
+            <Text>FAVORITE THIS MARKET</Text>
+          </TouchableOpacity>
+        </CalloutSubview>
+      </Callout>
+    </Marker>
+  );
+};
 
-  // CSS: Styling
+// CSS: Styling
 const styles = StyleSheet.create({
   button: {
     alignItems: "center",
