@@ -9,7 +9,10 @@ import UserPermissions from "../../utilities/UserPermissions";
 import { Ionicons } from "@expo/vector-icons";
 
 const Profile = (props) => {
-  const [avatar, setAvatar] = useState("");
+  //this is the hook for setting of the avatar image on the profile page
+  const [profileAvatar, setProfileAvatar] = useState(props.route.params.avatar);
+  //this is the hook for the setting of the add button icon for the profile page image
+  const [profileAddBtn, setProfileAddBtn] = useState(props.route.params.addBtn)
 
   const handlePickAvatar = async () => {
     UserPermissions.getCameraPermission();
@@ -20,8 +23,12 @@ const Profile = (props) => {
       aspect: [4, 3],
     });
 
+    setProfileAddBtn(false)
+    props.route.params.setAddBtn(false);
+
     if (!result.cancelled) {
-      setAvatar(result.uri);
+      setProfileAvatar(result.uri)
+      props.route.params.setAvatar(result.uri);
     }
   };
 
@@ -32,8 +39,8 @@ const Profile = (props) => {
           style={styles.avatarPlaceholder}
           onPress={handlePickAvatar}
         >
-          <Image source={{ uri: avatar }} style={styles.avatar} />
-          <Ionicons name="ios-add" size={24} color="black" />
+          <Image source={{ uri: profileAvatar }} style={styles.avatar} />
+          {profileAddBtn && <Ionicons name="ios-add" size={24} color="black" />}
         </TouchableOpacity>
       </View>
 

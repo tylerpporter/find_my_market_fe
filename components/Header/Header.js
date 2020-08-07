@@ -146,7 +146,14 @@ const Header = ({
     },
   ];
 
+  //this is the hook for setting the date on the filter modal
   const [filteredDate, setFilteredDate] = useState("");
+
+  //this is the hook for the setting of the avatar image for the whole app
+  const [avatar, setAvatar] = useState("");
+
+  //this is the hook for the setting of the add button icon on the profile image for the whole app
+  const [addBtn, setAddBtn] = useState(true);
 
   return (
     <View style={styles.container}>
@@ -289,15 +296,15 @@ const Header = ({
               />
             </View>
             <Text style={styles.title}> MENU </Text>
-            {/* This is the button to Log-Out */}
+            {/* This is the button to display user profile */}
             <TouchableHighlight
               style={{ ...styles.logOutButton }}
               onPress={() => {
                 setHamburgerVisible(!hamburgerVisible);
-                navigation.navigate("Login");
+                navigation.navigate("Profile", { user, avatar, setAvatar, addBtn, setAddBtn });
               }}
             >
-              <Text style={styles.textStyle}>LOG OUT</Text>
+              <Text style={styles.textStyle}>PROFILE</Text>
             </TouchableHighlight>
 
             {/* This is the button to display user favorites */}
@@ -311,14 +318,15 @@ const Header = ({
               <Text style={styles.textStyle}>DISPLAY MY FAVORITES</Text>
             </TouchableHighlight>
 
+            {/* This is the button to Log-Out */}
             <TouchableHighlight
               style={{ ...styles.logOutButton }}
               onPress={() => {
                 setHamburgerVisible(!hamburgerVisible);
-                navigation.navigate("Profile", { user });
+                navigation.navigate("Login");
               }}
             >
-              <Text style={styles.textStyle}>PROFILE</Text>
+              <Text style={styles.textStyle}>LOG OUT</Text>
             </TouchableHighlight>
           </View>
         </View>
