@@ -8,6 +8,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 // Components
 import Home from "../Home/Home";
 import Login from "../Login/Login";
+import Profile from "../Profile/Profile";
 
 //Hide warnings
 console.disableYellowBox = true;
@@ -19,20 +20,29 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator >
-        <Stack.Screen 
+
+      <Stack.Navigator>
+
+        <Stack.Screen
           name="Login"
           component={Login}
-          options={{ headerShown: false }} 
+          options={{ headerShown: false }}
         />
-       
+
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ title: "Welcome" }}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{ headerShown: true }}
+        />
+        
       </Stack.Navigator>
+
     </NavigationContainer>
   );
 };
