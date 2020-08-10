@@ -236,6 +236,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#38A3A5",
   },
+  closeIcon: {
+    alignSelf: "flex-end",
+  },
   // SignIn Modal
   signInModalView: {
     margin: 20,
