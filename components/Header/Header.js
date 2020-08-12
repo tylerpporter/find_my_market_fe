@@ -37,6 +37,7 @@ const Header = ({
   setHamburgerVisible,
   navigation,
   user,
+  setUser,
   setDisplayFav,
 }) => {
   // // HOOKS // //
@@ -147,13 +148,19 @@ const Header = ({
   ];
 
   //this is the hook for setting the date on the filter modal
-  const [filteredDate, setFilteredDate] = useState("");
+  const [filteredDate, setFilteredDate] = useState('');
 
   //this is the hook for the setting of the avatar image for the whole app
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState(user.image);
 
   //this is the hook for the setting of the add button icon on the profile image for the whole app
-  const [addBtn, setAddBtn] = useState(true);
+  const [addBtn, setAddBtn] = useState(() => {
+    if (user.image) {
+      return false
+    } else {
+      return true
+    }
+  });
 
   return (
     <View style={styles.container}>
@@ -301,7 +308,7 @@ const Header = ({
               style={{ ...styles.logOutButton }}
               onPress={() => {
                 setHamburgerVisible(!hamburgerVisible);
-                navigation.navigate("Profile", { user, avatar, setAvatar, addBtn, setAddBtn });
+                navigation.navigate("Profile", { user, avatar, setAvatar, addBtn, setAddBtn, setUser });
               }}
             >
               <Text style={styles.textStyle}>PROFILE</Text>
