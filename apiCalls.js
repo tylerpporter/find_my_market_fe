@@ -271,7 +271,6 @@ export const updateProfile = async (username, email, user, setUser) => {
       }),
     });
     const userData = await response.json();
-    console.log(userData);
     await setUser(userData);
     return userData
   } catch (error) {
@@ -298,4 +297,50 @@ export const updateProfileImage = async (user, setUser, image) => {
   } catch (error) {
     console.log("error", error);
   }
+};
+
+
+export const displayFavoriteMarketsListView = async (
+  user,
+) => {
+  let fmidArray = user.favorites.map((markets) => {
+    return markets["market_id"];
+  });
+  let url = "https://us-farmers-markets-api.herokuapp.com/";
+
+  try {
+  const promise = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `query($fmids: [Int!]!){ markets(fmids: $fmids) {
+          
+            fmid 
+            marketname
+            latitude
+            longitude
+            website
+            seasonDates
+            street
+            city
+            state
+            zip
+            products {
+                name
+            }
+            }
+    }`,
+      variables: {
+        fmids: fmidArray,
+      },
+    }),
+  })
+  
+  const data = await (promise.json())
+  return data.data.markets
+} catch (error) {
+  console.log(error)
+}
 };

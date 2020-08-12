@@ -13,7 +13,7 @@ import {
 } from "react-native";
 
 // fetch call
-import { getMarketsNearby, displayFavoriteMarkets } from "../../apiCalls";
+import { getMarketsNearby, displayFavoriteMarkets, displayFavoriteMarketsListView } from "../../apiCalls";
 
 // Components
 import SearchNav from "../SearchNav/SearchNav";
@@ -306,9 +306,10 @@ const Header = ({
             {/* This is the button to display user profile */}
             <TouchableHighlight
               style={{ ...styles.logOutButton }}
-              onPress={() => {
+              onPress={async () => {
+                let listMarketArray = await displayFavoriteMarketsListView(user)
                 setHamburgerVisible(!hamburgerVisible);
-                navigation.navigate("Profile", { user, avatar, setAvatar, addBtn, setAddBtn, setUser });
+                await navigation.navigate("Profile", { user, avatar, setAvatar, addBtn, setAddBtn, setUser, listMarketArray });
               }}
             >
               <Text style={styles.textStyle}>PROFILE</Text>

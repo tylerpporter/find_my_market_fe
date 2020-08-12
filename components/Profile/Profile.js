@@ -11,6 +11,7 @@ import {
   Modal,
   TextInput,
   TouchableHighlight,
+  ScrollView,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import UserPermissions from "../../utilities/UserPermissions";
@@ -21,10 +22,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
 // fetch call
-import { updateProfile, updateProfileImage } from "../../apiCalls"
+import { updateProfile, updateProfileImage } from "../../apiCalls";
+
+// COMPONENTS
+import FavMarketList from "../FavMarketList/FavMarketList";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Profile = (props) => {
-
   //this is the hook for setting of the avatar image on the profile page
   const [profileAvatar, setProfileAvatar] = useState(props.route.params.avatar);
   //this is the hook for the setting of the add button icon for the profile page image
@@ -36,7 +40,15 @@ const Profile = (props) => {
   // This is for form validation and storing Inputs
   const { control, handleSubmit, errors } = useForm();
   // This is the hook for updating the user profile
-  const [profileUser, setProfileUser] = useState(props.route.params.user)
+  const [profileUser, setProfileUser] = useState(props.route.params.user);
+  //this will determine if the user have favorites to display in listView
+  const [listView, setListView] = useState(() => {
+    if (!props.route.params.listMarketArray.length) {
+      return false
+    }else {
+      return true
+    }
+  });
 
   // This is for Controller
   const usernameInputRef = React.useRef();
@@ -53,13 +65,13 @@ const Profile = (props) => {
       allowsEditing: true,
       aspect: [4, 3],
     });
-    
+
     setProfileAddBtn(false);
     props.route.params.setAddBtn(false);
 
     if (!result.cancelled) {
-      let image = result.uri
-      updateProfileImage(profileUser, setUser, image)
+      let image = result.uri;
+      updateProfileImage(profileUser, setUser, image);
       setProfileAvatar(result.uri);
       props.route.params.setAvatar(result.uri);
     }
@@ -69,12 +81,24 @@ const Profile = (props) => {
   const onSubmit = async (data) => {
     let setUser = props.route.params.setUser;
 
-    let { username, email } = data
+    let { username, email } = data;
 
-    let updatedUser = await updateProfile(username, email, profileUser, setUser)
-    setProfileUser(updatedUser)
+    let updatedUser = await updateProfile(
+      username,
+      email,
+      profileUser,
+      setUser
+    );
+    setProfileUser(updatedUser);
     setModalVisible(!modalVisible);
   };
+
+  const favoriteMarketList = props.route.params.listMarketArray.map((favMarket) => {
+      return (
+      <FavMarketList favMarket={favMarket} />
+      )
+  });
+    
 
   return (
     <View style={styles.profileBackground}>
@@ -89,14 +113,10 @@ const Profile = (props) => {
       </View>
       <View style={styles.profileInfoView}>
         <View style={styles.profileInfoView}>
-          <Text style={styles.profileInfo}>
-            Username:{"\n"}
-            {profileUser.username}
-          </Text>
-          <Text style={styles.profileInfo}>
-            Email:{"\n"}
-            {profileUser.email}
-          </Text>
+          <Text style={styles.profileInfo}>Username:</Text>
+          <Text style={styles.profileInfo}>{profileUser.username}</Text>
+          <Text style={styles.profileInfo}>Email:</Text>
+          <Text style={styles.profileInfo}>{profileUser.email}</Text>
         </View>
 
         <TouchableOpacity style={styles.updateInfoButton}>
@@ -109,6 +129,23 @@ const Profile = (props) => {
           />
         </TouchableOpacity>
       </View>
+
+      {listView ? 
+      <SafeAreaView style={{ flex: 1, marginBottom: 30, padding: -30 }}>
+        <Text style={styles.favoritesHeader}>Favorite Markets</Text>
+        <ScrollView style={styles.listViewContainer}>
+            {favoriteMarketList}
+        </ScrollView>
+      </SafeAreaView>
+      :
+      <SafeAreaView style={{ flex: 1, marginBottom: 30, padding: -30 }}>
+        <Text style={styles.favoritesHeader}>Favorite Markets</Text>
+        <View style={styles.listViewContainerError}>
+          <Text style={{padding: 20, fontWeight: "600"}}> Let's create some Favorite Markets</Text>
+        </View>
+      </SafeAreaView>
+
+      }
 
       <View>
         <Modal
@@ -200,7 +237,7 @@ const styles = StyleSheet.create({
     height: 200,
     backgroundColor: "#E1E2E6",
     borderRadius: 100,
-    marginTop: 48,
+    marginTop: 13,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -214,7 +251,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   profileInfo: {
-    padding: 10,
+    padding: 6,
     fontSize: 16,
   },
   header: {
@@ -261,7 +298,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "white",
     paddingTop: 10,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   errorText: {
     color: "red",
@@ -294,10 +331,10 @@ const styles = StyleSheet.create({
   },
   profileInfoView: {
     backgroundColor: "#E1E2E6",
-    marginTop: "10%",
+    marginTop: "2%",
     width: "80%",
     alignSelf: "center",
-    height: "30%",
+    height: "25%",
     borderRadius: 5,
   },
   updateInfoButton: {
@@ -305,9 +342,31 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     color: "white",
     height: 40,
-    marginTop: 70,
+    marginTop: 90,
     width: "70%",
     alignSelf: "center",
+  },
+  favoritesHeader: {
+    alignSelf: "center",
+    marginTop: 0,
+    padding: 0,
+    fontSize: 18,
+    fontWeight: "800",
+  },
+  listViewContainer: {
+    backgroundColor: "#E1E2E6",
+    width: "80%",
+    alignSelf: "center",
+    height: 400,
+    borderRadius: 5,
+  },
+  listViewContainerError: {
+    backgroundColor: "#E1E2E6",
+    width: "80%",
+    alignSelf: "center",
+    height: 70,
+    borderRadius: 5,
+    alignItems: "center"
   },
 });
 
