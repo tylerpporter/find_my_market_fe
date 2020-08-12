@@ -35,36 +35,36 @@ const Map = ({
     user.favorites.map((fav) => fav["market_id"])
   );
 
-  const markers = marketsNearMe.map((location) => {
-    let { latitude, longitude, fmid } = location;
-
-    if (userFavFmid.includes(fmid)) {
-      return (
-        <FavMarkers
-          key={fmid}
-          latitude={latitude}
-          longitude={longitude}
-          fmid={fmid}
-          location={location}
-          user={user}
-          setUser={setUser}
-        />
-      );
-    } else {
-      return (
-        <Markers
-          key={fmid}
-          latitude={latitude}
-          longitude={longitude}
-          fmid={fmid}
-          location={location}
-          user={user}
-          setUser={setUser}
-        />
-      );
-    }
-  });
-
+    const markers = marketsNearMe.map((location) => {
+      let { latitude, longitude, fmid } = location;
+  
+      if (userFavFmid.includes(fmid)) {
+        return (
+          <FavMarkers
+            key={fmid}
+            latitude={latitude}
+            longitude={longitude}
+            fmid={fmid}
+            location={location}
+            user={user}
+            setUser={setUser}
+          />
+        );
+      } else {
+        return (
+          <Markers
+            key={fmid}
+            latitude={latitude}
+            longitude={longitude}
+            fmid={fmid}
+            location={location}
+            user={user}
+            setUser={setUser}
+          />
+        );
+      }
+    });
+  
   const favMarkers = marketsNearMe.map((location) => {
     let { latitude, longitude, fmid } = location;
     if (displayFav) {
