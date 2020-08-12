@@ -5,46 +5,42 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  TouchableOpacity,
   TextInput,
-  Image,
-  Modal,
   TouchableHighlight,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
 // FETCH CALLS
-import { tokenCall } from '../../apiCalls'
+import { tokenCall } from "../../apiCalls";
 
-const SignIn = ({ 
-  control,
-  handleSubmit,
-  setSignIn,
-  signIn,
-  setSignInError,
-  signInError,
-  navigation
-}) => {
-  // // METHODS // //
+const SignIn = ({ control, handleSubmit, setSignIn, signIn, navigation }) => {
+ 
+  //This is the hook for the error handling message
+  const [error, setError] = useState(false);
+
+   // // METHODS // //
   // This is for Controller
   const emailInputRef = React.useRef();
   const passwordInputRef = React.useRef();
 
   // fetch
   const onSubmit = async (data) => {
-    let user = await tokenCall(data)
+    let user = await tokenCall(data);
     if (user.detail) {
-      setSignIn(!signIn);
-      setSignInError(!signInError)
+      setError(true);
     } else {
       setSignIn(!signIn);
-      navigation.navigate("Home", {user});
+      navigation.navigate("Home", { user });
+    }
   };
-  }
 
   return (
     <View style={styles.centeredView}>
+      {error && (
+        <Text style={styles.errorText}>
+          *Please enter a valid username and password
+        </Text>
+      )}
       <Text style={styles.label}>Email:</Text>
       <Controller
         name="email"
@@ -97,7 +93,7 @@ const SignIn = ({
         <Text style={styles.textStyle}>SUBMIT</Text>
       </TouchableHighlight>
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -149,6 +145,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "white",
     paddingTop: 10,
+  },
+  errorText: {
+    color: "red",
   },
 });
 

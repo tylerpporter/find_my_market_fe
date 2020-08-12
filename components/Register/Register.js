@@ -5,11 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  TouchableOpacity,
   TextInput,
-  Image,
-  Modal,
   TouchableHighlight,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
@@ -23,22 +19,23 @@ const Register = ({
   navigation,
   setRegister,
   register,
-  setRegisterError,
-  registerError
 }) => {
+  
+  //This is the hook for the error handling message
+  const [error, setError] = useState(false);
+
   // // METHODS // //
   // This is for Controller
   const emailInputRef = React.useRef();
   const passwordInputRef = React.useRef();
   const usernameInputRef = React.useRef();
-  
+
   // FETCH CALL
   const onSubmit = async (data) => {
     let user = await registerFetchCall(data);
-  
+
     if (user.detail) {
-      setRegister(!register);
-      setRegisterError(!registerError)
+      setError(true);
     } else {
       setRegister(!register);
       navigation.navigate("Home", { user });
@@ -47,7 +44,7 @@ const Register = ({
 
   return (
     <View style={styles.centeredView}>
-          <Text style={styles.label}>Username:</Text>
+      <Text style={styles.label}>Username:</Text>
       <Controller
         name="username"
         control={control}
@@ -70,6 +67,11 @@ const Register = ({
         )}
       />
       <Text style={styles.label}>Email:</Text>
+      {error && (
+        <Text style={styles.errorText}>
+          *Please enter a valid email address
+        </Text>
+      )}
       <Controller
         name="email"
         control={control}
@@ -120,7 +122,9 @@ const Register = ({
         style={{ ...styles.registerOpenButton }}
         onPress={handleSubmit(onSubmit)}
       >
-        <Text style={styles.textStyle} testID="registerSubmit">SUBMIT</Text>
+        <Text style={styles.textStyle} testID="registerSubmit">
+          SUBMIT
+        </Text>
       </TouchableHighlight>
     </View>
   );
@@ -175,6 +179,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "white",
     paddingTop: 10,
+  },
+  errorText: {
+    color: "red",
   },
 });
 

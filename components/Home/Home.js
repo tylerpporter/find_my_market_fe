@@ -54,7 +54,6 @@ const Home = ({navigation, route}) => {
   const [user, setUser] = useState(route.params.user);
   // This is for which markers to display
   const [displayFav, setDisplayFav] = useState(false);
-
   
   // // METHODS // //
   // Setting my current location as a user
@@ -119,6 +118,7 @@ const Home = ({navigation, route}) => {
         setHamburgerVisible={setHamburgerVisible}
         navigation={navigation}
         user={user}
+        setUser={setUser}
         setDisplayFav={setDisplayFav}
       />
       <Map

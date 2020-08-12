@@ -15,8 +15,6 @@ import {
 import { useForm, Controller } from "react-hook-form";
 
 // Components
-import RegisterModal from '../Modals/RegisterModal'
-import SignInModal from '../Modals/SignInModal'
 import Register from "../Register/Register";
 import SignIn from "../SignIn/SignIn";
 
@@ -108,8 +106,6 @@ const Login = ({ navigation }) => {
               navigation={navigation}
               setRegister={setRegister}
               register={register}
-              setRegisterError={setRegisterError}
-              registerError={registerError}
             />
           </View>
         </Modal>
@@ -148,8 +144,6 @@ const Login = ({ navigation }) => {
               navigation={navigation}
               signIn={signIn}
               setSignIn={setSignIn}
-              setSignInError={setSignInError}
-              signInError={signInError}
             />
           </View>
         </Modal>
@@ -241,6 +235,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#38A3A5",
+  },
+  closeIcon: {
+    alignSelf: "flex-end",
   },
   // SignIn Modal
   signInModalView: {

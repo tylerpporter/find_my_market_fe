@@ -8,7 +8,7 @@ jest.mock("../../apiCalls");
 
 describe("Header", () => {
   test("renders a header upon load", async () => {
-    const { getByTestId } = render(<Header />);
+    const { getByTestId } = render(<Header user={{image: ""}} />);
 
     const title = getByTestId("bannerLogo");
     const filterBtn = await waitFor(() => getByTestId("filterBtn"));
@@ -18,7 +18,7 @@ describe("Header", () => {
   });
 
   test("renders a SearchNav upon load", () => {
-    const { getByText } = render(<Header />);
+    const { getByText } = render(<Header user={{image: ""}} />);
 
     const city = getByText("City");
     const state = getByText("State");
@@ -31,7 +31,7 @@ describe("Header", () => {
     const mockModalVisible = jest.fn();
 
     const { getByTestId, getByText } = render(
-      <Header setModalVisible={mockModalVisible} />
+      <Header setModalVisible={mockModalVisible} user={{image: ""}} />
     );
 
     const filterBtn = getByTestId("filterBtn");
@@ -53,6 +53,7 @@ describe("Header", () => {
       <Header
         setModalVisible={mockModalVisible}
         setFilteredProducts={mockSetFilteredProducts}
+        user={{image: ""}}
       />
     );
 
@@ -82,6 +83,7 @@ describe("Header", () => {
       <Header
         setModalVisible={mockModalVisible}
         setFilteredProducts={mockSetFilteredProducts}
+        user={{image: ""}}
       />
     );
 

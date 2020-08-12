@@ -18,7 +18,7 @@ import { getMarketsNearby, displayFavoriteMarkets } from "../../apiCalls";
 // Components
 import SearchNav from "../SearchNav/SearchNav";
 import ListItem from "../ListItem/ListItem";
-import MyDatePicker from '../MyDatePicker/MyDatePicker';
+import MyDatePicker from "../MyDatePicker/MyDatePicker";
 
 // Vector-Icons
 import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
@@ -37,9 +37,9 @@ const Header = ({
   setHamburgerVisible,
   navigation,
   user,
+  setUser,
   setDisplayFav,
 }) => {
-
   // // HOOKS // //
   // This is a list of products to filter by
   const [products, setProducts] = useState([
@@ -147,7 +147,20 @@ const Header = ({
     },
   ];
 
-  const [filteredDate, setFilteredDate] = useState('')
+  //this is the hook for setting the date on the filter modal
+  const [filteredDate, setFilteredDate] = useState('');
+
+  //this is the hook for the setting of the avatar image for the whole app
+  const [avatar, setAvatar] = useState(user.image);
+
+  //this is the hook for the setting of the add button icon on the profile image for the whole app
+  const [addBtn, setAddBtn] = useState(() => {
+    if (user.image) {
+      return false
+    } else {
+      return true
+    }
+  });
 
   return (
     <View style={styles.container}>
@@ -211,7 +224,10 @@ const Header = ({
             </View>
             <Text style={styles.modalText}>Filter By Products</Text>
             <View style={styles.datePickerContainer}>
-            <MyDatePicker setFilteredDate={setFilteredDate} filteredDate={filteredDate}/>
+              <MyDatePicker
+                setFilteredDate={setFilteredDate}
+                filteredDate={filteredDate}
+              />
             </View>
             <View style={styles.modalContainer}>
               <FlatList
@@ -228,7 +244,7 @@ const Header = ({
                 keyExtractor={(item) => item.id}
               />
             </View>
-           
+
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
@@ -238,7 +254,7 @@ const Header = ({
                   setFilteredProducts,
                   filteredProducts,
                   setDisplayFav,
-                  filteredDate,
+                  filteredDate
                 );
                 setModalVisible(!modalVisible);
               }}
@@ -249,19 +265,18 @@ const Header = ({
               style={{ ...styles.openButton, backgroundColor: "#EF8275" }}
               onPress={() => {
                 setProducts(defaultProducts);
-                setFilteredDate('')
+                setFilteredDate("");
                 getMarketsNearby(
                   location,
                   setMarketsNearMe,
                   setFilteredProducts,
-                  setDisplayFav,
+                  setDisplayFav
                 );
                 setModalVisible(!modalVisible);
               }}
             >
               <Text style={styles.textStyle}>Clear Current Filters</Text>
             </TouchableHighlight>
-            
           </View>
         </View>
       </Modal>
@@ -288,6 +303,28 @@ const Header = ({
               />
             </View>
             <Text style={styles.title}> MENU </Text>
+            {/* This is the button to display user profile */}
+            <TouchableHighlight
+              style={{ ...styles.logOutButton }}
+              onPress={() => {
+                setHamburgerVisible(!hamburgerVisible);
+                navigation.navigate("Profile", { user, avatar, setAvatar, addBtn, setAddBtn, setUser });
+              }}
+            >
+              <Text style={styles.textStyle}>PROFILE</Text>
+            </TouchableHighlight>
+
+            {/* This is the button to display user favorites */}
+            <TouchableHighlight
+              style={{ ...styles.logOutButton }}
+              onPress={() => {
+                displayFavoriteMarkets(setMarketsNearMe, user, setDisplayFav);
+                setHamburgerVisible(!hamburgerVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>DISPLAY MY FAVORITES</Text>
+            </TouchableHighlight>
+
             {/* This is the button to Log-Out */}
             <TouchableHighlight
               style={{ ...styles.logOutButton }}
@@ -296,22 +333,7 @@ const Header = ({
                 navigation.navigate("Login");
               }}
             >
-              <Text style={styles.textStyle}>LOG OUT!</Text>
-            </TouchableHighlight>
-
-            {/* This is the button to display user favorites */}
-            <TouchableHighlight
-              style={{ ...styles.logOutButton }}
-              onPress={() => {
-                displayFavoriteMarkets(
-                  setMarketsNearMe,
-                  user,
-                  setDisplayFav,
-                );
-                setHamburgerVisible(!hamburgerVisible);
-              }}
-            >
-              <Text style={styles.textStyle}>Display MY favorites</Text>
+              <Text style={styles.textStyle}>LOG OUT</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -379,7 +401,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     borderRadius: 20,
-    height: 250,
+    height: 300,
     margin: 10,
     padding: 35,
     shadowColor: "#000",
@@ -430,8 +452,8 @@ const styles = StyleSheet.create({
   datePickerContainer: {
     height: "8%",
     width: 200,
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 export default Header;
