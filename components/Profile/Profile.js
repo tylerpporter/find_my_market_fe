@@ -20,9 +20,10 @@ import { useForm, Controller } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
-const Profile = (props) => {
+// fetch call
+import { updateProfile, updateProfileImage } from "../../apiCalls"
 
-  const userEmail = props.route.params.user.email;
+const Profile = (props) => {
 
   //this is the hook for setting of the avatar image on the profile page
   const [profileAvatar, setProfileAvatar] = useState(props.route.params.avatar);
@@ -34,6 +35,8 @@ const Profile = (props) => {
   const [error, setError] = useState(false);
   // This is for form validation and storing Inputs
   const { control, handleSubmit, errors } = useForm();
+  // This is the hook for updating the user profile
+  const [profileUser, setProfileUser] = useState(props.route.params.user)
 
   // This is for Controller
   const usernameInputRef = React.useRef();
@@ -41,6 +44,8 @@ const Profile = (props) => {
 
   // This is the method to choose a user image
   const handlePickAvatar = async () => {
+    const setUser = props.route.params.setUser;
+
     UserPermissions.getCameraPermission();
 
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -48,11 +53,13 @@ const Profile = (props) => {
       allowsEditing: true,
       aspect: [4, 3],
     });
-
+    
     setProfileAddBtn(false);
     props.route.params.setAddBtn(false);
 
     if (!result.cancelled) {
+      let image = result.uri
+      updateProfileImage(profileUser, setUser, image)
       setProfileAvatar(result.uri);
       props.route.params.setAvatar(result.uri);
     }
@@ -60,18 +67,13 @@ const Profile = (props) => {
 
   // FETCH CALL
   const onSubmit = async (data) => {
-    console.log("data", data);
+    let setUser = props.route.params.setUser;
 
-    //VERIFY THAT INFORMATION HAS CHANGED
+    let { username, email } = data
 
-    // let user = await registerFetchCall(data);
-
-    // if (user.detail) {
-    //   setError(true);
-    // } else {
-    //   setRegister(!register);
-    //   navigation.navigate("Home", { user });
-    // }
+    let updatedUser = await updateProfile(username, email, profileUser, setUser)
+    setProfileUser(updatedUser)
+    setModalVisible(!modalVisible);
   };
 
   return (
@@ -87,10 +89,13 @@ const Profile = (props) => {
       </View>
       <View style={styles.profileInfoView}>
         <View style={styles.profileInfoView}>
-          <Text style={styles.profileInfo}>Username:{"\n"}</Text>
+          <Text style={styles.profileInfo}>
+            Username:{"\n"}
+            {profileUser.username}
+          </Text>
           <Text style={styles.profileInfo}>
             Email:{"\n"}
-            {userEmail}
+            {profileUser.email}
           </Text>
         </View>
 
@@ -138,7 +143,7 @@ const Profile = (props) => {
                 <TextInput
                   {...props}
                   testID="registerUsername"
-                  placeholder="Please update your username"
+                  placeholder={profileUser.username}
                   color="black"
                   style={styles.profileUsernameInput}
                   onChangeText={(value) => {
@@ -164,7 +169,7 @@ const Profile = (props) => {
                 <TextInput
                   {...props}
                   testID="registerEmail"
-                  placeholder={userEmail}
+                  placeholder={profileUser.email}
                   color="black"
                   style={styles.profileEmailInput}
                   onChangeText={(value) => {
