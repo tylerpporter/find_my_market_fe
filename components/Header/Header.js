@@ -16,6 +16,7 @@ import {
 import { getMarketsNearby, displayFavoriteMarkets, displayFavoriteMarketsListView } from "../../apiCalls";
 
 // Components
+import HeaderView from "../HeaderView/HeaderView"
 import SearchNav from "../SearchNav/SearchNav";
 import ListItem from "../ListItem/ListItem";
 import MyDatePicker from "../MyDatePicker/MyDatePicker";
@@ -165,35 +166,10 @@ const Header = ({
   return (
     <View style={styles.container}>
       {/* <MainNav /> */}
-      <View style={styles.mainNavContainer}>
-        <TouchableHighlight
-          underlayColor="white"
-          onPress={() => {
-            setModalVisible(true);
-          }}
-        >
-          <FontAwesome
-            testID="filterBtn"
-            name="filter"
-            size={50}
-            color="black"
-            style={styles.filterBtn}
-          />
-        </TouchableHighlight>
-        <Image
-          testID="bannerLogo"
-          style={styles.bannerLogo}
-          source={require("../../assets/FMM_banner_logo_final.png")}
-        />
-        <TouchableHighlight
-          underlayColor="white"
-          onPress={() => {
-            setHamburgerVisible(true);
-          }}
-        >
-          <Feather name="menu" size={50} color="black" />
-        </TouchableHighlight>
-      </View>
+      <HeaderView 
+        setModalVisible={setModalVisible}
+        setHamburgerVisible={setHamburgerVisible}
+      />
       <SearchNav
         setSearchedMarkets={setSearchedMarkets}
         setLocation={setLocation}
@@ -345,16 +321,6 @@ const Header = ({
 
 // CSS: Styling
 const styles = StyleSheet.create({
-  mainNavContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: (0, 20),
-  },
-  bannerLogo: {
-    height: "75%",
-    width: "70%",
-  },
   container: {
     backgroundColor: "white",
     height: "25%",
@@ -443,9 +409,6 @@ const styles = StyleSheet.create({
   },
   closeIcon: {
     alignSelf: "flex-end",
-  },
-  filterBtn: {
-    marginRight: 5,
   },
   title: {
     fontSize: 35,
