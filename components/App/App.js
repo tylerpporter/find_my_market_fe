@@ -7,7 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 // Components
 import Home from "../Home/Home";
-import Login from "../Login/Login";
+import LoginContainer from "../LoginContainer/LoginContainer";
 import Profile from "../Profile/Profile";
 
 //Hide warnings
@@ -25,7 +25,7 @@ const App = () => {
 
         <Stack.Screen
           name="Login"
-          component={Login}
+          component={LoginContainer}
           options={{ headerShown: false }}
         />
 
