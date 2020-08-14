@@ -5,15 +5,13 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
-  Modal,
-  Text,
-  TouchableHighlight,
 } from "react-native";
 
 // fetch call
 import { getMarketsNearby } from "../../apiCalls";
 
 // Components
+import WelcomeModal from "../Modals/WelcomeModal"
 import Map from "../Map/Map";
 import Header from "../Header/Header";
 
@@ -79,30 +77,10 @@ const Home = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={isLoading}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Welcome to Find My Market!</Text>
-              <Text style={styles.modalText}>Find markets within 50 miles of you</Text>
-
-              <TouchableHighlight
-                style={{ ...styles.openButton}}
-                onPress={() => {
-                  setIsLoading(!isLoading);
-                }}
-              >
-                <Text style={styles.textStyle}>Let's get started!</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
+        <WelcomeModal 
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
       </View>
 
       <Header
