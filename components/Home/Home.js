@@ -2,16 +2,13 @@
 
 // React && React-Native
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 
 // fetch call
 import { getMarketsNearby } from "../../apiCalls";
 
 // Components
-import WelcomeModal from "../Modals/WelcomeModal"
+import WelcomeModal from "../Modals/WelcomeModal";
 import Map from "../Map/Map";
 import Header from "../Header/Header";
 
@@ -19,8 +16,7 @@ import Header from "../Header/Header";
 import * as Location from "expo-location";
 
 // HOME COMPONENT
-const Home = ({navigation, route}) => {
-
+const Home = ({ navigation, route }) => {
   // this is the default region for map
   const initialRegion = {
     coords: {
@@ -52,7 +48,7 @@ const Home = ({navigation, route}) => {
   const [user, setUser] = useState(route.params.user);
   // This is for which markers to display
   const [displayFav, setDisplayFav] = useState(false);
-  
+
   // // METHODS // //
   // Setting my current location as a user
   useEffect(() => {
@@ -77,12 +73,8 @@ const Home = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <View style={styles.centeredView}>
-        <WelcomeModal 
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
+        <WelcomeModal isLoading={isLoading} setIsLoading={setIsLoading} />
       </View>
-
       <Header
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
