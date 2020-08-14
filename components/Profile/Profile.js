@@ -8,9 +8,6 @@ import {
   Image,
   TouchableOpacity,
   Button,
-  Modal,
-  TextInput,
-  TouchableHighlight,
   ScrollView,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
@@ -19,13 +16,13 @@ import { useForm, Controller } from "react-hook-form";
 
 // VECTOR ICONS
 import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 
 // fetch call
-import { updateProfile, updateProfileImage } from "../../apiCalls";
+import { updateProfileImage } from "../../apiCalls";
 
 // COMPONENTS
 import FavMarketList from "../FavMarketList/FavMarketList";
+import ProfileUpdateModal from "../Modals/ProfileUpdateModal"
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Profile = (props) => {
@@ -35,10 +32,6 @@ const Profile = (props) => {
   const [profileAddBtn, setProfileAddBtn] = useState(props.route.params.addBtn);
   // this is for the Modal to update user information
   const [modalVisible, setModalVisible] = useState(false);
-  //This is the hook for the error handling message
-  const [error, setError] = useState(false);
-  // This is for form validation and storing Inputs
-  const { control, handleSubmit, errors } = useForm();
   // This is the hook for updating the user profile
   const [profileUser, setProfileUser] = useState(props.route.params.user);
   //this will determine if the user have favorites to display in listView
@@ -49,10 +42,6 @@ const Profile = (props) => {
       return true
     }
   });
-
-  // This is for Controller
-  const usernameInputRef = React.useRef();
-  const emailInputRef = React.useRef();
 
   // This is the method to choose a user image
   const handlePickAvatar = async () => {
@@ -75,22 +64,6 @@ const Profile = (props) => {
       setProfileAvatar(result.uri);
       props.route.params.setAvatar(result.uri);
     }
-  };
-
-  // FETCH CALL
-  const onSubmit = async (data) => {
-    let setUser = props.route.params.setUser;
-
-    let { username, email } = data;
-
-    let updatedUser = await updateProfile(
-      username,
-      email,
-      profileUser,
-      setUser
-    );
-    setProfileUser(updatedUser);
-    setModalVisible(!modalVisible);
   };
 
   const favoriteMarketList = props.route.params.listMarketArray.map((favMarket) => {
@@ -144,89 +117,15 @@ const Profile = (props) => {
           <Text style={{padding: 20, fontWeight: "600"}}> Let's create some Favorite Markets</Text>
         </View>
       </SafeAreaView>
-
       }
 
-      <View>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}
-        >
-          <View style={styles.profileModalView}>
-            <View style={styles.closeIcon}>
-              <AntDesign
-                name="close"
-                size={30}
-                color="black"
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              />
-            </View>
-            <Text style={styles.header}>Please update your</Text>
-            <Text style={styles.header}>username and/or email.</Text>
-            <Text style={styles.label}>Username:</Text>
-            <Controller
-              name="username"
-              control={control}
-              onFocus={() => {
-                usernameInputRef.current.focus();
-              }}
-              render={(props) => (
-                <TextInput
-                  {...props}
-                  testID="registerUsername"
-                  placeholder={profileUser.username}
-                  color="black"
-                  style={styles.profileUsernameInput}
-                  onChangeText={(value) => {
-                    props.onChange(value);
-                  }}
-                  ref={usernameInputRef}
-                />
-              )}
-            />
-            <Text style={styles.label}>Email:</Text>
-            {error && (
-              <Text style={styles.errorText}>
-                *Please enter a valid email address
-              </Text>
-            )}
-            <Controller
-              name="email"
-              control={control}
-              onFocus={() => {
-                emailInputRef.current.focus();
-              }}
-              render={(props) => (
-                <TextInput
-                  {...props}
-                  testID="registerEmail"
-                  placeholder={profileUser.email}
-                  color="black"
-                  style={styles.profileEmailInput}
-                  onChangeText={(value) => {
-                    props.onChange(value);
-                  }}
-                  ref={emailInputRef}
-                />
-              )}
-            />
-            <TouchableHighlight
-              style={{ ...styles.registerOpenButton }}
-              onPress={handleSubmit(onSubmit)}
-            >
-              <Text style={styles.textStyle} testID="registerSubmit">
-                UPDATE
-              </Text>
-            </TouchableHighlight>
-          </View>
-        </Modal>
-      </View>
+      <ProfileUpdateModal 
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        setProfileUser={setProfileUser}
+        profileUser={profileUser}
+        props={props}
+      />
     </View>
   );
 };
