@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import UserPermissions from "../../utilities/UserPermissions";
-import { useForm, Controller } from "react-hook-form";
 
 // VECTOR ICONS
 import { Ionicons } from "@expo/vector-icons";
@@ -21,6 +20,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { updateProfileImage } from "../../apiCalls";
 
 // COMPONENTS
+import ProfileImage from "../ProfileImage/ProfileImage"
+import ProfileInfo from "../ProfileInfo/ProfileInfo"
 import FavMarketList from "../FavMarketList/FavMarketList";
 import ProfileUpdateModal from "../Modals/ProfileUpdateModal"
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -75,33 +76,17 @@ const Profile = (props) => {
 
   return (
     <View style={styles.profileBackground}>
-      <View style={styles.avatarView}>
-        <TouchableOpacity
-          style={styles.avatarPlaceholder}
-          onPress={handlePickAvatar}
-        >
-          <Image source={{ uri: profileAvatar }} style={styles.avatar} />
-          {profileAddBtn && <Ionicons name="ios-add" size={24} color="black" />}
-        </TouchableOpacity>
-      </View>
-      <View style={styles.profileInfoView}>
-        <View style={styles.profileInfoView}>
-          <Text style={styles.profileInfo}>Username:</Text>
-          <Text style={styles.profileInfo}>{profileUser.username}</Text>
-          <Text style={styles.profileInfo}>Email:</Text>
-          <Text style={styles.profileInfo}>{profileUser.email}</Text>
-        </View>
+      <ProfileImage
+        handlePickAvatar={handlePickAvatar}
+        profileAddBtn={profileAddBtn}
+        profileAvatar={profileAvatar}
+      />
 
-        <TouchableOpacity style={styles.updateInfoButton}>
-          <Button
-            color="black"
-            title="Update your information"
-            onPress={() => {
-              setModalVisible(!modalVisible);
-            }}
-          />
-        </TouchableOpacity>
-      </View>
+      <ProfileInfo
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        profileUser={profileUser}
+      />
 
       {listView ? 
       <SafeAreaView style={{ flex: 1, marginBottom: 30, padding: -30 }}>
@@ -131,119 +116,9 @@ const Profile = (props) => {
 };
 
 const styles = StyleSheet.create({
-  avatarPlaceholder: {
-    width: 200,
-    height: 200,
-    backgroundColor: "#E1E2E6",
-    borderRadius: 100,
-    marginTop: 13,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  avatar: {
-    position: "absolute",
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-  },
-  avatarView: {
-    alignSelf: "center",
-  },
-  profileInfo: {
-    padding: 6,
-    fontSize: 16,
-  },
-  header: {
-    fontSize: 16,
-  },
-  profileEmailInput: {
-    alignSelf: "center",
-    backgroundColor: "white",
-    borderRadius: 4,
-    height: 60,
-    marginHorizontal: 10,
-    width: "100%",
-    borderWidth: 2,
-    borderColor: "black",
-  },
-  profileUsernameInput: {
-    alignSelf: "center",
-    backgroundColor: "white",
-    borderRadius: 4,
-    height: 60,
-    marginHorizontal: 10,
-    width: "100%",
-    borderWidth: 2,
-    borderColor: "black",
-  },
-  label: {
-    color: "black",
-    margin: 10,
-    marginHorizontal: 10,
-    fontSize: 25,
-    alignSelf: "flex-start",
-  },
-  registerOpenButton: {
-    alignSelf: "center",
-    backgroundColor: "#38A3A5",
-    borderRadius: 4,
-    color: "white",
-    height: 40,
-    marginTop: 30,
-    marginLeft: 20,
-    width: "100%",
-  },
-  textStyle: {
-    alignSelf: "center",
-    color: "white",
-    paddingTop: 10,
-    fontWeight: "bold",
-  },
-  errorText: {
-    color: "red",
-  },
-  profileModalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    alignSelf: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    height: "50%",
-    width: "80%",
-    marginTop: "50%",
-  },
-  closeIcon: {
-    alignSelf: "flex-end",
-  },
   profileBackground: {
     backgroundColor: "#38A3A5",
     height: "100%",
-  },
-  profileInfoView: {
-    backgroundColor: "#E1E2E6",
-    marginTop: "2%",
-    width: "80%",
-    alignSelf: "center",
-    height: "25%",
-    borderRadius: 5,
-  },
-  updateInfoButton: {
-    backgroundColor: "#EF8275",
-    borderRadius: 4,
-    color: "white",
-    height: 40,
-    marginTop: 90,
-    width: "70%",
-    alignSelf: "center",
   },
   favoritesHeader: {
     alignSelf: "center",
