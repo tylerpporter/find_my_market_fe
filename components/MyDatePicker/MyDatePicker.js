@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Content, DatePicker } from "native-base";
 import moment from "moment";
 
 const MyDatePicker = (props) => {
-  const [chosenDate, setChosenDate] = useState(props.filteredDate);
 
   const setDate = (newDate) => {
     let splitDate = newDate.toLocaleDateString();
     let formattedNewDate = formatDates(splitDate);
-    setChosenDate(formattedNewDate);
     props.setFilteredDate(formattedNewDate);
   };
 
