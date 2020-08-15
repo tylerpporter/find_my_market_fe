@@ -1,7 +1,6 @@
 // // IMPORTS // //
 // React && React-Native
 import React, { useState } from "react";
-import MapView from "react-native-maps";
 import { Marker, Callout, CalloutSubview } from "react-native-maps";
 import {
   StyleSheet,
@@ -14,17 +13,14 @@ import {
 
 // Vector-Icons
 import { AntDesign } from "@expo/vector-icons";
-{
-  /* <AntDesign name='heart' size={40} color='#80ED99' /> */
-}
 
 // FETCH CALLS
 import { createFavorite, destroyFavorite } from '../../apiCalls'
 
 // MAP COMPONENT
 const Markers = ({ latitude, longitude, fmid, location, user, setUser }) => {
-  // // METHODS // //
-
+  
+  // // HOOKS // //
   const [markerFav, setMarkerFav] = useState(false)
 
   return (
