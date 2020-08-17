@@ -12,12 +12,6 @@ import {
   Image,
 } from "react-native";
 
-// Vector-Icons
-import { AntDesign } from "@expo/vector-icons";
-{
-  /* <AntDesign name='heart' size={40} color='#80ED99' /> */
-}
-
 // COMPONENT
 import Markers from "../Markers/Markers";
 import FavMarkers from "../FavMarkers/FavMarkers";
